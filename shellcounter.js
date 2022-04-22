@@ -36,29 +36,66 @@ const shellRates = {
 	
 }
 
-let   userTotal = 0;
-let   userCounting = "";
-const userRates;
+let userTotal    = 0;
+let userCounting = "";
+let userRates    = null;
 
 function countShells() {
 	initialize();
 	countFlatRate();
 	countStackables();
-	//count static!
-	switch (background) {
-		case 'simple':
-			userTotal += shellRates.ratesBackgrounds[1];
-			userCounting += " + " + shellRates.ratesBackgrounds[1] + " (" + background + " background)";
+	countStatic();
+}
+
+function initialize() {
+	switch (media) {
+		case 'grayscale':
+			userRates = shellRates.ratesGrayscale;
 			break;
-		case 'depth':
-			userTotal += shellRates.ratesBackgrounds[2];
-			userCounting += " + " + shellRates.ratesBackgrounds[2] + " (" + background + " background)";
+		case 'flatcolor':
+			userRates = shellRates.ratesFlatcolor;
 			break;
-		case 'complex':
-			userTotal += shellRates.ratesBackgrounds[3];
-			userCounting += " + " + shellRates.ratesBackgrounds[3] + " (" + background + " background)";
+		case '3dflat':
+			userRates = shellRates.rates3dFlat;
+			break;
+		case '3d':
+			userRates = shellRates.rates3dFull;
+			break;
+		case 'paper':
+			if (craftSize == 'model') { userRates = shellRates.ratesPaperModel; }
+			else { userRates = shellRates.ratesPaperLarge; }
+			break;
+		case 'food':
+			if (craftSize == 'model') { userRates = shellRates.ratesFoodModel; }
+			else { userRates = shellRates.ratesFoodLarge; }
+			break;
+		case 'clay':
+			if (craftSize == 'model') { userRates = shellRates.ratesClayModel; }
+			else { userRates = shellRates.ratesClayLarge; }
+			break;
+		case 'fabric':
+			if (craftSize == 'model') { userRates = shellRates.ratesFabricModel; }
+			else { userRates = shellRates.ratesFabricLarge; }
 			break;
 	}
+}
+
+function countFlatRate() {
+	//headshot -> 0, halfbody -> 1, fullbody -> 2, mini -> 3
+	switch (coverage) {
+		case 'headshot':
+			userTotal += userRates[0];
+			break;
+		case 'halfbody':
+			userTotal += userRates[1];
+			break;
+		case 'fullbody':
+			userTotal += userRates[2];
+			break;
+		case 'mini':
+			userTotal += userRates[3];
+	}
+	userCounting += userTotal + " (" + media + " " + coverage + ")";
 }
 
 function countStackables() {
@@ -134,53 +171,20 @@ function countStackables() {
 	}
 }
 
-function countFlatRate() {
-	//headshot -> 0, halfbody -> 1, fullbody -> 2, mini -> 3
-	switch (coverage) {
-		case 'headshot':
-			userTotal += userRates[0];
+function countStatic() {
+	//count static!
+	switch (background) {
+		case 'simple':
+			userTotal += shellRates.ratesBackgrounds[1];
+			userCounting += " + " + shellRates.ratesBackgrounds[1] + " (" + background + " background)";
 			break;
-		case 'halfbody':
-			userTotal += userRates[1];
+		case 'depth':
+			userTotal += shellRates.ratesBackgrounds[2];
+			userCounting += " + " + shellRates.ratesBackgrounds[2] + " (" + background + " background)";
 			break;
-		case 'fullbody':
-			userTotal += userRates[2];
-			break;
-		case 'mini':
-			userTotal += userRates[3];
-	}
-	userCounting += userTotal + " (" + media + " " + coverage + ")";
-}
-
-function initialize() {
-	switch (media) {
-		case 'grayscale':
-			userRates = shellRates.ratesGrayscale;
-			break;
-		case 'flatcolor':
-			userRates = shellRates.ratesFlatcolor;
-			break;
-		case '3dflat':
-			userRates = shellRates.rates3dFlat;
-			break;
-		case '3d':
-			userRates = shellRates.rates3dFull;
-			break;
-		case 'paper':
-			if (craftSize == 'model') { userRates = shellRates.ratesPaperModel; }
-			else { userRates = shellRates.ratesPaperLarge; }
-			break;
-		case 'food':
-			if (craftSize == 'model') { userRates = shellRates.ratesFoodModel; }
-			else { userRates = shellRates.ratesFoodLarge; }
-			break;
-		case 'clay':
-			if (craftSize == 'model') { userRates = shellRates.ratesClayModel; }
-			else { userRates = shellRates.ratesClayLarge; }
-			break;
-		case 'fabric':
-			if (craftSize == 'model') { userRates = shellRates.ratesFabricModel; }
-			else { userRates = shellRates.ratesFabricLarge; }
+		case 'complex':
+			userTotal += shellRates.ratesBackgrounds[3];
+			userCounting += " + " + shellRates.ratesBackgrounds[3] + " (" + background + " background)";
 			break;
 	}
 }

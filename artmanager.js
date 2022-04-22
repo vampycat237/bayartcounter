@@ -1,7 +1,7 @@
 //gray & flatcolor are 2d only
 //3dflat and 3d are 3d only
 //paper, food, clay and fabric are craft only
-let   mediaOpt    = null;
+let   mediaOpt   = null;
 const media2d    = ['grayscale', 'flatcolor'];
 const media3d    = ['3dflat', '3d'];
 const mediaCraft = ['paper', 'food', 'clay', 'fabric'];
@@ -28,25 +28,21 @@ let media;
 let coverage;
 //crafts only string: model or large
 //should be set to "model" when craft is selected by default
-let lines;
-let craftSize;
-let shading;
-let animation;
-let animComplexity;
+let lines          = null;
+let craftSize      = null;
+let shading        = null;
+let animation      = null;
+let animComplexity = null;
 //string: simple, depth, complex
-let background;
+let background     = null;
 
+const blockList = ['category', 'media', 'coverage', 'lines', 'craftSize', 'shading', 'animation', 'animComplexity', 'background'];
+const choiceList = [category, media, coverage, lines, craftSize, shading, animation, animComplexity, background];
+
+//site function!
 function revert(str) {
 	//close everything
-	hidePrevSection('category', category);
-	hidePrevSection('media', media);
-	hidePrevSection('coverage', coverage);
-	hidePrevSection('lines', lines);
-	hidePrevSection('craftSize', craftSize);
-	hidePrevSection('shading', shading);
-	hidePrevSection('animation', animation);
-	hidePrevSection('animComplexity', animComplexity);
-	hidePrevSection('background', background);
+	hideAll();
 	
 	//open up the selected thing
 	blockSection = document.getElementById(str);
@@ -63,7 +59,7 @@ function showNextStep(currentStep, choice) {
 	//it's kinda like, a branching path!
 	
 	//anyway first let's call this guy.
-	hidePrevSection(currentStep, choice)
+	hideSection(currentStep, choice)
 	
 	//logs the step we're taking to the console!!
 	console.log(currentStep + ": " + choice);
@@ -71,10 +67,27 @@ function showNextStep(currentStep, choice) {
 	//check for illegal moves w/ inactive stuff
 	legalityChecker(currentStep);
 	
-	switch(currentStep) {
-	case 'category':
+	//check for the next step! the next step will be based on the currentStep, and whether the stickies are showing for later steps (meaning they've already been completed and are valid)
+	//default for nextStep is just that, the next step directly after this one!
+	//but sometimes it gets trickier than that
+	//default: follow the flow!
+	let nextStep = findNextStep(currentStep);
+	console.log(nextStep);
+	while (choiceList[blockList.indexOf(nextStep)] !== null && choiceList[blockList.indexOf(nextStep)] !== undefined) {
+		if (findNextStep(nextStep) !== null) {
+			nextStep = findNextStep(nextStep);
+			console.log(nextStep);
+		} else { break; }
+	}
+	//then check if we already have a value for that step: if we do, keep looking. else we're done!
+	
+	switch(nextStep) {
+	case 'media':
+		//show next section
 		document.getElementById('media').style.display = "block";
-		switch(choice) {
+		
+		//any additional things!
+		switch(category) {
 		case '2d':
 			document.getElementById('2dmedia').style.display = "block";
 			document.getElementById('3dmedia').style.display = "none";
@@ -92,9 +105,9 @@ function showNextStep(currentStep, choice) {
 			break;
 		}
 		break;
-	case 'media':
+	case 'coverage':
 		document.getElementById('coverage').style.display = "block";
-		if(choice == 'flatcolor') {
+		if(media == 'flatcolor') {
 			document.getElementById('mini').style.display = "block";
 		} else {
 			document.getElementById('mini').style.display = "none";
@@ -106,7 +119,7 @@ function showNextStep(currentStep, choice) {
 			document.getElementById('lined').innerHTML = "regular lineart";
 			document.getElementById('colorlines').style.display = "block";
 			document.getElementById('lineless').style.display = "block";
-			if(choice == 'mini') {
+			if(coverage == 'mini') {
 				//make sure that we can't get lineless with minis
 				document.getElementById('lined').innerHTML = "regular lineart or lineless (no lineless bonus for minis)";
 				document.getElementById('lineless').style.display = "none";
@@ -122,73 +135,29 @@ function showNextStep(currentStep, choice) {
 	}
 }
 
-function hidePrevSection(block, choice) {
-	//hide previous section & show its collapsed button
-	prevSection = document.getElementById(block);
-	prevButton  = document.getElementById(block+'sticky');
-	if(prevSection !== null && prevButton !== null && prevSection.style.display !== "none") {
-		prevSection.style.display = "none";
-		if(document.getElementById(choice) !== null) {
-			prevButton.innerHTML      = block + ": " + document.getElementById(choice).innerHTML;
-			prevButton.style.display  = "block";
-		}
-	}
-}
-
-function legalityChecker(currentStep) {
-	//will check for the existence of illegal matchups, starting at the top!
-	
-	//top-level checks for category getting out of sync with media, they will simply re-assign themself to the correct one if the most recent thing that was messed with was the medium.
-	if (mediaOpt.indexOf(media) < 0 && currentStep == 'media') {
-		if (media2d.indexOf(media) > -1) {
-			category = '2d';
-			mediaOpt = media2d;
-		} else if (media3d.indexOf(media) > -1) {
-			category = '3d';
-			mediaOpt = media3d;
-		} else {
-			category = 'craft';
-			mediaOpt = mediaCraft;
-		}
-	}
-	//now THIS one occurs if category is re-assigned, and is the only else-if here. If the user re-assigns the category, we bonk the mismatching medium!
-	else if (mediaOpt.indexOf(media) < 0 && currentStep == 'category') {
-		media = null;
-	}
-	//NO MORE IF-ELSES FROM HERE ON OUT!! we have to catch ALL the issues!
-	//anyway now we check to see if mini is assigned to anything but flatcolor!
-	if (coverage == 'mini' && media !== flatcolor) {
-		coverage = null;
-	}
-	//check to see if mini has lineless value OR if grayscale has colored lines
-	if ((coverage == 'mini' && lines = 'lineless') || (media = grayscale && lines = 'colorlines')) {
-		lines = null;
-	}
-	//check to see if anything not 2d has lines, and if so get rid of em
-	if (category !== '2d' && lines !== null) {lines = null;}
-	
-	//^same but with shading
-	if (category !== '2d' && shading !== null) {shading = null;}
-	
-	//makes sure non-crafts don't have craftSize
-	if (category !== 'craft' && craftSize !== null) {craftSize = null;}
+function countTotals() {
 	
 }
 
-function setMedGroup(str) {
+
+//set methods
+function setCategory(str) {
 	switch(str) {
 		case '2d':
 			category = '2d';
-			mediaOpt   = media2d;
+			mediaOpt = media2d;
 			break;
 		case '3d':
 			category = '3d';
-			mediaOpt   = media3d;
+			mediaOpt = media3d;
 			break;
 		case 'craft':
 			category = 'craft';
-			mediaOpt   = mediaCraft;
+			mediaOpt = mediaCraft;
 			break;
+		default:
+			category = '2d';
+			mediaOpt = media2d;
 	}
 	showNextStep('category', str);
 }
@@ -215,6 +184,8 @@ function setLines(str) {
 	if(linesOpt.indexOf(str) > -1) {
 		lines = str;
 	} else { lines = null; }
+	
+	showNextStep('lines', str);
 }
 
 function setShading(str) {
@@ -222,6 +193,8 @@ function setShading(str) {
 	if(shadingOpt.indexOf(str) > -1) {
 		lines = str;
 	} else { shading = null; }
+	
+	showNextStep('shading', str);
 }
 
 function setCraftSize(str) {
@@ -229,22 +202,30 @@ function setCraftSize(str) {
 	if(craftSizeOpt.indexOf(str) > -1) {
 		craftSize = str;
 	} else { coverage = null; }
+	
+	showNextStep('craftSize', str);
 }
 
 function setAnimation(str) {
 	if(animationOpt.indexOf(str) > -1) {
 		animation = str;
 	} else { animation = null; }
+	
+	showNextStep('animation', str);
 }
 
 function setAnimationComplexity(str) {
 	if(animComplexOpt.indexOf(str) > -1) {
 		animComplexity = str;
 	} else { animComplexity = null; }
+	
+	showNextStep('animComplexity', str);
 }
 
 function setBackground(str) {
 	if(backgroundOpt.indexOf(str) > -1) {
 		background = str;
 	} else { background = null; }
+	
+	hideSection('background', str);
 }

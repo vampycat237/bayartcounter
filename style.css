@@ -25,18 +25,29 @@ button {
 	background-color: #39386b;
 	min-width: 75%;
 }
-button:hover {
-	background-color: #424b89;
+button:hover  { background-color: #424b89; }
+
+button:active { background-color: #4e60a3; }
+
+button.sticky {
+	background-color: #322e56;
+	border-color:     #9bb6db;
+	color:            #9bb6db;
 }
-button:active {
-	background-color: #4e60a3;
+
+button.sticky:hover  { background-color: #39386b; }
+
+button.sticky:active { background-color: #424b89; }
+
+#countingsticky {
+	background-color: #356137;
+	border-color:     #c5d8b2;
+	color:            #c5d8b2;
 }
 
-button.sticky { background-color: #322e56; border-color: #9bb6db; color: #9bb6db; }
+#countingsticky:hover { background-color: #4f8046; }
 
-button.sticky:hover {  background-color: #39386b; }
-
-button.sticky:active {  background-color: #424b89; }
+#countingsticky:active { background-color: #85a15e; }
 
 div.container {
 	display:flex;
