@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<title>vampy's bay art counter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel = "stylesheet" type = "text/css" href = "style.css" />
+</head>
+<body>
+	<h1>shell counting helper</h1>
+	
+	<!--start!!-->
+	<section id="category">
+	<p>starting off, what is the general category of this artwork?</p>
+	<div class="container">
+		<button id="2d" onclick="setMedGroup('2d')">2d artwork</button>
+		<button id="3d" onclick="setMedGroup('3d')">digital 3d model</button>
+		<button id="craft" onclick="setMedGroup('craft')">physical craft</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="categorysticky" class="sticky" onclick="revert('category')" style="display:none">start</button>
+	
+	<!--medium stuff, each button here will only be shown if the mediumGroup matches it-->
+	<section id="media" style="display:none">
+	<p>what medium is this piece in?</p>
+	<div class="container" id="2dmedia" style="display:none">
+		<button id="grayscale" onclick="setMedium('grayscale')">grayscale</button>
+		<button id="flatcolor" onclick="setMedium('flatcolor')">flatcolored</button>
+	</div>
+	<div class="container" id="3dmedia" style="display:none">
+		<button id="3dflat">flat</button>
+		<button id="3d">full 3d</button>
+	</div>
+	<div class="container" id="craftmedia" style="display:none">
+		<button id="paper">papercrafts</button>
+		<button id="food">confections</button>
+		<button id="clay">clay</button>
+		<button id="fabric">fabric crafts</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="mediasticky" class="sticky" onclick="revert('media')" style="display:none">media</button>
+	
+	
+	<!--coverage-->
+	<section id="coverage" style="display:none">
+	<p>okay, which of these describes the character coverage</p>
+	<div class="container">
+		<button id="mini" onclick="setCoverage('mini')" style="display:none">mini (simplified)</button>
+		<button id="headshot" onclick="setCoverage('headshot')">headshot</button>
+		<button id="halfbody" onclick="setCoverage('halfbody')">halfbody (chest or more)</button>
+		<button id="fullbody" onclick="setCoverage('fullbody')">fullbody (at least 90% of body)</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="coveragesticky" class="sticky" onclick="revert('coverage')" style="display:none">start</button>
+	
+	<!--lines (if applicable)-->
+	<section id="lines" style="display:none">
+	<p>what is the lineart like?</p>
+	<div class="container">
+		<button id="lined" onclick="setLines(null)">regular lineart</button>
+		<button id="colorlines" onclick="setLines('colorlines')">fully colored lineart</button>
+		<button id="lineless" onclick="setLines('lineless')">lineless</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="coveragesticky" class="sticky" onclick="revert('coverage')" style="display:none">start</button>
+	
+	<!--craft size-->
+	
+	<!--shading-->
+	
+	<!--animation-->
+	
+	<!--animation complexity-->
+	
+	<!--background-->
+	
+	<!--get our shell counting script loaded up-->
+	<script src="artmanager.js"></script>
+	<script src="shellcounter.js"></script>
+</body>
+</html>

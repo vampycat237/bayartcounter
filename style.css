@@ -1,0 +1,47 @@
+body {
+	background-color: #2a2849;
+	margin: 2vw 5vw 2vw 5vw;
+	
+	/*font defaults*/
+	color: #c1e1ff;
+	font-size: 30px;
+	text-align: center;
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 46px;
+}
+button {
+	/*font stuff again bc buttons aren't that smart*/
+	color: #c1e1ff;
+	font-size: 30px;
+	text-align: center;
+	font-family: sans-serif;
+	
+	margin-left: auto; margin-right: auto;
+	padding: 15px;
+	border: 2px solid #c1e1ff;
+	margin-bottom: 1vw;
+	background-color: #39386b;
+	min-width: 75%;
+}
+button:hover {
+	background-color: #424b89;
+}
+button:active {
+	background-color: #4e60a3;
+}
+
+button.sticky { background-color: #322e56; border-color: #9bb6db; color: #9bb6db; }
+
+button.sticky:hover {  background-color: #39386b; }
+
+button.sticky:active {  background-color: #424b89; }
+
+div.container {
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+}
