@@ -79,6 +79,14 @@
 	<button id="craftSizesticky" class="sticky" onclick="revert('craftSize')" style="display:none">sticky</button>
 	
 	<!--shading-->
+	<section id="shading" style="display:none">
+	<p>is the piece shaded? if so, what is the shading complexity?</p>
+	<div class="container">
+		<button id="noshading" onclick="setShading(null)">no shading</button>
+		<button id="minimal" onclick="setShading('minimal')">minimal shading</button>
+		<button id="basic" onclick="setShading('basic')">basic shading (about one layer of shading or highlights)</button>
+		<button id="complex" onclick="setShading('complex')">complex shading (multiple layers of shading & highlights)</button>
+		<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
 	
 	<!--animation-->
 	
