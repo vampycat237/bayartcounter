@@ -28,14 +28,14 @@
 		<button id="flatcolor" onclick="setMedium('flatcolor')">flatcolored</button>
 	</div>
 	<div class="container" id="3dmedia" style="display:none">
-		<button id="3dflat">flat</button>
-		<button id="3d">full 3d</button>
+		<button id="3dflat" onclick="setMedium('3dflat')">flat</button>
+		<button id="3d"     onclick="setMedium('3d')">full 3d</button>
 	</div>
 	<div class="container" id="craftmedia" style="display:none">
-		<button id="paper">papercrafts</button>
-		<button id="food">confections</button>
-		<button id="clay">clay</button>
-		<button id="fabric">fabric crafts</button>
+		<button id="paper"  onclick="setMedium('paper')">papercrafts</button>
+		<button id="food"   onclick="setMedium('food')">confections</button>
+		<button id="clay"   onclick="setMedium('clay')">clay</button>
+		<button id="fabric" onclick="setMedium('fabric')">fabric crafts</button>
 	</div>
 	</section>
 	<!--button that sticks around!-->
@@ -69,11 +69,10 @@
 	
 	<!--craft size-->
 	<section id="craftSize" style="display:none">
-	<p>what is the lineart like?</p>
+	<p>what size best describes the craft?</p>
 	<div class="container">
-		<button id="lined" onclick="setLines(null)">regular lineart</button>
-		<button id="colorlines" onclick="setLines('colorlines')">fully colored lineart</button>
-		<button id="lineless" onclick="setLines('lineless')">lineless</button>
+		<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
+		<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
 	</div>
 	</section>
 	<!--button that sticks around!-->

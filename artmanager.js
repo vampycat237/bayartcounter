@@ -72,7 +72,7 @@ function showNextStep(currentStep, choice) {
 	//but sometimes it gets trickier than that
 	//default: follow the flow!
 	let nextStep = findNextStep(currentStep);
-	console.log(nextStep);
+	console.log('next step: ' + nextStep);
 	while (choiceList[blockList.indexOf(nextStep)] !== null && choiceList[blockList.indexOf(nextStep)] !== undefined) {
 		if (findNextStep(nextStep) !== null) {
 			nextStep = findNextStep(nextStep);
@@ -87,20 +87,19 @@ function showNextStep(currentStep, choice) {
 		document.getElementById('media').style.display = "block";
 		
 		//any additional things!
+		//start by hiding them all to reduce redundant code
+		document.getElementById('2dmedia').style.display = "none";
+		document.getElementById('3dmedia').style.display = "none";
+		document.getElementById('craftmedia').style.display = "none";
+			
 		switch(category) {
 		case '2d':
 			document.getElementById('2dmedia').style.display = "block";
-			document.getElementById('3dmedia').style.display = "none";
-			document.getElementById('craftmedia').style.display = "none";
 			break;
 		case '3d':
-			document.getElementById('2dmedia').style.display = "none";
 			document.getElementById('3dmedia').style.display = "block";
-			document.getElementById('craftmedia').style.display = "none";
 			break;
 		case 'craft':
-			document.getElementById('2dmedia').style.display = "none";
-			document.getElementById('3dmedia').style.display = "none";
 			document.getElementById('craftmedia').style.display = "block";
 			break;
 		}
@@ -114,24 +113,21 @@ function showNextStep(currentStep, choice) {
 			if(coverage == 'mini') { coverage = null; }
 		}
 		break;
-	case 'coverage':
-		if(category == '2d') {
-			document.getElementById('lined').innerHTML = "regular lineart";
-			document.getElementById('colorlines').style.display = "block";
-			document.getElementById('lineless').style.display = "block";
-			if(coverage == 'mini') {
-				//make sure that we can't get lineless with minis
-				document.getElementById('lined').innerHTML = "regular lineart or lineless (no lineless bonus for minis)";
-				document.getElementById('lineless').style.display = "none";
-				
-			} else if (media == 'grayscale') {
-				document.getElementById('colorlines').style.display = "none";
-			}
-			
-			document.getElementById('lines').style.display = "block";
-		} else if(category == 'craft') {
-			
+	case 'lines':
+		document.getElementById('lined').innerHTML = "regular lineart";
+		document.getElementById('colorlines').style.display = "block";
+		document.getElementById('lineless').style.display = "block";
+		if(coverage == 'mini') {
+			//make sure that we can't get lineless with minis
+			document.getElementById('lined').innerHTML = "regular lineart or lineless (no lineless bonus for minis)";
+			document.getElementById('lineless').style.display = "none";
 		}
+		else if (media == 'grayscale') {
+			document.getElementById('colorlines').style.display = "none";
+		}
+		
+		document.getElementById('lines').style.display = "block";
+		break;
 	}
 }
 

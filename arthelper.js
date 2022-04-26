@@ -77,12 +77,22 @@ function updateChoiceList() {
 	choiceList[8] = background;
 }
 
+//updates the choice variables to match the list
+function updateChoiceVars() {
+	category   = choiceList[0];
+	media      = choiceList[1];
+	coverage   = choiceList[2];
+	lines      = choiceList[3];
+	craftSize  = choiceList[4];
+	shading    = choiceList[5];
+	animation  = choiceList[6];
+	animComplexity = choiceList[7];
+	background = choiceList[8];
+}
+
 //checks for the existence of illegal matchups, starting at the top!
 //parameter is a string
 function legalityChecker(currentStep) {
-	
-	//we have to update the choice list first to make sure it's not doing anything weird
-	updateChoiceList();
 	
 	//make our list of illegal stuff we did
 	let violationList = [];
@@ -107,37 +117,44 @@ function legalityChecker(currentStep) {
 		}
 	}*/
 	//now THIS one occurs if category is re-assigned, and is the only else-if here. If the user re-assigns the category, we bonk the mismatching medium!
+	//try {
 	if (mediaOpt.indexOf(media) < 0 && currentStep == 'category' && media !== undefined) {
 		violationList.push("new media category "+category+" does not include medium "+media);
 		media = "illegal";
+		//throw "media-mismatch";
 	}
 	//NO MORE IF-ELSES FROM HERE ON OUT!! we have to catch ALL the issues!
 	//anyway now we check to see if mini is assigned to anything but flatcolor!
 	if (coverage == 'mini'   && media !== 'flatcolor') {
 		violationList.push("coverage 'mini' is flatcolor only");
 		coverage = "illegal";
+		//throw "invalid-coverage";
 	}
 	//check to see if mini has lineless value OR if grayscale has colored lines
 	if ((coverage == 'mini'  && lines == 'lineless') || (media == 'grayscale' && lines == 'colorlines')) {
 		violationList.push("lineart '"+lines+"' does not apply to medium "+media);
 		lines = "illegal";
+		//throw "invalid-lineart";
 	}
 	//check to see if anything not 2d has lines, and if so get rid of em
 	if (category !== '2d'    && lines !== null) {
 		violationList.push("lineart is 2d only");
 		lines = "illegal";
+		//throw "invalid-lineart";
 	}
 	
 	//^same but with shading
 	if (category !== '2d'    && shading !== null) {
 		violationList.push("shading is 2d only");
 		shading = "illegal";
+		//throw "invalid-shading";
 	}
 	
 	//makes sure non-crafts don't have craftSize
 	if (category !== 'craft' && craftSize !== null) {
 		violationList.push("craftSize is craft only");
 		craftSize = "illegal";
+		//throw "invalid-craftSize"
 	}
 	
 	
@@ -146,7 +163,11 @@ function legalityChecker(currentStep) {
 		console.log("violations: " + violationList.join(", "));
 	}
 	
-	//update this AGAIN
+	/*} catch (err) {
+		console.log('caught media-mismatch');
+	}*/
+	
+	//update the list...
 	updateChoiceList();
 	
 	//OKAY NOW!! clear the stickybuttons for everything that's changed to null!!
@@ -155,6 +176,7 @@ function legalityChecker(currentStep) {
 		matchingButton = document.getElementById(block + 'sticky');
 		
 		let choice = choiceList[blockList.indexOf(block)];
+		console.log('checking choice '+choice);
 		
 		if (choice == "illegal") {
 			choice = null;
@@ -165,5 +187,7 @@ function legalityChecker(currentStep) {
 		}
 	}
 	
+	//update the variables to match the list
+	updateChoiceVars();
 }
 
