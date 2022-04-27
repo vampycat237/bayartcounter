@@ -176,7 +176,7 @@ function countStatic() {
 	switch (background) {
 		case 'simpleb':
 			userTotal += shellRates.ratesBackgrounds[1];
-			userCounting += " + " + shellRates.ratesBackgrounds[1] + " (" + background + " background)";
+			userCounting += " + " + shellRates.ratesBackgrounds[1] + " (simple background)";
 			break;
 		case 'depth':
 			userTotal += shellRates.ratesBackgrounds[2];
@@ -184,7 +184,7 @@ function countStatic() {
 			break;
 		case 'complexb':
 			userTotal += shellRates.ratesBackgrounds[3];
-			userCounting += " + " + shellRates.ratesBackgrounds[3] + " (" + background + " background)";
+			userCounting += " + " + shellRates.ratesBackgrounds[3] + " (complex background)";
 			break;
 	}
 }

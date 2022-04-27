@@ -192,15 +192,20 @@ function getChoiceOptions(blockId) {
 	}
 }
 
-function checkOptionValidity(blockId) {
-	choice = choiceList[blockList.indexOf(blockId)];
+function checkOptionValidity(blockId, choice = "not given") {
+	if (choice == "not given") {
+		updateChoiceList();
+		choice = choiceList[blockList.indexOf(blockId)];
+	}
 	//choiceOptions.mediaOpt.indexOf(str)
 	if (getChoiceOptions(blockId).indexOf(choice) > -1) {
 		//console.log(blockId + ' ' + choice + ' is valid');
 		return true;
+	} else if (media == 'flatcolor' && choice == 'mini') {
+		return true;
 	}
 	else {
-		//console.log(blockId + ' ' + choice + ' is invalid');
+		console.log(blockId + ' ' + choice + ' is invalid');
 		return false;
 	}
 }

@@ -11,6 +11,9 @@ body {
 h1 {
 	font-size: 46px;
 }
+.note {
+	font-size: 16px;
+}
 button {
 	/*font stuff again bc buttons aren't that smart*/
 	color: #c1e1ff;

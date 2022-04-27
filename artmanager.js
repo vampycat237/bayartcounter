@@ -7,7 +7,7 @@ const choiceOptions = {
 	media3d    : ['3dflat', '3d'],
 	mediaCraft : ['paper', 'food', 'clay', 'fabric'],
 	//mini is flatcolor only
-	coverageOpt    : ['headshot', 'halfbody', 'fullbody', 'mini'],
+	coverageOpt    : ['headshot', 'halfbody', 'fullbody'],
 	//craft only
 	craftSizeOpt   : ['model', 'large'],
 	//flatcolor only
@@ -140,11 +140,6 @@ function showNextStep(currentStep, choice) {
 	}
 }
 
-function countTotals() {
-	
-}
-
-
 //set methods
 function setCategory(str) {
 	category = str;
@@ -184,7 +179,7 @@ function setCoverage(str) {
 
 function setLines(str) {
 	//flatcolor only
-	if(checkOptionValidity('lines')) {
+	if(checkOptionValidity('lines', str)) {
 		lines = str;
 	} else { lines = null; }
 	
@@ -193,7 +188,7 @@ function setLines(str) {
 
 function setShading(str) {
 	//2d only
-	if(checkOptionValidity('shading')) {
+	if(checkOptionValidity('shading', str)) {
 		shading = str;
 		console.log('setting shading to ' + str);
 	} else { shading = null; }
@@ -211,7 +206,7 @@ function setCraftSize(str) {
 }
 
 function setAnimation(str) {
-	if(checkOptionValidity('animation')) {
+	if(checkOptionValidity('animation', str)) {
 		animation = str;
 	} else { animation = null; }
 	
@@ -227,7 +222,7 @@ function setAnimationComplexity(str) {
 }
 
 function setBackground(str) {
-	if(checkOptionValidity('background')) {
+	if(checkOptionValidity('background', str)) {
 		background = str;
 	} else { background = null; }
 	
@@ -254,9 +249,9 @@ function hideCounting() {
 }
 
 function doCounting() {
-	/*//update our choiceList so we can loop through it
+	//update our choiceList so we can loop through it
 	updateChoiceList();
-	//set anything that's undefined to null
+	/*//set anything that's undefined to null
 	for (let block of blockList) {
 		let choice = choiceList[blockList.indexOf(block)];
 		
