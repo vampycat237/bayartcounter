@@ -7,6 +7,22 @@
 </head>
 <body>
 	<h1>shell counting helper</h1>
+	<div class="stickytop">
+		<button id="categorysticky" class="sticky" onclick="revert('category')" style="display:none">category</button>
+		
+		<button id="mediasticky" class="sticky" onclick="revert('media')" style="display:none">media</button>
+		
+		<button id="coveragesticky" class="sticky" onclick="revert('coverage')" style="display:none">coverage</button>
+		
+		<button id="linessticky" class="sticky" onclick="revert('lines')" style="display:none">lines</button>
+		
+		<button id="shadingsticky" class="sticky" onclick="revert('shading')" style="display:none">shading</button>
+		
+		<button id="craftSizesticky" class="sticky" onclick="revert('craftSize')" style="display:none">craft size</button>
+		
+		
+		
+	</div>
 	
 	<!--start!!-->
 	<section id="category">
@@ -17,8 +33,6 @@
 		<button id="craft" onclick="setCategory('craft')">physical craft</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="categorysticky" class="sticky" onclick="revert('category')" style="display:none">sticky</button>
 	
 	<!--medium stuff, each button here will only be shown if the mediumGroup matches it-->
 	<section id="media" style="display:none">
@@ -28,8 +42,8 @@
 		<button id="flatcolor" onclick="setMedium('flatcolor')">flatcolored</button>
 	</div>
 	<div class="container" id="3dmedia" style="display:none">
-		<button id="3dflat" onclick="setMedium('3dflat')">flat</button>
-		<button id="3d"     onclick="setMedium('3d')">full 3d</button>
+		<button id="3dflat" onclick="setMedium('3dflat')">flat (the 3D model has a flat edge<br>that may not be defined as a real world fox)</button>
+		<button id="3d"     onclick="setMedium('3d')">full 3d (the fox has proper shape and depth of a real-world fox)</button>
 	</div>
 	<div class="container" id="craftmedia" style="display:none">
 		<button id="paper"  onclick="setMedium('paper')">papercrafts</button>
@@ -38,8 +52,6 @@
 		<button id="fabric" onclick="setMedium('fabric')">fabric crafts</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="mediasticky" class="sticky" onclick="revert('media')" style="display:none">sticky</button>
 	
 	
 	<!--coverage-->
@@ -52,8 +64,6 @@
 		<button id="fullbody" onclick="setCoverage('fullbody')">fullbody (at least 90% of body)</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="coveragesticky" class="sticky" onclick="revert('coverage')" style="display:none">sticky</button>
 	
 	<!--lines (if applicable)-->
 	<section id="lines" style="display:none">
@@ -64,19 +74,6 @@
 		<button id="lineless" onclick="setLines('lineless')">lineless</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="linessticky" class="sticky" onclick="revert('lines')" style="display:none">sticky</button>
-	
-	<!--craft size-->
-	<section id="craftSize" style="display:none">
-	<p>what size best describes the craft?</p>
-	<div class="container">
-		<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
-		<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
-	</div>
-	</section>
-	<!--button that sticks around!-->
-	<button id="craftSizesticky" class="sticky" onclick="revert('craftSize')" style="display:none">sticky</button>
 	
 	<!--shading-->
 	<section id="shading" style="display:none">
@@ -89,12 +86,22 @@
 		<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="shadingsticky" class="sticky" onclick="revert('shading')" style="display:none">sticky</button>
+	
+	
+	<!--craft size-->
+	<section id="craftSize" style="display:none">
+	<p>what size best describes the craft?</p>
+	<div class="container">
+		<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
+		<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
+	</div>
+	</section>
+	
 	
 	<!--animation-->
 	<section id="animation" style="display:none">
-	<p>is this artwork animated? if so, what type of animation is used?</p> <p>(note, each scene is calculated seperately TODO)</p>
+	<p>is this artwork animated? if so, what type of animation is used?</p>
+	<p class="note">note: each scene in an animation video, such as an AMV, meme, etc; is graded as its own individual, separate animation.</p>
 	<div class="container">
 		<button id="noanimation" onclick="setAnimation(null)">no animation</button>
 		<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
@@ -108,9 +115,9 @@
 	<section id="animComplexity" style="display:none">
 	<p>what is the complexity of this animation?</p>
 	<div class="container">
-		<button id="noanimation" onclick="setAnimComplexity('easy')">easy (only a small amount of the character is animated while the rest is static, for instance a talking animation where only the mouth moves)</button>
-		<button id="tween" onclick="setAnimComplexity('simple')">simple (pose stays largely the same with a few elements moving independently, such as a wing twitch )</button>
-		<button id="handdrawn" onclick="setAnimComplexity('complex')">complex (whole body moves, for instance a walk cycle)</button>
+		<button id="easy" onclick="setAnimComplexity('easy')">easy default text</button>
+		<button id="simple" onclick="setAnimComplexity('simple')">simple default text animation)</button>
+		<button id="complexa" onclick="setAnimComplexity('complexa')">complex default text</button>
 	</div>
 	</section>
 	<!--button that sticks around!-->

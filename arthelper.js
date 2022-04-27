@@ -7,21 +7,43 @@ function hideSection(block, choice) {
 	sectionToHide = document.getElementById(block);
 	stickyButton  = document.getElementById(block+'sticky');
 	
+	//set the friendlyName of the block
+	if (block == 'craftSize') {
+		friendlyName = 'craft size';
+		
+	} else if (block == 'animComplexity') {
+		friendlyName = 'animation complexity';
+		
+	} else {
+		friendlyName = block;
+	}
+	
+	//set the text of the choice
+	if(document.getElementById(choice) !== null) {
+		rawText = document.getElementById(choice).innerHTML;
+	}
+	//there is a null option?
+	else if (document.getElementById('no'+block) !== null) {
+		rawText = document.getElementById('no'+block).innerHTML;
+	}
+	//this is the specific case of lineart, where "nolines" does not make sense
+	else if (block == 'lines' && choice == null) {
+		rawText = document.getElementById('lined').innerHTML;
+	}
+	else { rawText = '...' }
+	
+	//set the friendlyText of the choice
+	if (rawText.indexOf("(") > -1) {
+		//it has a paren in it! we want to get rid of everything in the parens AND the space before the paren.
+		friendlyText = rawText.substring(0, rawText.indexOf("(") - 1);
+	} else {
+		friendlyText = rawText;
+	}
+	
 	if(sectionToHide !== null && stickyButton !== null && sectionToHide.style.display !== "none") {
 		sectionToHide.style.display = "none";
 		stickyButton.style.display  = "block";
-		//choice is a valid button here?
-		if(document.getElementById(choice) !== null) {
-			stickyButton.innerHTML      = block + ": " + document.getElementById(choice).innerHTML;
-		}
-		//there is a null option?
-		else if (document.getElementById('no'+block) !== null) {
-			stickyButton.innerHTML      = block + ": " + document.getElementById('no'+block).innerHTML;
-		}
-		//this is the specific case of lineart, where "nolines" does not make sense
-		else if (block == 'lines' && choice == null) {
-			stickyButton.innerHTML      = block + ": " + document.getElementById('lined').innerHTML;
-		}
+		stickyButton.innerHTML      = friendlyName + ": " + friendlyText;
 	}
 }
 
@@ -205,7 +227,7 @@ function checkOptionValidity(blockId, choice = "not given") {
 		return true;
 	}
 	else {
-		console.log(blockId + ' ' + choice + ' is invalid');
+		//console.log(blockId + ' ' + choice + ' is invalid');
 		return false;
 	}
 }

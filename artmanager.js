@@ -17,11 +17,29 @@ const choiceOptions = {
 	//all i guess??
 	animationOpt   : [null, 'tween', 'handdrawn'],
 	//these are the handdrawn bits. treat the tween 'simple' as 'easy', 'complex' as 'simple', and 'fluid' as 'complex'
-	animComplexOpt : [null, 'easy', 'simple', 'complex'],
+	animComplexOpt : [null, 'easy', 'simple', 'complexa'],
 	//all!
 	backgroundOpt  : [null, 'simpleb', 'depth', 'complexb'],
 }
-
+const animComplexDesc = {
+	tween : [
+		//easy/simple
+		"simple (minimal movement, like a small headbob)",
+		//simple/complex
+		"complex (busy movement, consisting of three<br>or more limbs in action)",
+		//complex/fluid
+		"fluid (an extremely complex tween animation that<br>involves most or all limbs on the body)"
+	],
+	handdrawn : [
+		//easy
+		"easy (reusing one drawing with minimal changes per frame,<br>such as an eye blink or ear twitch.)",
+		//simple
+		"simple (using the same pose with minimal changes,<br>such as a tail wag or idle animation)",
+		//complex
+		"complex (drawing each pose and position uniquely,<br>such as a walk cycle)"
+	]
+	
+}
 //BASE INFO
 //string: 2d 3d or craft
 let category;
@@ -136,7 +154,22 @@ function showNextStep(currentStep, choice) {
 		
 		break;
 	//no case for shading because it will only appear for valid media
-	//no case for animation because
+	//no case for animation because it doesn't change
+	//case for animComplexity changes based on the animation type
+	case 'animComplexity':
+		switch (animation) {
+		case 'tween':
+			document.getElementById('easy').innerHTML = animComplexDesc.tween[0];
+			document.getElementById('simple').innerHTML = animComplexDesc.tween[1];
+			document.getElementById('complexa').innerHTML = animComplexDesc.tween[2];
+			break;
+		
+		case 'handdrawn':
+			document.getElementById('easy').innerHTML = animComplexDesc.handdrawn[0];
+			document.getElementById('simple').innerHTML = animComplexDesc.handdrawn[1];
+			document.getElementById('complexa').innerHTML = animComplexDesc.handdrawn[2];
+			break;
+		}
 	}
 }
 
@@ -213,7 +246,7 @@ function setAnimation(str) {
 	showNextStep('animation', str);
 }
 
-function setAnimationComplexity(str) {
+function setAnimComplexity(str) {
 	if(checkOptionValidity('animComplexity')) {
 		animComplexity = str;
 	} else { animComplexity = null; }
@@ -265,15 +298,11 @@ function doCounting() {
 	//now that everything is ready, let's call the counting function!
 	countShells();
 	
-	setTimeout(showCountingBlock(),5000);
-	
-}
-
-function showCountingBlock() {
 	//close all other blocks 
 	hideAll();
 	//show the counting block!
 	document.getElementById('counting').style.display = "block";
 	//change the sticky to say REcalculate, since it will reset the numbers if theyve changed
 	document.getElementById('countingsticky').innerHTML = "recalculate totals";
+	
 }
