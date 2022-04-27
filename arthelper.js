@@ -8,9 +8,18 @@ function hideSection(block, choice) {
 	stickyButton  = document.getElementById(block+'sticky');
 	if(sectionToHide !== null && stickyButton !== null && sectionToHide.style.display !== "none") {
 		sectionToHide.style.display = "none";
+		stickyButton.style.display  = "block";
+		//choice is a valid button here?
 		if(document.getElementById(choice) !== null) {
 			stickyButton.innerHTML      = block + ": " + document.getElementById(choice).innerHTML;
-			stickyButton.style.display  = "block";
+		}
+		//there is a null option?
+		else if (document.getElementById('no'+block) !== null) {
+			stickyButton.innerHTML      = block + ": " + document.getElementById('no'+block).innerHTML;
+		}
+		//this is the specific case of lineart, where "nolines" does not make sense
+		else if (block == 'lines' && choice == null) {
+			stickyButton.innerHTML      = block + ": " + document.getElementById('lined').innerHTML;
 		}
 	}
 }
@@ -99,32 +108,16 @@ function legalityChecker(currentStep) {
 	
 	//top-level checks for category getting out of sync with media, they will simply re-assign themself to the correct one if the most recent thing that was messed with was the medium.
 	
-	//just realized this is an impossible case
-	/*if (//media option is invalid for the category, we are choosing a new medium, and medium isn't null (to make sure we don't make category vanish)
-		mediaOpt.indexOf(media) < 0 &&
-		currentStep == 'media' &&
-		media !== null
-		) {
-		if (media2d.indexOf(media) > -1) {
-			category = '2d';
-			mediaOpt = media2d;
-		} else if (media3d.indexOf(media) > -1) {
-			category = '3d';
-			mediaOpt = media3d;
-		} else {
-			category = 'craft';
-			mediaOpt = mediaCraft;
-		}
-	}*/
-	//now THIS one occurs if category is re-assigned, and is the only else-if here. If the user re-assigns the category, we bonk the mismatching medium!
-	//try {
-	if (mediaOpt.indexOf(media) < 0 && currentStep == 'category' && media !== undefined) {
+	//update the choice list
+	updateChoiceList();
+	
+	//If the user re-assigns the category, we bonk the mismatching medium!
+	if (choiceOptions.mediaOpt.indexOf(media) < 0 && currentStep == 'category' && media !== undefined) {
 		violationList.push("new media category "+category+" does not include medium "+media);
 		media = "illegal";
 		//throw "media-mismatch";
 	}
-	//NO MORE IF-ELSES FROM HERE ON OUT!! we have to catch ALL the issues!
-	//anyway now we check to see if mini is assigned to anything but flatcolor!
+	//check to see if mini is assigned to anything but flatcolor!
 	if (coverage == 'mini'   && media !== 'flatcolor') {
 		violationList.push("coverage 'mini' is flatcolor only");
 		coverage = "illegal";
@@ -137,21 +130,21 @@ function legalityChecker(currentStep) {
 		//throw "invalid-lineart";
 	}
 	//check to see if anything not 2d has lines, and if so get rid of em
-	if (category !== '2d'    && lines !== null) {
+	if (category !== '2d'    && lines !== null && lines !== undefined) {
 		violationList.push("lineart is 2d only");
 		lines = "illegal";
 		//throw "invalid-lineart";
 	}
 	
 	//^same but with shading
-	if (category !== '2d'    && shading !== null) {
+	if (category !== '2d'    && shading !== null && shading !== undefined) {
 		violationList.push("shading is 2d only");
 		shading = "illegal";
 		//throw "invalid-shading";
 	}
 	
 	//makes sure non-crafts don't have craftSize
-	if (category !== 'craft' && craftSize !== null) {
+	if (category !== 'craft' && craftSize !== null && craftSize !== undefined) {
 		violationList.push("craftSize is craft only");
 		craftSize = "illegal";
 		//throw "invalid-craftSize"
@@ -163,13 +156,6 @@ function legalityChecker(currentStep) {
 		console.log("violations: " + violationList.join(", "));
 	}
 	
-	/*} catch (err) {
-		console.log('caught media-mismatch');
-	}*/
-	
-	//update the list...
-	updateChoiceList();
-	
 	//OKAY NOW!! clear the stickybuttons for everything that's changed to null!!
 	for (let block of blockList) {
 		matchingBlock = document.getElementById(block);
@@ -179,7 +165,7 @@ function legalityChecker(currentStep) {
 		console.log('checking choice '+choice);
 		
 		if (choice == "illegal") {
-			choice = null;
+			choiceList[blockList.indexOf(block)] = null;
 			if (matchingBlock !== null && matchingButton !== null) {
 				console.log("clearing " + block);
 				clearSection(block);
@@ -191,3 +177,29 @@ function legalityChecker(currentStep) {
 	updateChoiceVars();
 }
 
+function getChoiceOptions(blockId) {
+	//returns the list from the choiceOptions object that matches with the block id passed in
+	switch (blockId) {
+		case 'category':  return ['2d', '3d', 'craft']; break;
+		case 'media':     return choiceOptions.mediaOpt; break;
+		case 'coverage':  return choiceOptions.coverageOpt; break;
+		case 'lines':     return choiceOptions.linesOpt; break;
+		case 'shading':   return choiceOptions.shadingOpt; break;
+		case 'animation': return choiceOptions.animationOpt; break;
+		case 'animComplexity': return choiceOptions.animComplexOpt; break;
+		case 'background': return choiceOptions.backgroundOpt; break;
+	}
+}
+
+function checkOptionValidity(blockId) {
+	choice = choiceList[blockList.indexOf(blockId)];
+	//choiceOptions.mediaOpt.indexOf(str)
+	if (getChoiceOptions(blockId).indexOf(choice) > -1) {
+		//console.log(blockId + ' ' + choice + ' is valid');
+		return true;
+	}
+	else {
+		//console.log(blockId + ' ' + choice + ' is invalid');
+		return false;
+	}
+}

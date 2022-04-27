@@ -174,7 +174,7 @@ function countStackables() {
 function countStatic() {
 	//count static!
 	switch (background) {
-		case 'simple':
+		case 'simpleb':
 			userTotal += shellRates.ratesBackgrounds[1];
 			userCounting += " + " + shellRates.ratesBackgrounds[1] + " (" + background + " background)";
 			break;
@@ -182,7 +182,7 @@ function countStatic() {
 			userTotal += shellRates.ratesBackgrounds[2];
 			userCounting += " + " + shellRates.ratesBackgrounds[2] + " (" + background + " background)";
 			break;
-		case 'complex':
+		case 'complexb':
 			userTotal += shellRates.ratesBackgrounds[3];
 			userCounting += " + " + shellRates.ratesBackgrounds[3] + " (" + background + " background)";
 			break;

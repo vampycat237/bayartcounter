@@ -1,40 +1,47 @@
-//gray & flatcolor are 2d only
-//3dflat and 3d are 3d only
-//paper, food, clay and fabric are craft only
-let   mediaOpt   = null;
-const media2d    = ['grayscale', 'flatcolor'];
-const media3d    = ['3dflat', '3d'];
-const mediaCraft = ['paper', 'food', 'clay', 'fabric'];
-//mini is flatcolor only
-const coverageOpt    = ['headshot', 'halfbody', 'fullbody'];
-//craft only
-const craftSizeOpt   = ['model', 'large'];
-//flatcolor only
-const linesOpt       = [null, 'colorlines', 'lineless'];
-//2d only
-const shadingOpt     = [null, 'minimal', 'basic', 'complex', 'painting'];
-//all i guess??
-const animationOpt   = [null, 'tween', 'handdrawn'];
-//these are the handdrawn bits. treat the tween 'simple' as 'easy', 'complex' as 'simple', and 'fluid' as 'complex'
-const animComplexOpt = [null, 'easy', 'simple', 'complex'];
-//all!
-const backgroundOpt  = [null, 'simple', 'depth', 'complex'];
+const choiceOptions = {
+	//gray & flatcolor are 2d only
+	//3dflat and 3d are 3d only
+	//paper, food, clay and fabric are craft only
+	mediaOpt   : null,
+	media2d    : ['grayscale', 'flatcolor'],
+	media3d    : ['3dflat', '3d'],
+	mediaCraft : ['paper', 'food', 'clay', 'fabric'],
+	//mini is flatcolor only
+	coverageOpt    : ['headshot', 'halfbody', 'fullbody', 'mini'],
+	//craft only
+	craftSizeOpt   : ['model', 'large'],
+	//flatcolor only
+	linesOpt       : [null, 'colorlines', 'lineless'],
+	//2d only
+	shadingOpt     : [null, 'minimal', 'basic', 'complex', 'painting'],
+	//all i guess??
+	animationOpt   : [null, 'tween', 'handdrawn'],
+	//these are the handdrawn bits. treat the tween 'simple' as 'easy', 'complex' as 'simple', and 'fluid' as 'complex'
+	animComplexOpt : [null, 'easy', 'simple', 'complex'],
+	//all!
+	backgroundOpt  : [null, 'simpleb', 'depth', 'complexb'],
+}
 
+//BASE INFO
 //string: 2d 3d or craft
 let category;
 //string: gray, flatcolor, 3dflat, 3d, paper, food, clay, fabric
 let media;
 //string: mini, headshot, halfbody, fullbody
 let coverage;
+
+//STACKABLES
 //crafts only string: model or large
 //should be set to "model" when craft is selected by default
-let lines          = null;
-let craftSize      = null;
-let shading        = null;
-let animation      = null;
-let animComplexity = null;
+let lines;
+let craftSize;
+let shading;
+let animation;
+let animComplexity;
+
+//STATIC
 //string: simple, depth, complex
-let background     = null;
+let background;
 
 const blockList = ['category', 'media', 'coverage', 'lines', 'craftSize', 'shading', 'animation', 'animComplexity', 'background'];
 const choiceList = [category, media, coverage, lines, craftSize, shading, animation, animComplexity, background];
@@ -71,21 +78,23 @@ function showNextStep(currentStep, choice) {
 	//default for nextStep is just that, the next step directly after this one!
 	//but sometimes it gets trickier than that
 	//default: follow the flow!
-	let nextStep = findNextStep(currentStep);
-	console.log('next step: ' + nextStep);
-	while (choiceList[blockList.indexOf(nextStep)] !== null && choiceList[blockList.indexOf(nextStep)] !== undefined) {
+	let nextStep = 'category';
+	
+	//instead of checking for undefined and null, check to see if it's a valid option for the block!
+	while (checkOptionValidity(nextStep)) {
+		//if it returns null that means something is wrong, or that we reached the end of our steps. there's no more steps to find!
 		if (findNextStep(nextStep) !== null) {
 			nextStep = findNextStep(nextStep);
-			console.log(nextStep);
 		} else { break; }
 	}
+	console.log('next step: ' + nextStep);
 	//then check if we already have a value for that step: if we do, keep looking. else we're done!
+	
+	//show the chosen "nextStep" block
+	document.getElementById(nextStep).style.display = "block";
 	
 	switch(nextStep) {
 	case 'media':
-		//show next section
-		document.getElementById('media').style.display = "block";
-		
 		//any additional things!
 		//start by hiding them all to reduce redundant code
 		document.getElementById('2dmedia').style.display = "none";
@@ -105,15 +114,14 @@ function showNextStep(currentStep, choice) {
 		}
 		break;
 	case 'coverage':
-		document.getElementById('coverage').style.display = "block";
+		//ensure that mini option only appears for flatcolor medium
+		document.getElementById('mini').style.display = "none";
 		if(media == 'flatcolor') {
 			document.getElementById('mini').style.display = "block";
-		} else {
-			document.getElementById('mini').style.display = "none";
-			if(coverage == 'mini') { coverage = null; }
 		}
 		break;
 	case 'lines':
+		//make sure that mini can't have lineless bonus & grayscale can't have colored lines (because it's grayscale)
 		document.getElementById('lined').innerHTML = "regular lineart";
 		document.getElementById('colorlines').style.display = "block";
 		document.getElementById('lineless').style.display = "block";
@@ -126,8 +134,9 @@ function showNextStep(currentStep, choice) {
 			document.getElementById('colorlines').style.display = "none";
 		}
 		
-		document.getElementById('lines').style.display = "block";
 		break;
+	//no case for shading because it will only appear for valid media
+	//no case for animation because
 	}
 }
 
@@ -138,28 +147,23 @@ function countTotals() {
 
 //set methods
 function setCategory(str) {
+	category = str;
 	switch(str) {
 		case '2d':
-			category = '2d';
-			mediaOpt = media2d;
+			choiceOptions.mediaOpt = choiceOptions.media2d;
 			break;
 		case '3d':
-			category = '3d';
-			mediaOpt = media3d;
+			choiceOptions.mediaOpt = choiceOptions.media3d;
 			break;
 		case 'craft':
-			category = 'craft';
-			mediaOpt = mediaCraft;
+			choiceOptions.mediaOpt = choiceOptions.mediaCraft;
 			break;
-		default:
-			category = '2d';
-			mediaOpt = media2d;
 	}
 	showNextStep('category', str);
 }
 
 function setMedium(str) {
-	if(mediaOpt.indexOf(str) > -1) {
+	if(choiceOptions.mediaOpt.indexOf(str) > -1) {
 		media = str;
 	} else { coverage = null; }
 	
@@ -168,26 +172,30 @@ function setMedium(str) {
 	
 function setCoverage(str) {
 	//mini is flatcolor only
-	if(coverageOpt.indexOf(str) > -1 || (media == 'flatcolor' && str == 'mini')) {
+	if(choiceOptions.coverageOpt.indexOf(str) > -1 || (media == 'flatcolor' && str == 'mini')) {
 		coverage = str;
 	} else { coverage = null; }
 	
 	showNextStep('coverage', str);
+	//show the counting button - if there's nothing else you've done, you can shortcut right to the totals!
+	showCountingSticky();
+	
 }
 
 function setLines(str) {
 	//flatcolor only
-	if(linesOpt.indexOf(str) > -1) {
+	if(checkOptionValidity('lines')) {
 		lines = str;
 	} else { lines = null; }
 	
-	showNextStep('lines', str);
+	showNextStep('lines', lines);
 }
 
 function setShading(str) {
 	//2d only
-	if(shadingOpt.indexOf(str) > -1) {
-		lines = str;
+	if(checkOptionValidity('shading')) {
+		shading = str;
+		console.log('setting shading to ' + str);
 	} else { shading = null; }
 	
 	showNextStep('shading', str);
@@ -195,7 +203,7 @@ function setShading(str) {
 
 function setCraftSize(str) {
 	//this should only appear if we're doing a craft
-	if(craftSizeOpt.indexOf(str) > -1) {
+	if(choiceOptions.craftSizeOpt.indexOf(str) > -1) {
 		craftSize = str;
 	} else { coverage = null; }
 	
@@ -203,7 +211,7 @@ function setCraftSize(str) {
 }
 
 function setAnimation(str) {
-	if(animationOpt.indexOf(str) > -1) {
+	if(checkOptionValidity('animation')) {
 		animation = str;
 	} else { animation = null; }
 	
@@ -211,7 +219,7 @@ function setAnimation(str) {
 }
 
 function setAnimationComplexity(str) {
-	if(animComplexOpt.indexOf(str) > -1) {
+	if(checkOptionValidity('animComplexity')) {
 		animComplexity = str;
 	} else { animComplexity = null; }
 	
@@ -219,9 +227,42 @@ function setAnimationComplexity(str) {
 }
 
 function setBackground(str) {
-	if(backgroundOpt.indexOf(str) > -1) {
+	if(checkOptionValidity('background')) {
 		background = str;
 	} else { background = null; }
 	
 	hideSection('background', str);
+}
+
+function showCountingSticky() {
+	//would have used hideSection() but this actually has mildly different needs
+	//code largely ripped from that method though
+	sectionToHide = document.getElementById('counting');
+	stickyButton  = document.getElementById('counting'+'sticky');
+	if(sectionToHide !== null && stickyButton !== null) {
+		sectionToHide.style.display = "none";
+		stickyButton.style.display  = "block";
+	}
+}
+
+function hideCounting() {
+	
+}
+
+function doCounting() {
+	//update our choiceList so we can loop through it
+	updateChoiceList();
+	//set anything that's undefined to null
+	for (let block of blockList) {
+		let choice = choiceList[blockList.indexOf(block)];
+		
+		if (choice == undefined) {
+			choiceList[blockList.indexOf(block)] = null;
+		}
+	}
+	//save that
+	updateChoiceVars();
+	
+	//now that everything is ready, let's call the counting function!
+	countShells();
 }

@@ -39,15 +39,15 @@ button.sticky:hover  { background-color: #39386b; }
 
 button.sticky:active { background-color: #424b89; }
 
-#countingsticky {
+button.counting {
 	background-color: #356137;
 	border-color:     #c5d8b2;
 	color:            #c5d8b2;
 }
 
-#countingsticky:hover { background-color: #4f8046; }
+button.counting:hover { background-color: #4f8046; }
 
-#countingsticky:active { background-color: #85a15e; }
+button.counting:active { background-color: #85a15e; }
 
 div.container {
 	display:flex;
