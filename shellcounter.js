@@ -45,9 +45,13 @@ function countShells() {
 	countFlatRate();
 	countStackables();
 	countStatic();
+	
+	displayShellCounts();
 }
 
 function initialize() {
+	userTotal = 0;
+	userCounting = "";
 	switch (media) {
 		case 'grayscale':
 			userRates = shellRates.ratesGrayscale;
@@ -102,9 +106,6 @@ function countStackables() {
 	//0 is the default
 	//lines first
 	switch (lines) {
-		default:
-			userTotal += shellRates.ratesLines[0];
-			break;
 		case 'colorlines':
 			userTotal += shellRates.ratesLines[1];
 			userCounting += " + " + shellRates.ratesLines[1] + " (colored lineart bonus)";
@@ -112,12 +113,10 @@ function countStackables() {
 		case 'lineless':
 			userTotal += shellRates.ratesLines[2];
 			userCounting += " + " + shellRates.ratesLines[2] + " (lineless bonus)";
+			break;
 	}
 	//now shading!
 	switch (shading) {
-		default:
-			userTotal += shellRates.ratesShading[0];
-			break;
 		case 'minimal':
 			userTotal += shellRates.ratesShading[1];
 			userCounting += " + " + shellRates.ratesShading[1] + " (minimal shading)";
@@ -133,6 +132,7 @@ function countStackables() {
 		case 'painting':
 			userTotal += shellRates.ratesShading[4];
 			userCounting += " + " + shellRates.ratesShading[4] + " (painted shading)";
+			break;
 	}
 	//now animations
 	switch (animation) {

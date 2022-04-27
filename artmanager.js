@@ -246,11 +246,15 @@ function showCountingSticky() {
 }
 
 function hideCounting() {
-	
+	document.getElementById('counting').style.display = "none";
+	if (checkOptionValidity('category') && checkOptionValidity('media') && checkOptionValidity('coverage')) {
+		document.getElementById('countingsticky').style.display = "block";
+	}
+	document.getElementById('countingsticky').innerHTML = "calculate totals";
 }
 
 function doCounting() {
-	//update our choiceList so we can loop through it
+	/*//update our choiceList so we can loop through it
 	updateChoiceList();
 	//set anything that's undefined to null
 	for (let block of blockList) {
@@ -261,8 +265,20 @@ function doCounting() {
 		}
 	}
 	//save that
-	updateChoiceVars();
+	updateChoiceVars();*/
 	
 	//now that everything is ready, let's call the counting function!
 	countShells();
+	
+	setTimeout(showCountingBlock(),5000);
+	
+}
+
+function showCountingBlock() {
+	//close all other blocks 
+	hideAll();
+	//show the counting block!
+	document.getElementById('counting').style.display = "block";
+	//change the sticky to say REcalculate, since it will reset the numbers if theyve changed
+	document.getElementById('countingsticky').innerHTML = "recalculate totals";
 }

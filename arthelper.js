@@ -6,6 +6,7 @@ function hideSection(block, choice) {
 	//hide previous section & show its collapsed button
 	sectionToHide = document.getElementById(block);
 	stickyButton  = document.getElementById(block+'sticky');
+	
 	if(sectionToHide !== null && stickyButton !== null && sectionToHide.style.display !== "none") {
 		sectionToHide.style.display = "none";
 		stickyButton.style.display  = "block";
@@ -202,4 +203,12 @@ function checkOptionValidity(blockId) {
 		//console.log(blockId + ' ' + choice + ' is invalid');
 		return false;
 	}
+}
+
+function displayShellCounts() {
+	countingProofBlock = document.getElementById('countingproof');
+	shellTotalBlock    = document.getElementById('shelltotal');
+	
+	countingProofBlock.innerHTML = "counting: " + userCounting;
+	shellTotalBlock.innerHTML = "total: " + userTotal;
 }

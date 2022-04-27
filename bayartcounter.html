@@ -87,6 +87,10 @@
 		<button id="basic" onclick="setShading('basic')">basic shading (about one layer of shading or highlights)</button>
 		<button id="complex" onclick="setShading('complex')">complex shading (multiple layers of shading & highlights)</button>
 		<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="shadingsticky" class="sticky" onclick="revert('shading')" style="display:none">sticky</button>
 	
 	<!--animation-->
 	<section id="animation" style="display:none">
@@ -95,6 +99,10 @@
 		<button id="noanimation" onclick="setAnimation(null)">no animation</button>
 		<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
 		<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="animationsticky" class="sticky" onclick="revert('animation')" style="display:none">sticky</button>
 	
 	<!--animation complexity-->
 	<section id="animComplexity" style="display:none">
@@ -103,6 +111,10 @@
 		<button id="noanimation" onclick="setAnimComplexity('easy')">easy (only a small amount of the character is animated while the rest is static, for instance a talking animation where only the mouth moves)</button>
 		<button id="tween" onclick="setAnimComplexity('simple')">simple (pose stays largely the same with a few elements moving independently, such as a wing twitch )</button>
 		<button id="handdrawn" onclick="setAnimComplexity('complex')">complex (whole body moves, for instance a walk cycle)</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="animComplexitysticky" class="sticky" onclick="revert('animComplexity')" style="display:none">sticky</button>
 	
 	<!--background-->
 	<section id="background" style="display:none">
@@ -112,15 +124,21 @@
 		<button id="simpleb" onclick="setBackground('simpleb')">simple background</button>
 		<button id="depth" onclick="setBackground('depth')">depth background</button>
 		<button id="complexb" onclick="setBackground('complexb')">complex background</button>
+	</div>
+	</section>
+	<!--button that sticks around!-->
+	<button id="backgroundsticky" class="sticky" onclick="revert('background')" style="display:none">sticky</button>
 	
 	<!--TOTALS, should be CLEARED (body & sticky are both none) at first but once we reach coverage it should be HIDDEN (body none, sticky block)-->
 	<section id="counting" class="bottomsticky" style="display:none">
-	<p>total: </p>
-	<p></p>
-	<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
+	<div class="container">
+		<p id="countingproof"></p>
+		<p id="shelltotal">total: </p>
+		<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
+	<div>
 	</section>
 	<!--stickybutton-->
-	<button id="countingsticky" class="counting" onclick="countTotals()" style="display:none">calculate totals</button>
+	<button id="countingsticky" class="counting" onclick="doCounting()" style="display:none">calculate totals</button>
 	
 	<!--get our shell counting script loaded up-->
 	<script src="artmanager.js"></script>
