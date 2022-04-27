@@ -89,18 +89,38 @@
 		<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
 	
 	<!--animation-->
+	<section id="animation" style="display:none">
+	<p>is this artwork animated? if so, what type of animation is used?</p> <p>(note, each scene is calculated seperately TODO)</p>
+	<div class="container">
+		<button id="noanimation" onclick="setAnimation(null)">no animation</button>
+		<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
+		<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
 	
 	<!--animation complexity-->
+	<section id="animComplexity" style="display:none">
+	<p>what is the complexity of this animation?</p>
+	<div class="container">
+		<button id="noanimation" onclick="setAnimComplexity('easy')">easy (only a small amount of the character is animated while the rest is static, for instance a talking animation where only the mouth moves)</button>
+		<button id="tween" onclick="setAnimComplexity('simple')">simple (pose stays largely the same with a few elements moving independently, such as a wing twitch )</button>
+		<button id="handdrawn" onclick="setAnimComplexity('complex')">complex (whole body moves, for instance a walk cycle)</button>
 	
 	<!--background-->
+	<section id="background" style="display:none">
+	<p>finally, does this piece have a background? if so, how complex is it?</p>
+	<div class="container">
+		<button id="nobackground" onclick="setBackground(null)">no background, photo, pattern, or solid color</button>
+		<button id="simpleb" onclick="setBackground('simpleb')">simple background</button>
+		<button id="depth" onclick="setBackground('depth')">depth background</button>
+		<button id="complexb" onclick="setBackground('complexb')">complex background</button>
 	
-	<!--TOTALS, should be hidden at first but once we reach coverage it should show-->
+	<!--TOTALS, should be CLEARED (body & sticky are both none) at first but once we reach coverage it should be HIDDEN (body none, sticky block)-->
 	<section id="counting" class="bottomsticky" style="display:none">
 	<p>total: </p>
-	<button></button>
+	<p></p>
+	<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
 	</section>
 	<!--stickybutton-->
-	<button id="countingsticky" onclick="countTotals()" style="display:none">calculate totals</button>
+	<button id="countingsticky" class="counting" onclick="countTotals()" style="display:none">calculate totals</button>
 	
 	<!--get our shell counting script loaded up-->
 	<script src="artmanager.js"></script>
