@@ -37,12 +37,12 @@ function hideSection(block, choice) {
 	if (rawText.indexOf("(") > -1) {
 		friendlyText = rawText.substring(0, rawText.indexOf("(") - 1);
 		
-	}/*
+	}
 	//it is the no background line! it's too long
 	else if (block == 'background' && choice == null) {
 		friendlyText = "no background";
 	}
-	//it is color lines!! it's also too long
+	/*//it is color lines!! it's also too long
 	else if () {
 		
 	}*/
@@ -92,7 +92,7 @@ function findNextStep(currentStep) {
 	case 'lines':
 		return 'shading';
 	case 'shading':
-	case 'modelSize':
+	case 'craftSize':
 		return 'animation';
 	case 'animation':
 		if (animation !== null) {
@@ -195,7 +195,7 @@ function legalityChecker(currentStep) {
 		matchingButton = document.getElementById(block + 'sticky');
 		
 		let choice = choiceList[blockList.indexOf(block)];
-		console.log('checking choice '+choice);
+		//console.log('checking choice '+choice);
 		
 		if (choice == "illegal") {
 			choiceList[blockList.indexOf(block)] = null;
@@ -218,9 +218,11 @@ function getChoiceOptions(blockId) {
 		case 'coverage':  return choiceOptions.coverageOpt; break;
 		case 'lines':     return choiceOptions.linesOpt; break;
 		case 'shading':   return choiceOptions.shadingOpt; break;
+		case 'craftSize': return choiceOptions.craftSizeOpt; break;
 		case 'animation': return choiceOptions.animationOpt; break;
 		case 'animComplexity': return choiceOptions.animComplexOpt; break;
 		case 'background': return choiceOptions.backgroundOpt; break;
+		default: return null;
 	}
 }
 
@@ -229,6 +231,7 @@ function checkOptionValidity(blockId, choice = "not given") {
 		updateChoiceList();
 		choice = choiceList[blockList.indexOf(blockId)];
 	}
+	console.log("checking " + blockId + " " + choice);
 	//choiceOptions.mediaOpt.indexOf(str)
 	if (getChoiceOptions(blockId).indexOf(choice) > -1) {
 		//console.log(blockId + ' ' + choice + ' is valid');

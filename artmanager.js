@@ -234,7 +234,7 @@ function setShading(str) {
 
 function setCraftSize(str) {
 	//this should only appear if we're doing a craft
-	if(choiceOptions.craftSizeOpt.indexOf(str) > -1) {
+	if(checkOptionValidity('craftSize', str)) {
 		craftSize = str;
 	} else { coverage = null; }
 	
@@ -250,7 +250,7 @@ function setAnimation(str) {
 }
 
 function setAnimComplexity(str) {
-	if(checkOptionValidity('animComplexity')) {
+	if(checkOptionValidity('animComplexity', str)) {
 		animComplexity = str;
 	} else { animComplexity = null; }
 	
