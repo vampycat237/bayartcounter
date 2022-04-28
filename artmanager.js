@@ -69,13 +69,11 @@ function revert(str) {
 	//close everything
 	hideAll();
 	
-	//open up the selected thing
-	blockSection = document.getElementById(str);
-	blockButton  = document.getElementById(str+'sticky');
-	if(blockSection !== null && blockButton !== null) {
-		blockSection.style.display = "block";
-		blockButton.style.display  = "none";
-	}
+	//hide the stickybutton for this
+	document.getElementById(str+'sticky').style.display  = "none";
+	
+	//open up the selected thing with the proper settings
+	readyNextStep(str);
 }
 
 function showNextStep(currentStep, choice) {
@@ -108,6 +106,11 @@ function showNextStep(currentStep, choice) {
 	console.log('next step: ' + nextStep);
 	//then check if we already have a value for that step: if we do, keep looking. else we're done!
 	
+	readyNextStep(nextStep);
+	
+}
+
+function readyNextStep(nextStep) {
 	//show the chosen "nextStep" block
 	document.getElementById(nextStep).style.display = "block";
 	
@@ -260,6 +263,7 @@ function setBackground(str) {
 	} else { background = null; }
 	
 	hideSection('background', str);
+	doCounting();
 }
 
 function showCountingSticky() {
@@ -283,7 +287,7 @@ function hideCounting() {
 
 function doCounting() {
 	//update our choiceList so we can loop through it
-	updateChoiceList();
+	//updateChoiceList();
 	/*//set anything that's undefined to null
 	for (let block of blockList) {
 		let choice = choiceList[blockList.indexOf(block)];

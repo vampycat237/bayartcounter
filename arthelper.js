@@ -33,10 +33,20 @@ function hideSection(block, choice) {
 	else { rawText = '...' }
 	
 	//set the friendlyText of the choice
+	//it has a paren in it! we want to get rid of everything in the parens AND the space before the paren.
 	if (rawText.indexOf("(") > -1) {
-		//it has a paren in it! we want to get rid of everything in the parens AND the space before the paren.
 		friendlyText = rawText.substring(0, rawText.indexOf("(") - 1);
-	} else {
+		
+	}/*
+	//it is the no background line! it's too long
+	else if (block == 'background' && choice == null) {
+		friendlyText = "no background";
+	}
+	//it is color lines!! it's also too long
+	else if () {
+		
+	}*/
+	else {
 		friendlyText = rawText;
 	}
 	

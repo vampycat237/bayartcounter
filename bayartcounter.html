@@ -20,7 +20,11 @@
 		
 		<button id="craftSizesticky" class="sticky" onclick="revert('craftSize')" style="display:none">craft size</button>
 		
+		<button id="animationsticky" class="sticky" onclick="revert('animation')" style="display:none">sticky</button>
 		
+		<button id="animComplexitysticky" class="sticky" onclick="revert('animComplexity')" style="display:none">sticky</button>
+		
+		<button id="backgroundsticky" class="sticky" onclick="revert('background')" style="display:none">sticky</button>
 		
 	</div>
 	
@@ -108,8 +112,7 @@
 		<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="animationsticky" class="sticky" onclick="revert('animation')" style="display:none">sticky</button>
+	
 	
 	<!--animation complexity-->
 	<section id="animComplexity" style="display:none">
@@ -120,8 +123,7 @@
 		<button id="complexa" onclick="setAnimComplexity('complexa')">complex default text</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="animComplexitysticky" class="sticky" onclick="revert('animComplexity')" style="display:none">sticky</button>
+	
 	
 	<!--background-->
 	<section id="background" style="display:none">
@@ -133,15 +135,14 @@
 		<button id="complexb" onclick="setBackground('complexb')">complex background</button>
 	</div>
 	</section>
-	<!--button that sticks around!-->
-	<button id="backgroundsticky" class="sticky" onclick="revert('background')" style="display:none">sticky</button>
+	
 	
 	<!--TOTALS, should be CLEARED (body & sticky are both none) at first but once we reach coverage it should be HIDDEN (body none, sticky block)-->
 	<section id="counting" class="bottomsticky" style="display:none">
 	<div class="container">
+		<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
 		<p id="countingproof"></p>
 		<p id="shelltotal">total: </p>
-		<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
 	<div>
 	</section>
 	<!--stickybutton-->

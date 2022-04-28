@@ -33,9 +33,12 @@ button:hover  { background-color: #424b89; }
 button:active { background-color: #4e60a3; }
 
 button.sticky {
+	min-width: 25%;
+	flex: 1 1 0%;
 	background-color: #322e56;
 	border-color:     #9bb6db;
 	color:            #9bb6db;
+	font-size: 26px;
 }
 
 button.sticky:hover  { background-color: #39386b; }
@@ -53,9 +56,18 @@ button.counting:hover { background-color: #4f8046; }
 button.counting:active { background-color: #85a15e; }
 
 div.container {
-	display:flex;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	margin: auto;
+}
+
+div.stickytop {
+	margin-left: auto; margin-right: auto;
+	width: 75%;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	flex-wrap: wrap;
 }
