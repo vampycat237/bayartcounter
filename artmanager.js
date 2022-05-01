@@ -208,8 +208,8 @@ function setCoverage(str) {
 	} else { coverage = null; }
 	
 	showNextStep('coverage', str);
-	//show the counting button - if there's nothing else you've done, you can shortcut right to the totals!
-	showCountingSticky();
+	//show the counting button if it's not a craft- if there's nothing else you've done, you can shortcut right to the totals!
+	if (category !== 'craft') showCountingSticky();
 	
 }
 
@@ -239,6 +239,8 @@ function setCraftSize(str) {
 	} else { coverage = null; }
 	
 	showNextStep('craftSize', str);
+	//crafts show the counting sticky here instead bc it's required for the math
+	showCountingSticky();
 }
 
 function setAnimation(str) {
