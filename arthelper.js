@@ -100,6 +100,8 @@ function findNextStep(currentStep) {
 		} else {
 			return 'background';
 		}
+	case 'animComplexity':
+		return 'background';
 	//if something else happens somehow, return null, we have to stop lmao.
 	default:
 		return null;
