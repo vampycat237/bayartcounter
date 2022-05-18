@@ -1,4 +1,17 @@
 # bayartcounter.github.io
+NOTE: Multi-bay support is still a WORK IN PROGRESS!
+Current Multi-bay support features:
+- Changing the amount of bays in a piece that have the same specifications (example: 2 flatcolor fullbodies with minimal shading and a tween animation)
+- Adding new bays with different specifications (example: 1 flatcolor fullbody, 1 flatcolor halfbody)
+
+Multi-bay support features to come:
+- Switching between your different (groups of) bayfoxes (example: you have 1 flatcolor fullbody and 1 flatcolor halfbody, and have the halfbody selected, and need to change the shading on the fullbody)
+- Removing a (group of) bayfoxes (example: you have 1 flatcolor fullbody and 1 flatcolor halfbody in your art, but you accidentally added a third group of 1 grayscale fullbody)
+
+Because these features are still in progress, this version of the bay art counter has not been pushed to the main branch.
+
+---
+
 Vampy's Bay Art Counter is a web-based shell calculator for your bayfox art submissions!
 It helps save time and has the potential to make art submission a bit more accessible.
 Please let me know if you run into any bugs, or have a suggestion for how to improve the tool!
