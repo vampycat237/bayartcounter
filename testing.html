@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<body>
+	<p>open the console to see the test results</p>
+	
+	<p>locate() tests</p>
+	<button onclick="console.log(locate('(flatcolor mini)'))">test 'flatcolor mini'</button>
+	
+	<button onclick="console.log(locate('(paper headshot)'))">test 'paper headshot'</button>
+	
+	<button onclick="console.log(locate('(colored lineart)'))">test  'colored lineart'</button>
+	
+	<button onclick="console.log(locate('(lineless)'))">test 'lineless'</button>
+	
+	<button onclick="console.log(locate('(painted shading)'))">test 'painted shading'</button>
+	
+	<button onclick="console.log(locate('(fluid tween animation)'))">test 'fluid tween animation'</button>
+	
+	<p>buildCountingObj() tests</p>
+	
+	<button onclick="makeTestBays()">initialize</button>
+	
+	<button onclick="countShells()">count shells</button>
+	
+	<button onclick="printBayCounting()">log bay counting arrays</button>
+	
+	<button onclick="console.log(countingObj)">log counting object</button>
+	
+	<button onclick="console.log(activeBay.toString())">log activeBay</button>
+	
+	<button onclick="console.log(bayList)">log bayList</button>
+	
+	<button onclick="console.log(removeBay(bayList[0]))">delete first bay from bayList</button>
+	
+	<button onclick="console.log(activeBay.equals(activeBay))">test equals()</button>
+	
+	
+	<p id='countingproof'>counting proof goes here</p>
+	<p id='shelltotal'>shell totals goes here</p>
+	
+	
+	<script>
+	function makeTestBays() {
+		//fill out the activeBay - we have to set stuff directly bc we can't have readyNextStep called lmao
+		//this one will be 2 flatcolor minis
+		activeBay.category = '2d';
+		activeBay.media    = 'flatcolor';
+		activeBay.coverage = 'mini';
+		activeBay.count    = 2;
+		//print this bay to console
+		console.log('created test bay 1: ' + activeBay);
+		
+		//make a new bay & switch to it
+		//this one will be 3 grayscale headshots
+		switchActiveBay(new Bayfox(true, activeBay, 3));
+		//category is already 2d due to cloning
+		activeBay.media    = 'grayscale';
+		activeBay.coverage = 'headshot';
+		
+		console.log('created test bay 2: ' + activeBay);
+		
+		//make a new bay & switch to it
+		//this one will be 1 3d halfbody
+		switchActiveBay(new Bayfox());
+		
+		activeBay.category = '3d';
+		activeBay.media    = '3dflat';
+		activeBay.coverage = 'halfbody';
+		//print this bay to console
+		console.log('created test bay 3: ' + activeBay);
+	}
+	
+	function printBayCounting() {
+		storeActiveBay();
+		for (b of bayList) {
+			console.log(b.counting);
+		}
+		recallActiveBay();
+	}
+	</script>
+	
+	<script src="artmanager.js"></script>
+	<script src="arthelper.js"></script>
+	<script src="shellcounter.js"></script>
+	<script src="baymanager.js"></script>
+</body>
+</html>
