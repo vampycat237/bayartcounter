@@ -56,6 +56,8 @@ function hideSection(block, choice) {
 		sectionToHide.style.display = "none";
 		stickyButton.style.display  = "block";
 		stickyButton.innerHTML      = friendlyName + ": " + friendlyText;
+	} else if (sectionToHide !== null && stickyButton !== null && !(checkOptionValidity(block, choice))) {
+		clearSection(block);
 	}
 }
 
@@ -231,15 +233,16 @@ function getChoiceOptions(blockId, b = activeBay) {
 
 function checkOptionValidity(blockId, choice = "not given") {
 	if (choice == "not given") {
-		//updateChoiceList();
-		//choice = choiceList[blockList.indexOf(blockId)];
-		
-		//turns out js objects are like. a hybrid of java objects and python dicts. so i can do this
-		choice = activeBay[blockId];
+		if (blockId == "background") {
+			choice = background;
+		} else {
+			//turns out js objects are like. a hybrid of java objects and python dicts. so i can do this
+			choice = activeBay[blockId];
+		}
 	}
 	//console.log("checking " + blockId + " " + choice);
 	//choiceOptions.mediaOpt.indexOf(str)
-	if (getChoiceOptions(blockId).indexOf(choice) > -1) {
+	if (getChoiceOptions(blockId) !== null && getChoiceOptions(blockId).indexOf(choice) > -1) {
 		//console.log(blockId + ' ' + choice + ' is valid');
 		return true;
 	} else if (activeBay.media == 'flatcolor' && choice == 'mini') {

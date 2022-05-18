@@ -96,7 +96,7 @@ function showNextStep(currentStep, choice) {
 	hideSection(currentStep, choice)
 	
 	//logs the step we're taking to the console!!
-	console.log(currentStep + ": " + choice);
+	//console.log(currentStep + ": " + choice);
 	
 	//check for illegal moves w/ inactive stuff
 	legalityChecker(currentStep);
@@ -112,7 +112,7 @@ function showNextStep(currentStep, choice) {
 		//if it returns null that means something is wrong, or that we reached the end of our steps. there's no more steps to find!
 		if (findNextStep(nextStep) !== null) {
 			nextStep = findNextStep(nextStep);
-			console.log('next step: ' + nextStep);
+			//console.log('next step: ' + nextStep);
 		} else { break; }
 	}
 	//console.log('next step: ' + nextStep);
@@ -238,7 +238,7 @@ function setShading(str) {
 	//2d only
 	if(checkOptionValidity('shading', str)) {
 		activeBay.shading = str;
-		console.log('setting shading to ' + str);
+		//console.log('setting shading to ' + str);
 	} else { activeBay.shading = null; }
 	
 	showNextStep('shading', str);
@@ -335,6 +335,7 @@ function switchBays(newActiveBay) {
 }
 
 function toggleDropdown(divId) {
+	updateDropdowns();
 	const dropdown = document.getElementById(divId);
 	if (dropdown.style.display == "block") {
 		dropdown.style.display = "none";
@@ -348,9 +349,27 @@ function updateDropdowns() {
 	const dropdowns = document.getElementsByTagName("option");
 	
 	for (thing of dropdowns) {
-		console.log(thing.value);
-		if (thing.value < bayList.size) {
+		//console.log(thing.value);
+		if (thing.value == "activeBay") {
+			//it's showing activeBay. we don't need to show or hide it
+			//just update the innerHTML
+			thing.innerHTML = activeBay.toString() + " (active)";
+			
+		} else if (thing.value == -1) {
+			//it's the default selected bit, we don't need to do anything.
+			//console.log("default value found");
+		} else if (thing.value < bayList.length) {
+			//the value is an index on the bayList, so if it's smaller than the length it's a valid index
+			//in this case we want to set the displayed text to the string representation of the bayList item matching this index, and show the list item
+			thing.style.display = "block";
 			thing.innerHTML = bayList[thing.value].toString();
+			
+		} else {
+			//it's too big, and it's not the default bit, so we hide it
+			//console.log(thing.value + " is too big, hiding");
+			thing.style.display = "none";
 		}
 	}
+	
+	console.log('dropdowns updated');
 }

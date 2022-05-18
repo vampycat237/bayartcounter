@@ -128,7 +128,9 @@ let activeBay = new Bayfox();
 */
 function switchActiveBay(newActiveBay) {
 	//PUT ACTIVEBAY AWAY
-	storeActiveBay();
+	if(!storeActiveBay()) {
+		console.log('discarded '+activeBay+' when switching bays. reason: activeBay did not have enough information to be stored');
+	}
 	
 	//MAKE NEWACTIVEBAY THE ACTIVEBAY
 	//set it!
@@ -160,8 +162,14 @@ function removeBay(b) {
 //ensure that there is ALWAYS at least 1 bay, you can't have 0
 //^solution is you can't remove the activeBay!
 
-//put away activeBay - returns true if stacked and false if not stacked
+//put away activeBay - returns true if it was added, false if not
 function storeActiveBay() {
+	//check validity of the active bay. can we even store it?
+	if (isBlank(activeBay.media, activeBay.coverage)) {
+		//if it doesnt have a medium or a coverage, we can't store it
+		return false;
+		
+	}
 	//check if activeBay is on the bayList
 	for (let b of bayList) {
 		if (activeBay.equals(b)) {
@@ -172,7 +180,7 @@ function storeActiveBay() {
 	}
 	//if we've looped thru and not found a matching object, we just have to add it!
 	bayList.push(activeBay);
-	return false;
+	return true;
 }
 
 //retrieve the activeBay from before counting was done!
@@ -195,4 +203,30 @@ function recallActiveBay() {
 		}
 		//and if they don't match, we keep looking of course
 	}
+}
+
+function addNewBay(value) {
+	//store our activeBay bc we will overwrite it with the new bay
+	if(!storeActiveBay()) {
+		alert('Failed to add new bay.\nReason: Active bay must have valid medium and coverage to be stored.');
+		console.log('failed to add new bay');
+		return;
+	}
+	
+	if (value < 0 || value > bayList.size) {
+		console.log('added new empty bay');
+		//in this case, we make a new Bayfox WITHOUT cloning
+		activeBay = new Bayfox();
+		
+	} else if (value == "activeBay") {
+		//we should make a new bayfox cloning the ACTIVE bay
+		activeBay = new Bayfox(true, activeBay);
+		
+	} else {
+		console.log('added new bay cloned from ' + bayList[value].toString());
+		activeBay = new Bayfox(true, bayList[value]);
+	}
+	
+	toggleDropdown('add');
+	//console.log('added new bayfox');
 }

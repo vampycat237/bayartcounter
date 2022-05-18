@@ -7,85 +7,68 @@
 </head>
 <body>
 	<h1>shell counting helper</h1>
-	<!--page container to place the multibaymanager-->
+	<!--remove later-->
+	<div class="row stickytop multibay sticky">
+		<p class="note">debug menu</p>
+		<button class="small tiny" onclick="console.log(activeBay.toString())">log activeBay</button>
+		<button class="small tiny" onclick="console.log(bayList)">log bayList</button>
+	</div>
+	
 	<div class="row stickytop multibaymanager">
 		<!--changes the amount of bays that have the values of the active bay-->
 		<div class="row small sticky multibay">
-		<!--<div class="column plusminus">
-			<button class="small tiny sticky" onclick="incrementBayCount(1)">+</button>
-			<button class="small tiny sticky" onclick="if(activeBay.count > 1) {incrementBayCount(-1)}">-</button>
-			</div>-->
-		<!--<form class="small sticky multibay" style="display: flex; flex-direction: row; width: 100%;" oninput="console.log(activeBayCount.value)">-->
-			<label for="activeBayCount" class="multibay" style="padding-right: 2px;"># of bays with these details:</label>
-			<input class="multibay" id="activeBayCount" type="number" value="1" min="1"></input>
-		<!--</form>-->
+			<label for="activeBayCount" style="padding-right: 2px;"># of bays with these details:</label>
+			<input id="activeBayCount" type="number" value="1" min="1"></input>
 		</div>
-		
-		<!--these could probably be switched out for ONE dropdown, or just a live list, of all the bays as buttons? where you can duplicate, delete, switch to, or change the amount of existing settings? maybe?-->
-		<!--<button class="small sticky multibay" onclick="console.log(activeBay.toString())">test</button>-->
-		
-		<!--<div class="row small sticky multibay dropdown">
-		<span style="align-self: center">add/switch/remove...</span>
-			<div class="column dropdown-content">
-			<button class="dropdown-content">add new empty bay</button>
-			
-			<button class="dropdown-content">switch to selected bay</button>
-			
-			<button class="dropdown-content">remove selected bay</button>
-			
-			
-			
-			<p class="dropdown-content">dropdown</p>
-			</div>
-		</div>
-		
 		
 		<!--addnewbay asks user for a group of specifications (a Bayfox object) to clone, defaulting to null/not cloning. once the user confirms, it creates a new Bayfox and switches that one to be active.-->
 		
-		<div class="column multibay dropdown">
-		<button class="small sticky multibay dropdown" onclick="toggleDropdown('add')">add new...</button>
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('add')">add new...</button>
 		<!--<span style="align-self: center">switch bay...</span>-->
 			<div id="add" class="column dropdown-content">
 			<label for="addbay">choose a bay to clone:</label>
 			<select name="addbay" id="addbay">
 				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
-				<option value="null">don't clone</option>
-				<option class="0" value="0">baylist[0]</option>
-				<option class="1" value="1">1</option>
-				<option class="2" value="2">2</option>
-				<option class="3" value="3">3</option>
-				<option class="4" value="4">4</option>
-				<option class="5" value="5">5</option>
-				<option class="6" value="6">6</option>
-				<option class="7" value="7">7</option>
-				<option class="8" value="8">8</option>
-				<option class="9" value="9">really long text bit test</option>
+				<option style="display:block" selected="true" value="-1">don't clone</option>
+				<option style="display:block" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
 			</select>
-			<button class="dropdown-content" type="button" onclick="console.log('adding bay ' + addbay.value)">add new bay</button>
+			<button class="dropdown-content" type="button" onclick="addNewBay(addbay.value)">add new bay</button>
 			<button class="dropdown-content" type="button" onclick="toggleDropdown('add')">cancel</button>
 			</div>
 		</div>
 		
 		<!--switchbay shows a dropdown of the bays you can switch to, and when you click one it calls switchActiveBay() & passes in the bay you chose from the list-->
 		
-		<div class="column multibay dropdown">
-		<button class="small sticky multibay dropdown" onclick="toggleDropdown('switch')">switch bay...</button>
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('switch')">switch bay...</button>
 		<!--<span style="align-self: center">switch bay...</span>-->
 			<div id="switch" class="column dropdown-content">
 			<label for="switchbay">choose a bay to switch to:</label>
 			<select name="switchbay" id="switchbay">
 				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
-				<option value="null">--select a bayfox--</option>
-				<option class="0" value="0">baylist[0]</option>
-				<option class="1" value="1">1</option>
-				<option class="2" value="2">2</option>
-				<option class="3" value="3">3</option>
-				<option class="4" value="4">4</option>
-				<option class="5" value="5">5</option>
-				<option class="6" value="6">6</option>
-				<option class="7" value="7">7</option>
-				<option class="8" value="8">8</option>
-				<option class="9" value="9">really long text bit test</option>
+				<option selected="true" value="-1">--select a bayfox--</option>
+				<option style="display:block" disabled="true" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
 			</select>
 			<button class="dropdown-content" type="button" onclick="console.log(switchbay.value)">switch to this bay</button>
 			<button class="dropdown-content" type="button" onclick="toggleDropdown('switch')">cancel</button>
@@ -94,23 +77,24 @@
 		
 		<!--deletebay has a dropdown of all bays. you select which bay you want to delete then push the red remove button-->
 		
-		<div class="column multibay dropdown">
-		<button class="small sticky multibay dropdown" onclick="toggleDropdown('remove')">remove...</button>
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('remove')">remove...</button>
 			<div id="remove" class="column dropdown-content">
 			<label for="removebay">choose a bay to remove:</label>
 			<select name="removebay" id="removebay">
 				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
-				<option value="null">--select a bayfox--</option>
-				<option class="0" value="0">baylist[0]</option>
-				<option class="1" value="1">1</option>
-				<option class="2" value="2">2</option>
-				<option class="3" value="3">3</option>
-				<option class="4" value="4">4</option>
-				<option class="5" value="5">5</option>
-				<option class="6" value="6">6</option>
-				<option class="7" value="7">7</option>
-				<option class="8" value="8">8</option>
-				<option class="9" value="9">really long text bit test</option>
+				<option selected="true" value="-1">--select a bayfox--</option>
+				<option style="display:block" disabled="true" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
 			</select>
 			<button class="dropdown-content red" type="button" onclick="console.log(removebay.value)">remove this bay</button>
 			<button class="dropdown-content" type="button" onclick="toggleDropdown('remove')">cancel</button>

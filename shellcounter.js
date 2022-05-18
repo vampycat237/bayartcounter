@@ -175,7 +175,7 @@ function countFlatRate(b) {
 		
 	} else if (b.category == 'craft') {
 		//ex: "500 (model paper fullbody)"
-		b.counting.push(baseVal + " (" + b.craftSize + " " + b.media + " " + b.coverage);
+		b.counting.push(baseVal + " (" + b.craftSize + " " + b.media + " " + b.coverage + ")");
 	
 	} else {
 		//ex: "200 (flatcolor fullbody)"
