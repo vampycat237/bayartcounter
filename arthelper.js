@@ -274,3 +274,33 @@ function isBlank(x, y='n/a') {
 function blankOrEqual(x, y) {
 	return (x == y || isBlank(x, y));
 }
+
+const messageBorder = document.getElementById('message-border');
+const messageDiv    = document.getElementById('message');
+const messageText   = document.getElementById('message-content');
+const messageButton = document.getElementById('message-button');
+
+function showMessage(message, timeToShow = 5000) {
+	messageBorder.style.display = "block";
+	
+	messageText.innerHTML   = message;
+	messageText.className   = "message-content show";
+	messageDiv.className    = "column message show";
+	messageBorder.className = "message-border show";
+	messageButton.className = "small tiny message-content show hoverable";
+	
+	setTimeout(hideMessage, timeToShow);
+}
+
+function hideMessage() {
+	messageText.className   = "message-content";
+	messageDiv.className    = "column message";
+	messageBorder.className = "message-border";
+	messageButton.className = "small tiny clear message-content hoverable";
+	
+	setTimeout(hideMessage2, 3000);
+}
+
+function hideMessage2() {
+	messageBorder.style.display = "none";
+}

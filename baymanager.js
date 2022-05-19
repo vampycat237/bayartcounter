@@ -208,8 +208,9 @@ function recallActiveBay() {
 function addNewBay(value) {
 	//store our activeBay bc we will overwrite it with the new bay
 	if(!storeActiveBay()) {
-		alert('Failed to add new bay.\nReason: Active bay must have valid medium and coverage to be stored.');
+		showMessage('failed to add new bay: active bay must have valid medium and coverage to be stored', 30000);
 		console.log('failed to add new bay');
+		toggleDropdown('add');
 		return;
 	}
 	
@@ -229,4 +230,10 @@ function addNewBay(value) {
 	
 	toggleDropdown('add');
 	//console.log('added new bayfox');
+	
+	//use hideAll to update blocks & clear empty ones
+	hideAll();
+	
+	//and prompt the artmanager to show the next thing we need to change
+	showNextStep('category', null);
 }

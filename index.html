@@ -7,11 +7,23 @@
 </head>
 <body>
 	<h1>shell counting helper</h1>
-	<!--remove later-->
-	<div class="row stickytop multibay sticky">
+	
+	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
+	<div class="column message-container">
+	<div id="message-border" class="message-border">
+		<div id="message" class="column message">
+			<span id="message-content" class="message-content">test message</span>
+			<button id="message-button" class="small clear message-content hoverable" onclick="hideMessage()">ok</button>
+		</div>
+	</div>
+	</div>
+	
+	<!--debug menu (set to `style="display: none"` later, so it can still be enabled if needed)-->
+	<div class="row stickytop multibay sticky" style="display:none">
 		<p class="note">debug menu</p>
 		<button class="small tiny" onclick="console.log(activeBay.toString())">log activeBay</button>
 		<button class="small tiny" onclick="console.log(bayList)">log bayList</button>
+		<button class="small tiny" onclick="showMessage('test message')">show test message</button>
 	</div>
 	
 	<div class="row stickytop multibaymanager">

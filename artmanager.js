@@ -115,6 +115,14 @@ function showNextStep(currentStep, choice) {
 			//console.log('next step: ' + nextStep);
 		} else { break; }
 	}
+	
+	//show the counting button if we have everything we need (media and coverage, + craftSize for crafts)- if there's nothing else you've done, you can shortcut right to the totals!
+	if ((checkOptionValidity('media') && checkOptionValidity('coverage')) && ((activeBay.category !== 'craft') || (checkOptionValidity('craftSize')) ) ) {
+		showCountingSticky();
+	} else {
+		clearSection('counting');
+	}
+	
 	//console.log('next step: ' + nextStep);
 	//then check if we already have a value for that step: if we do, keep looking. else we're done!
 	
@@ -220,8 +228,6 @@ function setCoverage(str) {
 	} else { activeBay.coverage = null; }
 	
 	showNextStep('coverage', str);
-	//show the counting button if it's not a craft- if there's nothing else you've done, you can shortcut right to the totals!
-	if (activeBay.category !== 'craft') showCountingSticky();
 	
 }
 
@@ -251,8 +257,6 @@ function setCraftSize(str) {
 	} else { activeBay.craftSize = null; }
 	
 	showNextStep('craftSize', str);
-	//crafts show the counting sticky here instead bc it's required for the math
-	showCountingSticky();
 }
 
 function setAnimation(str) {
@@ -280,23 +284,25 @@ function setBackground(str) {
 	doCounting();
 }
 
+//declare variables for the countingBlock and countingSticky as they are used by multiple functions
+const countingBlock  = document.getElementById('counting');
+const countingSticky = document.getElementById('counting'+'sticky');
+
 function showCountingSticky() {
 	//would have used hideSection() but this actually has mildly different needs
 	//code largely ripped from that method though
-	sectionToHide = document.getElementById('counting');
-	stickyButton  = document.getElementById('counting'+'sticky');
-	if(sectionToHide !== null && stickyButton !== null) {
-		sectionToHide.style.display = "none";
-		stickyButton.style.display  = "block";
+	if(countingBlock !== null && countingSticky !== null) {
+		countingBlock.style.display = "none";
+		countingSticky.style.display  = "block";
 	}
 }
 
 function hideCounting() {
-	document.getElementById('counting').style.display = "none";
+	countingBlock.style.display = "none";
 	if (checkOptionValidity('category') && checkOptionValidity('media') && checkOptionValidity('coverage')) {
-		document.getElementById('countingsticky').style.display = "block";
+		countingSticky.style.display = "block";
 	}
-	document.getElementById('countingsticky').innerHTML = "calculate totals";
+	countingSticky.innerHTML = "calculate totals";
 }
 
 function doCounting() {
@@ -319,9 +325,9 @@ function doCounting() {
 	//close all other blocks 
 	hideAll();
 	//show the counting block!
-	document.getElementById('counting').style.display = "block";
+	countingBlock.style.display = "block";
 	//change the sticky to say REcalculate, since it will reset the numbers if theyve changed
-	document.getElementById('countingsticky').innerHTML = "recalculate totals";
+	countingSticky.innerHTML = "recalculate totals";
 	
 }
 
@@ -371,5 +377,5 @@ function updateDropdowns() {
 		}
 	}
 	
-	console.log('dropdowns updated');
+	//console.log('dropdowns updated');
 }

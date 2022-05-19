@@ -10,6 +10,7 @@ body {
 }
 h1 {
 	font-size: 46px;
+	margin-bottom: 1vw;
 }
 .note {
 	font-size: 16px;
@@ -44,6 +45,8 @@ button:active, button.dropdown-content:active { background-color: #4e60a3; }
 .small.tiny {
 	padding: 0px 6px 0px 6px;
 	min-width: 16px;
+	max-width: 50px;
+	align-self: center;
 }
 
 .sticky {
@@ -189,6 +192,62 @@ option {
 	display:none;
 }
 
+.message-container {
+	position: -webkit-sticky; /*safari*/
+	position: fixed;
+	top: 0;
+	left: 0;
+	margin: 0px;
+	
+	width:100%;
+	align-items:stretch;
+}
+
+.message-border {
+	max-width: 100%;
+	
+	border: 2px solid #424b8900;
+	transition: border-color 1s;
+	
+}
+
+.message-border.show {
+	border-color: #c1e1ffff;
+}
+
+.message {
+	padding: 5px;
+	
+	background-color: #39386b00;
+	transition: background-color 2s;
+	
+	align-items: center;
+}
+
+.message.show {
+	background-color: #39386bff;
+}
+
+.message-content {
+	color: #c1e1ff00;
+	background-color: #39386b00;
+	transition: color 1s;
+}
+
+.message-content.show {
+	color: #c1e1ffff;
+}
+
+.message-content.show.hoverable:hover {
+	color: #fffcd6ff;
+	background-color: #424b89;
+}
+
+#message-button {
+	border: 0px solid;
+	align-self: center;
+	margin-left: auto; margin-right: auto;
+}
 
 @media only screen and (max-width: 800px) {
 	button, .stickytop {
