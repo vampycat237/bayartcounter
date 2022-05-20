@@ -4,9 +4,10 @@
 //both parameters are strings
 function hideSection(block, choice) {
 	//hide previous section & show its collapsed button
-	sectionToHide = document.getElementById(block);
-	stickyButton  = document.getElementById(block+'sticky');
+	const sectionToHide = document.getElementById(block);
+	const stickyButton  = document.getElementById(block+'sticky');
 	
+	var friendlyName, rawText, friendlyText;
 	//set the friendlyName of the block
 	if (block == 'craftSize') {
 		friendlyName = 'craft size';
@@ -50,17 +51,20 @@ function hideSection(block, choice) {
 		friendlyText = rawText;
 	}
 	
-	if(sectionToHide !== null && stickyButton !== null && sectionToHide.style.display !== "none") {
+	//if the choice is invalid, don't do it
+	if(sectionToHide !== null && stickyButton !== null && (checkOptionValidity(block, choice))) {
 		sectionToHide.style.display = "none";
 		stickyButton.style.display  = "block";
 		stickyButton.innerHTML      = friendlyName + ": " + friendlyText;
+	} else if (sectionToHide !== null && stickyButton !== null && !(checkOptionValidity(block, choice))) {
+		clearSection(block);
 	}
 }
 
 //clears the given section (removes its stickybutton too)
 function clearSection(block) {
-	sectionToClear = document.getElementById(block);
-	stickyButton   = document.getElementById(block+'sticky');
+	const sectionToClear = document.getElementById(block);
+	const stickyButton   = document.getElementById(block+'sticky');
 	if(sectionToClear !== null && stickyButton !== null) {
 		sectionToClear.style.display = "none";
 		stickyButton.style.display   = "none";
@@ -70,7 +74,11 @@ function clearSection(block) {
 //hides every block EXCEPT for counting
 function hideAll() {
 	for (let block of blockList) {
-		hideSection(block, choiceList[blockList.indexOf(block)]);
+		if (block == 'background') {
+			hideSection(block, background);
+		} else {
+			hideSection(block, activeBay[block]);
+		}
 	}
 }
 
@@ -82,9 +90,9 @@ function findNextStep(currentStep) {
 	case 'media':
 		return 'coverage';
 	case 'coverage':
-		if (category == '2d') {
+		if (activeBay.category == '2d') {
 			return 'lines';
-		}else if (category == 'craft') {
+		}else if (activeBay.category == 'craft') {
 			return 'craftSize';
 		} else {
 			return 'animation';
@@ -95,7 +103,7 @@ function findNextStep(currentStep) {
 	case 'craftSize':
 		return 'animation';
 	case 'animation':
-		if (animation !== null) {
+		if (activeBay.animation !== null) {
 			return 'animComplexity';
 		} else {
 			return 'background';
@@ -108,7 +116,7 @@ function findNextStep(currentStep) {
 	}
 }
 
-//updates the choiceList
+/*//updates the choiceList
 function updateChoiceList() {
 	choiceList[0] = category;
 	choiceList[1] = media;
@@ -132,56 +140,54 @@ function updateChoiceVars() {
 	animation  = choiceList[6];
 	animComplexity = choiceList[7];
 	background = choiceList[8];
-}
+}*/
 
 //checks for the existence of illegal matchups, starting at the top!
-//parameter is a string
-function legalityChecker(currentStep) {
+//currentStep is a string
+//b is the bayfox object we're checking, it defaults to the activeBay
+function legalityChecker(currentStep, b = activeBay) {
 	
 	//make our list of illegal stuff we did
-	let violationList = [];
+	const violationList = [];
 	
 	//top-level checks for category getting out of sync with media, they will simply re-assign themself to the correct one if the most recent thing that was messed with was the medium.
 	
-	//update the choice list
-	updateChoiceList();
-	
 	//If the user re-assigns the category, we bonk the mismatching medium!
-	if (choiceOptions.mediaOpt.indexOf(media) < 0 && currentStep == 'category' && media !== undefined) {
+	if (!checkOptionValidity('media') && currentStep == 'category' && b.media !== undefined) {
 		violationList.push("new media category "+category+" does not include medium "+media);
-		media = "illegal";
+		b.media = "illegal";
 		//throw "media-mismatch";
 	}
 	//check to see if mini is assigned to anything but flatcolor!
-	if (coverage == 'mini'   && media !== 'flatcolor') {
+	if (b.coverage == 'mini'   && b.media !== 'flatcolor') {
 		violationList.push("coverage 'mini' is flatcolor only");
-		coverage = "illegal";
+		b.coverage = "illegal";
 		//throw "invalid-coverage";
 	}
 	//check to see if mini has lineless value OR if grayscale has colored lines
-	if ((coverage == 'mini'  && lines == 'lineless') || (media == 'grayscale' && lines == 'colorlines')) {
+	if ((b.coverage == 'mini'  && b.lines == 'lineless') || (b.media == 'grayscale' && b.lines == 'colorlines')) {
 		violationList.push("lineart '"+lines+"' does not apply to medium "+media);
-		lines = "illegal";
+		b.lines = "illegal";
 		//throw "invalid-lineart";
 	}
 	//check to see if anything not 2d has lines, and if so get rid of em
-	if (category !== '2d'    && lines !== null && lines !== undefined) {
+	if (b.category !== '2d'    && b.lines !== null && b.lines !== undefined) {
 		violationList.push("lineart is 2d only");
-		lines = "illegal";
+		b.lines = "illegal";
 		//throw "invalid-lineart";
 	}
 	
 	//^same but with shading
-	if (category !== '2d'    && shading !== null && shading !== undefined) {
+	if (b.category !== '2d'    && b.shading !== null && b.shading !== undefined) {
 		violationList.push("shading is 2d only");
-		shading = "illegal";
+		b.shading = "illegal";
 		//throw "invalid-shading";
 	}
 	
 	//makes sure non-crafts don't have craftSize
-	if (category !== 'craft' && craftSize !== null && craftSize !== undefined) {
+	if (b.category !== 'craft' && b.craftSize !== null && b.craftSize !== undefined) {
 		violationList.push("craftSize is craft only");
-		craftSize = "illegal";
+		b.craftSize = "illegal";
 		//throw "invalid-craftSize"
 	}
 	
@@ -193,14 +199,14 @@ function legalityChecker(currentStep) {
 	
 	//OKAY NOW!! clear the stickybuttons for everything that's changed to null!!
 	for (let block of blockList) {
-		matchingBlock = document.getElementById(block);
-		matchingButton = document.getElementById(block + 'sticky');
+		var matchingBlock = document.getElementById(block);
+		var matchingButton = document.getElementById(block + 'sticky');
 		
-		let choice = choiceList[blockList.indexOf(block)];
+		//let choice = choiceList[blockList.indexOf(block)];
 		//console.log('checking choice '+choice);
 		
-		if (choice == "illegal") {
-			choiceList[blockList.indexOf(block)] = null;
+		if (block !== 'background' && b[block] == "illegal") {
+			b[block] = null;
 			if (matchingBlock !== null && matchingButton !== null) {
 				console.log("clearing " + block);
 				clearSection(block);
@@ -209,36 +215,41 @@ function legalityChecker(currentStep) {
 	}
 	
 	//update the variables to match the list
-	updateChoiceVars();
+	//updateChoiceVars();
 }
 
-function getChoiceOptions(blockId) {
+//gets the choiceOptions for this bay
+function getChoiceOptions(blockId, b = activeBay) {
 	//returns the list from the choiceOptions object that matches with the block id passed in
 	switch (blockId) {
-		case 'category':  return ['2d', '3d', 'craft']; break;
-		case 'media':     return choiceOptions.mediaOpt; break;
-		case 'coverage':  return choiceOptions.coverageOpt; break;
-		case 'lines':     return choiceOptions.linesOpt; break;
-		case 'shading':   return choiceOptions.shadingOpt; break;
-		case 'craftSize': return choiceOptions.craftSizeOpt; break;
-		case 'animation': return choiceOptions.animationOpt; break;
-		case 'animComplexity': return choiceOptions.animComplexOpt; break;
-		case 'background': return choiceOptions.backgroundOpt; break;
+		case 'category':  return ['2d', '3d', 'craft'];
+		case 'media':     return b.mediaOpt;
+		case 'coverage':  return choiceOptions.coverageOpt;
+		case 'lines':     return choiceOptions.linesOpt;
+		case 'shading':   return choiceOptions.shadingOpt;
+		case 'craftSize': return choiceOptions.craftSizeOpt;
+		case 'animation': return choiceOptions.animationOpt;
+		case 'animComplexity': return choiceOptions.animComplexOpt;
+		case 'background': return choiceOptions.backgroundOpt;
 		default: return null;
 	}
 }
 
 function checkOptionValidity(blockId, choice = "not given") {
 	if (choice == "not given") {
-		updateChoiceList();
-		choice = choiceList[blockList.indexOf(blockId)];
+		if (blockId == "background") {
+			choice = background;
+		} else {
+			//turns out js objects are like. a hybrid of java objects and python dicts. so i can do this
+			choice = activeBay[blockId];
+		}
 	}
-	console.log("checking " + blockId + " " + choice);
+	//console.log("checking " + blockId + " " + choice);
 	//choiceOptions.mediaOpt.indexOf(str)
-	if (getChoiceOptions(blockId).indexOf(choice) > -1) {
+	if (getChoiceOptions(blockId) !== null && getChoiceOptions(blockId).indexOf(choice) > -1) {
 		//console.log(blockId + ' ' + choice + ' is valid');
 		return true;
-	} else if (media == 'flatcolor' && choice == 'mini') {
+	} else if (activeBay.media == 'flatcolor' && choice == 'mini') {
 		return true;
 	}
 	else {
@@ -248,9 +259,59 @@ function checkOptionValidity(blockId, choice = "not given") {
 }
 
 function displayShellCounts() {
-	countingProofBlock = document.getElementById('countingproof');
-	shellTotalBlock    = document.getElementById('shelltotal');
+	const countingProofBlock = document.getElementById('countingproof');
+	const shellTotalBlock    = document.getElementById('shelltotal');
 	
 	countingProofBlock.innerHTML = "counting: " + userCounting;
 	shellTotalBlock.innerHTML = "total: " + userTotal;
+}
+
+
+function isBlank(x, y='n/a') {
+	if (y == 'n/a') {
+		return (x == null || x == undefined);
+	} else {
+		return ((x == null || x == undefined)&&(y == null || y == undefined));
+	}
+}
+
+function blankOrEqual(x, y) {
+	return (x == y || isBlank(x, y));
+}
+
+const messageBorder = document.getElementById('message-border');
+const messageDiv    = document.getElementById('message');
+const messageText   = document.getElementById('message-content');
+const messageButton = document.getElementById('message-button');
+
+function showMessage(message, timeToShow = 5000) {
+	messageBorder.style.display = "block";
+	
+	messageText.innerHTML   = message;
+	messageText.className   = "message-content show";
+	messageDiv.className    = "column message show";
+	messageBorder.className = "message-border show";
+	messageButton.className = "smallish message-content show hoverable";
+	
+	setTimeout(hideMessage, timeToShow);
+}
+
+function hideMessage() {
+	messageText.className   = "message-content";
+	messageDiv.className    = "column message";
+	messageBorder.className = "message-border";
+	messageButton.className = "smallish clear message-content hoverable";
+	
+	setTimeout(hideMessage2, 3000);
+}
+
+function hideMessage2() {
+	messageBorder.style.display = "none";
+}
+
+//on page refresh, make sure the input for activeBayCount gets reset to 1 because otherwise it's quite confusing!
+//^this executes on page load AND when bays are changed
+//by default it resets it to 1, but it can also set it to a given count
+function resetActiveBayCount(count = 1) {
+	bayCountInput.value = count;
 }

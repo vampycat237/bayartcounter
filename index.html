@@ -5,9 +5,122 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel = "stylesheet" type = "text/css" href = "style.css" />
 </head>
-<body>
+<body onload="resetActiveBayCount()">
 	<h1>shell counting helper</h1>
-	<div class="stickytop">
+	
+	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
+	<div class="column message-container">
+	<div id="message-border" class="message-border" style="display:none">
+		<div id="message" class="column message">
+			<span id="message-content" class="message-content">test message</span>
+			<button id="message-button" class="smallish clear message-content hoverable" onclick="hideMessage()">ok</button>
+		</div>
+	</div>
+	</div>
+	
+	<!--debug menu (set to `style="display: none"` later, so it can still be enabled if needed)-->
+	<div class="column stickytop multibay sticky" style="display:none">
+		<p class="note">debug menu</p>
+		<button class="small" onclick="console.log(activeBay.toString())">log activeBay toString()</button>
+		
+		<button class="small" onclick="console.log(activeBay)">log activeBay object</button>
+		
+		<button class="small" onclick="console.log(bayList)">log bayList</button>
+		
+		<button class="small" onclick="showMessage('test message')">show test message</button>
+	</div>
+	
+	<div class="row stickytop multibaymanager">
+		<!--changes the amount of bays that have the values of the active bay-->
+		<div class="row small sticky multibay">
+			<label for="activeBayCount" style="padding-right: 2px;"># of bays with these details:</label>
+			<input id="activeBayCount" type="number" value="1" min="1"></input>
+		</div>
+		
+		<!--addnewbay asks user for a group of specifications (a Bayfox object) to clone, defaulting to null/not cloning. once the user confirms, it creates a new Bayfox and switches that one to be active.-->
+		
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('add')">add new...</button>
+		<!--<span style="align-self: center">switch bay...</span>-->
+			<div id="add" class="column dropdown-content">
+			<label for="addbay">choose a bay to clone:</label>
+			<select name="addbay" id="addbay">
+				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
+				<option style="display:block" selected="true" value="-1">don't clone</option>
+				<option style="display:block" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
+			</select>
+			<button class="dropdown-content" type="button" onclick="addNewBay(addbay.value)">add new bay</button>
+			<button class="dropdown-content" type="button" onclick="toggleDropdown('add')">cancel</button>
+			</div>
+		</div>
+		
+		<!--switchbay shows a dropdown of the bays you can switch to, and when you click one it calls switchActiveBay() & passes in the bay you chose from the list-->
+		
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('switch')">switch bay...</button>
+		<!--<span style="align-self: center">switch bay...</span>-->
+			<div id="switch" class="column dropdown-content">
+			<label for="switchbay">choose a bay to switch to:</label>
+			<select name="switchbay" id="switchbay">
+				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
+				<option selected="true" value="-1">--select a bayfox--</option>
+				<option style="display:block" disabled="true" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
+			</select>
+			<button class="dropdown-content" type="button" onclick="switchActiveBay(findBayfox(switchbay.value))">switch to this bay</button>
+			<button class="dropdown-content" type="button" onclick="toggleDropdown('switch')">cancel</button>
+			</div>
+		</div>
+		
+		<!--deletebay has a dropdown of all bays. you select which bay you want to delete then push the red remove button-->
+		
+		<div class="column small sticky multibay dropdown">
+		<button class="small sticky clear dropdown" onclick="toggleDropdown('remove')">remove...</button>
+			<div id="remove" class="column dropdown-content">
+			<label for="removebay">choose a bay to remove:</label>
+			<select name="removebay" id="removebay">
+				<!--class is for hiding/showing options, value is for code stuff, text is the display!-->
+				<option selected="true" value="-1">--select a bayfox--</option>
+				<option style="display:block" disabled="true" value="activeBay"></option>
+				<option class="0" value="0"></option>
+				<option class="1" value="1"></option>
+				<option class="2" value="2"></option>
+				<option class="3" value="3"></option>
+				<option class="4" value="4"></option>
+				<option class="5" value="5"></option>
+				<option class="6" value="6"></option>
+				<option class="7" value="7"></option>
+				<option class="8" value="8"></option>
+				<option class="9" value="9"></option>
+			</select>
+			<button class="dropdown-content red" type="button" onclick="toggleDropdown('remove'); removeBay(findBayfox(removebay.value))">remove this bay</button>
+			<button class="dropdown-content" type="button" onclick="toggleDropdown('remove')">cancel</button>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<div class="row stickytop">
 		<button id="categorysticky" class="sticky" onclick="revert('category')" style="display:none">category</button>
 		
 		<button id="mediasticky" class="sticky" onclick="revert('media')" style="display:none">media</button>
@@ -143,7 +256,7 @@
 		<button id="countinghider" class="counting" onclick="hideCounting()">hide total</button>
 		<p id="countingproof"></p>
 		<p id="shelltotal">total: </p>
-	<div>
+	</div>
 	</section>
 	<!--stickybutton-->
 	<button id="countingsticky" class="counting" onclick="doCounting()" style="display:none">calculate totals</button>
@@ -152,5 +265,20 @@
 	<script src="artmanager.js"></script>
 	<script src="arthelper.js"></script>
 	<script src="shellcounter.js"></script>
+	<script src="baymanager.js"></script>
+	
+	<!--all event listeners go below! their functionality might be in other scripts, but the event listeners go here bc it's easier on my noggin-->
+	<script>
+		//activeBayCount
+		const bayCountInput = document.querySelector('input');
+
+		bayCountInput.addEventListener('input', updateActiveBayCount);
+
+		function updateActiveBayCount(count) {
+			//console.log(count.target.value);
+			activeBay.count = count.target.value;
+		}
+		
+	</script>
 </body>
 </html>
