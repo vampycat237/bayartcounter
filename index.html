@@ -5,25 +5,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel = "stylesheet" type = "text/css" href = "style.css" />
 </head>
-<body>
+<body onload="resetActiveBayCount()">
 	<h1>shell counting helper</h1>
 	
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
 	<div class="column message-container">
-	<div id="message-border" class="message-border">
+	<div id="message-border" class="message-border" style="display:none">
 		<div id="message" class="column message">
 			<span id="message-content" class="message-content">test message</span>
-			<button id="message-button" class="small clear message-content hoverable" onclick="hideMessage()">ok</button>
+			<button id="message-button" class="smallish clear message-content hoverable" onclick="hideMessage()">ok</button>
 		</div>
 	</div>
 	</div>
 	
 	<!--debug menu (set to `style="display: none"` later, so it can still be enabled if needed)-->
-	<div class="row stickytop multibay sticky" style="display:none">
+	<div class="column stickytop multibay sticky" style="display:none">
 		<p class="note">debug menu</p>
-		<button class="small tiny" onclick="console.log(activeBay.toString())">log activeBay</button>
-		<button class="small tiny" onclick="console.log(bayList)">log bayList</button>
-		<button class="small tiny" onclick="showMessage('test message')">show test message</button>
+		<button class="small" onclick="console.log(activeBay.toString())">log activeBay toString()</button>
+		
+		<button class="small" onclick="console.log(activeBay)">log activeBay object</button>
+		
+		<button class="small" onclick="console.log(bayList)">log bayList</button>
+		
+		<button class="small" onclick="showMessage('test message')">show test message</button>
 	</div>
 	
 	<div class="row stickytop multibaymanager">
@@ -82,7 +86,7 @@
 				<option class="8" value="8"></option>
 				<option class="9" value="9"></option>
 			</select>
-			<button class="dropdown-content" type="button" onclick="console.log(switchbay.value)">switch to this bay</button>
+			<button class="dropdown-content" type="button" onclick="switchActiveBay(findBayfox(switchbay.value))">switch to this bay</button>
 			<button class="dropdown-content" type="button" onclick="toggleDropdown('switch')">cancel</button>
 			</div>
 		</div>
@@ -108,7 +112,7 @@
 				<option class="8" value="8"></option>
 				<option class="9" value="9"></option>
 			</select>
-			<button class="dropdown-content red" type="button" onclick="console.log(removebay.value)">remove this bay</button>
+			<button class="dropdown-content red" type="button" onclick="toggleDropdown('remove'); removeBay(findBayfox(removebay.value))">remove this bay</button>
 			<button class="dropdown-content" type="button" onclick="toggleDropdown('remove')">cancel</button>
 			</div>
 		</div>
@@ -271,7 +275,7 @@
 		bayCountInput.addEventListener('input', updateActiveBayCount);
 
 		function updateActiveBayCount(count) {
-			console.log(count.target.value);
+			//console.log(count.target.value);
 			activeBay.count = count.target.value;
 		}
 		

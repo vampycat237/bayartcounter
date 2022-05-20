@@ -189,11 +189,11 @@ function countStackables(b) {
 	switch (b.lines) {
 		case 'colorlines':
 			userTotal += shellRates.ratesLines[1] * b.count;
-			b.counting.push(" + " + shellRates.ratesLines[1] + " (colored lineart)");
+			b.counting.push(shellRates.ratesLines[1] + " (colored lineart)");
 			break;
 		case 'lineless':
 			userTotal += shellRates.ratesLines[2] * b.count;
-			b.counting.push(" + " + shellRates.ratesLines[2] + " (lineless)");
+			b.counting.push(shellRates.ratesLines[2] + " (lineless)");
 			break;
 		/*default:
 			//puts an empty string in to make sure the indeces are all correct
@@ -203,19 +203,19 @@ function countStackables(b) {
 	switch (b.shading) {
 		case 'minimal':
 			userTotal += shellRates.ratesShading[1] * b.count;
-			userCounting += " + " + shellRates.ratesShading[1] + " (minimal shading)";
+			b.counting.push(shellRates.ratesShading[1] + " (minimal shading)");
 			break;
 		case 'basic':
 			userTotal += shellRates.ratesShading[2] * b.count;
-			userCounting += " + " + shellRates.ratesShading[2] + " (basic shading)";
+			b.counting.push(shellRates.ratesShading[2] + " (basic shading)");
 			break;
 		case 'complex':
 			userTotal += shellRates.ratesShading[3] * b.count;
-			userCounting += " + " + shellRates.ratesShading[3] + " (complex shading)";
+			b.counting.push(shellRates.ratesShading[3] + " (complex shading)");
 			break;
 		case 'painting':
 			userTotal += shellRates.ratesShading[4] * b.count;
-			userCounting += " + " + shellRates.ratesShading[4] + " (painted shading)";
+			b.counting.push(shellRates.ratesShading[4] + " (painted shading)");
 			break;
 	}
 	//now animations
@@ -224,15 +224,15 @@ function countStackables(b) {
 			switch (b.animComplexity) {
 				case 'easy':
 					userTotal += shellRates.ratesTweens[1] * b.count
-					userCounting += " + " + shellRates.ratesTweens[1] + " (simple tween animation)";
+					b.counting.push(shellRates.ratesTweens[1] + " (simple tween animation)");
 					break;
 				case 'simple':
 					userTotal += shellRates.ratesTweens[2] * b.count
-					userCounting += " + " + shellRates.ratesTweens[2] + " (complex tween animation)";
+					b.counting.push(shellRates.ratesTweens[2] + " (complex tween animation)");
 					break;
 				case 'complexa':
 					userTotal += shellRates.ratesTweens[3] * b.count
-					userCounting += " + " + shellRates.ratesTweens[3] + " (fluid tween animation)";
+					b.counting.push(shellRates.ratesTweens[3] + " (fluid tween animation)");
 					break;
 			}
 			break;
@@ -240,15 +240,15 @@ function countStackables(b) {
 			switch (b.animComplexity) {
 				case 'easy':
 					userTotal += shellRates.ratesAnimated[1] * b.count
-					userCounting += " + " + shellRates.ratesAnimated[1] + " (easy hand-drawn animation)";
+					b.counting.push(shellRates.ratesAnimated[1] + " (easy hand-drawn animation)");
 					break;
 				case 'simple':
 					userTotal += shellRates.ratesAnimated[2] * b.count
-					userCounting += " + " + shellRates.ratesAnimated[2] + " (simple hand-drawn animation)";
+					b.counting.push(shellRates.ratesAnimated[2] + " (simple hand-drawn animation)");
 					break;
 				case 'complexa':
 					userTotal += shellRates.ratesAnimated[3] * b.count
-					userCounting += " + " + shellRates.ratesAnimated[3] + " (complex hand-drawn animation)";
+					b.counting.push(shellRates.ratesAnimated[3] + " (complex hand-drawn animation)");
 					break;
 			}
 			break;

@@ -331,16 +331,9 @@ function doCounting() {
 	
 }
 
-function switchBays(newActiveBay) {
-	//this handles the backend stuff
-	switchActiveBay(newActiveBay);
-	
-	//now we use hideAll to actually update the stickies! big brain
-	hideAll();
-	
-}
-
 function toggleDropdown(divId) {
+	console.log("toggling dropdown: "+divId);
+	
 	updateDropdowns();
 	const dropdown = document.getElementById(divId);
 	if (dropdown.style.display == "block") {
@@ -359,7 +352,7 @@ function updateDropdowns() {
 		if (thing.value == "activeBay") {
 			//it's showing activeBay. we don't need to show or hide it
 			//just update the innerHTML
-			thing.innerHTML = activeBay.toString() + " (active)";
+			thing.innerHTML = activeBay.toString() + " (current)";
 			
 		} else if (thing.value == -1) {
 			//it's the default selected bit, we don't need to do anything.

@@ -74,7 +74,11 @@ function clearSection(block) {
 //hides every block EXCEPT for counting
 function hideAll() {
 	for (let block of blockList) {
-		hideSection(block, activeBay[block]);
+		if (block == 'background') {
+			hideSection(block, background);
+		} else {
+			hideSection(block, activeBay[block]);
+		}
 	}
 }
 
@@ -287,7 +291,7 @@ function showMessage(message, timeToShow = 5000) {
 	messageText.className   = "message-content show";
 	messageDiv.className    = "column message show";
 	messageBorder.className = "message-border show";
-	messageButton.className = "small tiny message-content show hoverable";
+	messageButton.className = "smallish message-content show hoverable";
 	
 	setTimeout(hideMessage, timeToShow);
 }
@@ -296,11 +300,18 @@ function hideMessage() {
 	messageText.className   = "message-content";
 	messageDiv.className    = "column message";
 	messageBorder.className = "message-border";
-	messageButton.className = "small tiny clear message-content hoverable";
+	messageButton.className = "smallish clear message-content hoverable";
 	
 	setTimeout(hideMessage2, 3000);
 }
 
 function hideMessage2() {
 	messageBorder.style.display = "none";
+}
+
+//on page refresh, make sure the input for activeBayCount gets reset to 1 because otherwise it's quite confusing!
+//^this executes on page load AND when bays are changed
+//by default it resets it to 1, but it can also set it to a given count
+function resetActiveBayCount(count = 1) {
+	bayCountInput.value = count;
 }

@@ -100,7 +100,7 @@ class Bayfox {
 			if (v == 'count') {
 				str += this[v]+"x ";
 			}
-			else if (this[v] !== undefined && v !== 'mediaOpt' && v !== 'category' && v !== 'shellRates' && v !== 'counting') {
+			else if (!isBlank(this[v]) && v !== 'mediaOpt' && v !== 'category' && v !== 'shellRates' && v !== 'counting') {
 				str += this[v]+" ";
 			}
 		}
@@ -129,7 +129,11 @@ let activeBay = new Bayfox();
 function switchActiveBay(newActiveBay) {
 	//PUT ACTIVEBAY AWAY
 	if(!storeActiveBay()) {
-		console.log('discarded '+activeBay+' when switching bays. reason: activeBay did not have enough information to be stored');
+		console.log('could not switch bays. reason: activeBay did not have enough information to be stored');
+		showMessage('could not switch bays. reason: activeBay did not have enough information to be stored', 30000);
+		
+		toggleDropdown('switch');
+		return;
 	}
 	
 	//MAKE NEWACTIVEBAY THE ACTIVEBAY
@@ -145,16 +149,27 @@ function switchActiveBay(newActiveBay) {
 			bayList.splice(bayList.indexOf(b), 1);
 		}
 	}
+	//hides the switch dropdown menu
+	toggleDropdown('switch');
+	
+	//set the activebaycount to the correct bit
+	resetActiveBayCount(activeBay.count);
+	
+	//use hideAll to update blocks & clear empty ones
+	hideAll();
 	
 }
 
 //returns true if it's removed, false if not
 function removeBay(b) {
+	//don't toggle the dropdown here, it's handled by the button
+	
 	if (bayList.indexOf(b) > -1) {
 		bayList.splice(bayList.indexOf(b), 1);
 		//console.log('bay removed from list!');
 		return true;
 	}
+	showMessage("failed to remove bay from list", 10000);
 	console.log('failed to remove bay from list');
 	return false;
 }
@@ -165,7 +180,7 @@ function removeBay(b) {
 //put away activeBay - returns true if it was added, false if not
 function storeActiveBay() {
 	//check validity of the active bay. can we even store it?
-	if (isBlank(activeBay.media, activeBay.coverage)) {
+	if (!((checkOptionValidity('media') && checkOptionValidity('coverage')) && ((activeBay.category !== 'craft') || (checkOptionValidity('craftSize')) ) )) {
 		//if it doesnt have a medium or a coverage, we can't store it
 		return false;
 		
@@ -231,9 +246,28 @@ function addNewBay(value) {
 	toggleDropdown('add');
 	//console.log('added new bayfox');
 	
+	//set the activebaycount to the correct bit
+	resetActiveBayCount(activeBay.count);
+	
 	//use hideAll to update blocks & clear empty ones
 	hideAll();
 	
 	//and prompt the artmanager to show the next thing we need to change
 	showNextStep('category', null);
+}
+
+//accepts an index (or "activeBay", or -1) and returns a Bayfox object
+function findBayfox(index) {
+	if (index < 0 || index > bayList.size) {
+		//index is too large or too small, therefore invalid
+		return null;
+		
+	} else if (index == "activeBay") {
+		//return the activeBay
+		return activeBay;
+		
+	} else {
+		//it's a valid index!
+		return bayList[index];
+	}
 }
