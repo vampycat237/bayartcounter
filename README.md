@@ -1,4 +1,4 @@
-# bayartcounter.github.io
+# bayartcounter
 NOTE: Multi-bay support is still a WORK IN PROGRESS! However it is functional with most planned features at this time :)
 Current Multi-bay support features:
 - Changing the amount of bays in a piece that have the same specifications (example: 2 flatcolor fullbodies with minimal shading and a tween animation)
