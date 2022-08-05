@@ -256,6 +256,28 @@ option {
 	margin-left: auto; margin-right: auto;
 }
 
+/*save/load things*/
+div.saveload {
+	/*styling for the saveload div goes here*/
+	width: 10%;
+	margin-bottom: 1vw;
+	
+}
+button.saveload {
+	/*common save/load button styling goes here*/
+	margin-left: 0.5vw; margin-right: 0.5vw;
+	min-width: 10%;
+	max-width: 100px;
+}
+
+#save {
+	/*save image link goes here*/
+}
+
+#load {
+	/*load image link goes here*/
+}
+
 @media only screen and (max-width: 800px) {
 	button, .stickytop {
 		min-width: 100%;

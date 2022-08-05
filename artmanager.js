@@ -349,7 +349,9 @@ function updateDropdowns() {
 	
 	for (thing of dropdowns) {
 		//console.log(thing.value);
-		if (thing.value == "activeBay") {
+		if (thing.className == "load") {
+			//TODO - update cookie dropdowns
+		} else if (thing.value == "activeBay") {
 			//it's showing activeBay. we don't need to show or hide it
 			//just update the innerHTML
 			thing.innerHTML = activeBay.toString() + " (current)";

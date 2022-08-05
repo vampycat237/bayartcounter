@@ -8,7 +8,7 @@
 	
 	<button onclick="console.log(locate('(paper headshot)'))">test 'paper headshot'</button>
 	
-	<button onclick="console.log(locate('(colored lineart)'))">test  'colored lineart'</button>
+	<button onclick="console.log(locate('(colored lineart)'))">test 'colored lineart'</button>
 	
 	<button onclick="console.log(locate('(lineless)'))">test 'lineless'</button>
 	
@@ -37,6 +37,15 @@
 	
 	<p id='countingproof'>counting proof goes here</p>
 	<p id='shelltotal'>shell totals goes here</p>
+	
+	<p>cookie tests</p>
+	<button onclick="initCookie()">initialize (set A)</button>
+	<button onclick="initCookieB()">initialize (set B)</button>
+	<button onclick="setCookie(0, saveName = 'test save')">save (slot 0)</button>
+	<button onclick="setCookie(1, saveName = 'test save2')">save (slot 1)</button>
+	<button onclick="console.log(parseCookies())">log cookies</button>
+	<button onclick="console.log(getCookie(0))">retrieve & print slot 0</button>
+	<button onclick="">retrieve & print array of bay in slot 0</button>
 	
 	
 	<script>
@@ -77,11 +86,61 @@
 		}
 		recallActiveBay();
 	}
+	
+	function initCookie() {
+		//fill out the activeBay - we have to set stuff directly bc we can't have readyNextStep called lmao
+		//this one will be 2 flatcolor minis
+		activeBay.category = '2d';
+		activeBay.media    = 'flatcolor';
+		activeBay.coverage = 'mini';
+		activeBay.count    = 2;
+		//print this bay to console
+		console.log('created test bay 1: ' + activeBay);
+		
+		//make a new bay, fill it out, and save it to the bayList
+		//this one will be 3 grayscale headshots, cloned from activeBay
+		const bay2 = new Bayfox(true, activeBay, 3);
+		bay2.media    = 'grayscale';
+		bay2.coverage = 'headshot';
+		bayList.push(bay2);
+		
+		console.log('created test bay 2: ' + bay2);
+		
+		//make a new bay & switch to it
+		//this one will be 1 3d halfbody, not cloned
+		const bay3 = new Bayfox();
+		
+		bay3.category = '3d';
+		bay3.media    = '3dflat';
+		bay3.coverage = 'halfbody';
+		bayList.push(bay3);
+		//print this bay to console
+		console.log('created test bay 3: ' + bay3);
+	}
+	
+	function initCookieB() {
+		//make a little testing set like above
+		activeBay.category  = 'craft';
+		activeBay.craftSize = 'model';
+		activeBay.media     = 'food';
+		activeBay.coverage  = 'headshot';
+		activeBay.count     = 4;
+		//print this bay to console
+		console.log('created test bay 1: ' + activeBay);
+		
+		//erase bayList
+		for (let b in bayList) {
+			removeBay(bayList[b]);
+		}
+		console.log('cleared bayList: ' + bayList);
+	}
+	
 	</script>
 	
 	<script src="artmanager.js"></script>
 	<script src="arthelper.js"></script>
 	<script src="shellcounter.js"></script>
 	<script src="baymanager.js"></script>
+	<script src="saveload.js"></script>
 </body>
 </html>

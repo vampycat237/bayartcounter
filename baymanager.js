@@ -229,7 +229,7 @@ function addNewBay(value) {
 		return;
 	}
 	
-	if (value < 0 || value > bayList.size) {
+	if (value < 0 || value >= bayList.size) {
 		console.log('added new empty bay');
 		//in this case, we make a new Bayfox WITHOUT cloning
 		activeBay = new Bayfox();
