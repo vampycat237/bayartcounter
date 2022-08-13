@@ -275,6 +275,7 @@ function countStatic() {
 
 function buildCountingObj() {
 	//this function populates the countingObj's arrays with everything the foxes have accumulated in their counting arrays
+	//it no longer recognizes them as seperate groups of bays, just a bunch of values
 	
 	//loop thru each bayfox object
 	for (let b of bayList) {
@@ -292,12 +293,16 @@ function buildCountingObj() {
 			} else if (isInMap) {
 				//it's in the map already!
 				//don't add it to the map, but increment the counter by the bay's count value
-				countingObj[index][str] += b.count;
+				//unfortunately we have to do this Weirdly because javascript maps are Weird.
+				countingObj[index].set(str, countingObj[index].get(str)+b.count);
+				//countingObj[index][str] += parseInt(b.count);
+				//console.log("increased count of '"+str+"' by "+b.count+" for a total of x"+countingObj[index].get(str));
 				
 			} else {
 				//it's not in the map yet!
 				//add it to the appropriate map
-				countingObj[index].set(str, b.count);
+				countingObj[index].set(str, parseInt(b.count));
+				//console.log("created new map entry under index "+index+" for '"+str+"' x"+b.count);
 				
 			}
 		}
@@ -306,6 +311,7 @@ function buildCountingObj() {
 }
 
 function buildCountingStr() {
+	//builds the counting string using the countingObj
 	/* format example:
 	 * (200 (flatcolor fullbody)) x 2 + 250 (depth background)
 	 * loop thru all bays looking for bits to add to our string
@@ -352,7 +358,6 @@ function locate(str) {
 			return [countingObj.indexOf(item), true];
 		}
 	}
-	//if we get here, it ain't here sister! return null for the key and -1 for the index so we know its SUPER NOT THERE
 	
 	/*INCONSISTENCIES BTWN LISTS & COUNTING STR:
 	 * complex - shading has "complex", animation has "complexa", background has "complexb", but they are ALL put in as "complex".
@@ -369,6 +374,7 @@ function locate(str) {
 	strArray = str.substring(str.indexOf("(")+1,str.indexOf(")")).split(" ");
 	
 	for (val of strArray) {
+		//val is in fact a string not an index
 		//check to see if it goes in "base" (if it has a coverage in it)
 		if (choiceOptions.coverageOpt.indexOf(val) > -1 || val == 'mini') {
 			return [0, false];
@@ -391,4 +397,37 @@ function locate(str) {
 	
 	//if we get here something's wrong, return null for the index
 	return [null, false];
+}
+
+function buildCountingStr2() {
+	//builds the counting string using individual bays, no countingObj involved
+	/* format example:
+	 * (200 (flatcolor fullbody) + 30 (colored lineart)) x 2 + 250 (depth background)
+	 * loop thru all bays looking for bits to add to our string
+	 * and when we find a duplicate we like? make note of that i guess, by increasing how much of it we've seen?
+	 * this doesn't make sense, i'm gonna look at these comments later and be like h u h ?
+	 
+	 * currently my big brain idea is to track the count in a seperate array that has to keep the same indeces lol.
+	*/
+	
+	//and then declare the (local) array where we collect all the strings in order and such
+	const countingBuilder = [];
+	
+	//then we use that information to create our counting string
+	for (var b of bayList) {
+		//loops thru bay objects, reading their counting lists and their counts
+		//b.counting holds a bay's counting info
+		//b.count holds, well, how many bays there are that use this
+		
+		//if count is greater than 1 we add the text like this: (text) x count
+		if (b.count > 1) {
+			countingBuilder.push("( " + b.counting.join(" + ") + " ) x" + b.count);
+		}
+		//else we just add the text
+		else {
+			countingBuilder.push(b.counting.join(" + "));
+		}
+	}
+	
+	userCounting = countingBuilder.join(" + ");
 }

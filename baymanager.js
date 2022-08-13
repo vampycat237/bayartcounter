@@ -230,15 +230,18 @@ function addNewBay(value) {
 	}
 	
 	if (value < 0 || value > bayList.size) {
+		showMessage('added new empty bay');
 		console.log('added new empty bay');
 		//in this case, we make a new Bayfox WITHOUT cloning
 		activeBay = new Bayfox();
 		
 	} else if (value == "activeBay") {
+		showMessage('added new bay cloned from ' + activeBay.toString());
 		//we should make a new bayfox cloning the ACTIVE bay
 		activeBay = new Bayfox(true, activeBay);
 		
 	} else {
+		showMessage('added new bay cloned from ' + bayList[value].toString());
 		console.log('added new bay cloned from ' + bayList[value].toString());
 		activeBay = new Bayfox(true, bayList[value]);
 	}

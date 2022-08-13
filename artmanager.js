@@ -332,7 +332,7 @@ function doCounting() {
 }
 
 function toggleDropdown(divId) {
-	console.log("toggling dropdown: "+divId);
+	//console.log("toggling dropdown: "+divId);
 	
 	updateDropdowns();
 	const dropdown = document.getElementById(divId);
