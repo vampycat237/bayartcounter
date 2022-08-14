@@ -1,9 +1,37 @@
+:root {
+	/*palette defaults*/
+	--bluebg:     #2a2849; /*page background color*/
+	
+	--bluetext:   #c1e1ff; /*text & border color*/
+	--bluebutton: #39386b; /*button default bg color*/
+	--bluehover:  #424b89; /*button default hover color*/
+	--blueactive: #4e60a3; /*button default active color*/
+	
+	/*faded: used for stickybuttons*/
+	--fadedtext:   #9bb6db; /*text & border color*/
+	--fadedbutton: #322e56; /*button bg color*/
+	--fadedhover:  #39386b; /*button hover color, matches bluebutton*/
+	--fadedactive: #424b89; /*button active color, matches bluehover*/
+	
+	/*green: used for counting*/
+	--greentext:   #c5d8b2; /*text & border color*/
+	--greenbutton: #356137; /*button bg color*/
+	--greenhover:  #4f8046; /*button hover color*/
+	--greenactive: #85a15e; /*button active color*/
+	
+	/*red: used for delete buttons and such*/
+	--redtext:   #FF97B6; /*text & border color*/
+	--redbutton: #851C1C; /*button bg color*/
+	--redhover:  #AD2742; /*button hover color*/
+	--redactive: #B82D5D; /*button active color*/
+}
+
 body {
-	background-color: #2a2849;
-	margin: 2vw 5vw 2vw 5vw;
+	background-color: var(--bluebg);
+	margin: 2vw 2vw 2vw 2vw;
 	
 	/*font defaults*/
-	color: #c1e1ff;
+	color: var(--bluetext);
 	font-size: 30px;
 	text-align: center;
 	font-family: sans-serif;
@@ -15,24 +43,26 @@ h1 {
 .note {
 	font-size: 16px;
 }
-button {
+button, a.button {
 	/*font stuff again bc buttons aren't that smart*/
-	color: #c1e1ff;
+	color: var(--bluetext);
 	font-size: 30px;
 	text-align: center;
 	font-family: sans-serif;
+	box-sizing: border-box;
 	
 	margin-left: auto; margin-right: auto;
 	padding: 15px;
-	border: 2px solid #c1e1ff;
+	border: 2px solid var(--bluetext);
 	margin-bottom: 1vw;
-	background-color: #39386b;
-	min-width: 75%;
+	background-color: var(--bluebutton);
+	/*min-width: 75%;*/
+	min-width: 100%;
 }
 
-button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: #424b89; }
+button:hover, a.button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: var(--bluehover); }
 
-button:active, button.dropdown-content:active { background-color: #4e60a3; }
+button:active, a.button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover .title-button, .dropdown-holder:focus .title-button { background-color: var(--blueactive); }
 
 .small {
 	font-size: 16px !important;
@@ -59,36 +89,42 @@ button:active, button.dropdown-content:active { background-color: #4e60a3; }
 .sticky {
 	min-width: 25%;
 	flex: 1 1 0%;
-	background-color: #322e56;
-	border: 2px solid #9bb6db;
-	color:            #9bb6db;
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
 	font-size: 26px;
 	margin-bottom: 0px;
 }
 
-.sticky:hover  { background-color: #39386b; }
-
-.sticky:active { background-color: #424b89; }
-
-button.counting {
-	background-color: #356137;
-	border-color:     #c5d8b2;
-	color:            #c5d8b2;
+.faded {
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
 }
 
-button.counting:hover { background-color: #4f8046; }
+.sticky:hover,  .faded:hover  { background-color: var(--fadedhover); }
 
-button.counting:active { background-color: #85a15e; }
+.sticky:active, .faded:active { background-color: var(--fadedactive); }
+
+.counting {
+	background-color: var(--greenbutton);
+	border-color:     var(--greentext);
+	color:            var(--greentext);
+}
+
+.counting:hover { background-color: var(--greenhover)!important; }
+
+.counting:active { background-color: var(--greenactive)!important; }
 
 button.red {
-	background-color: #851C1C;
-	border-color:     #FF97B6;
-	color:            #FF97B6;
+	background-color: var(--redbutton);
+	border-color:     var(--redtext);
+	color:            var(--redtext);
 }
 
-button.red:hover { background-color: #AD2742; }
+button.red:hover { background-color: var(--redhover); }
 
-button.red:active { background-color: #B82D5D; }
+button.red:active { background-color: var(--redactive); }
 
 button.clear {
 	background-color: #00000000;
@@ -105,10 +141,11 @@ div.row {
 	flex-direction: row;
 }
 
-div.container {
+.container {
 	justify-content: space-between;
 	align-items: center;
 	margin: auto;
+	width: 75%;
 }
 
 div.stickytop {
@@ -117,6 +154,15 @@ div.stickytop {
 	width: 75%;
 	align-items: stretch;
 	flex-wrap: wrap;
+}
+
+/*v2 stuff*/
+div.container.btn-container {
+	width: 100%;
+}
+
+.smalltext, .button.smalltext {
+	font-size: 22px;
 }
 
 /*page holds the whole ass page. everything
@@ -151,9 +197,9 @@ div.stickytop.multibaymanager {
 }*/
 
 #activeBayCount {
-	background-color: #322e56;
-	border: 2px solid #9bb6db;
-	color:            #9bb6db;
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
 	font-size: 16px;
 	height: auto;
 	margin: 0px;
@@ -170,6 +216,7 @@ div.stickytop.multibaymanager {
 }*/
 
 /*DROPDOWN STUFF*/
+/*v1's dropdowns*/
 div.dropdown-content {
 	display: none;
 	position: absolute;
@@ -182,11 +229,11 @@ div.dropdown-content {
 }
 
 .dropdown-content {
-	color: #c1e1ff;
-	border: 2px solid #c1e1ff;
-	padding: 5px;
+	background-color: var(--bluebutton);
+	border: 2px solid var(--bluetext);
+	color:            var(--bluetext);
 	font-size: 16px;
-	background-color: #39386b;
+	padding: 5px;
 	width: 100%;
 	margin: 0;
 }
@@ -195,6 +242,87 @@ div.dropdown-content {
 	display: block;
 }*/
 
+/*v2's dropdowns/expand on click-s*/
+.dropdown-holder .dropdown-contents {
+	/*styling for the dropdown content holder*/
+	display: flex;
+	flex-direction: column;
+	height: auto;
+	max-height: 0vw;
+	overflow: clip;
+	
+	transition: 2s;
+}
+.dropdown-holder.selected .dropdown-contents, .dropdown-holder:hover .dropdown-contents, .dropdown-holder:focus .dropdown-contents {
+	/*so we can set things to "selected" to keep them expanded*/
+	max-height: 30vw;
+}
+
+/*v2's div.section*/
+.section {
+	background-color: var(--bluebg);
+	border: 2px solid var(--bluetext);
+	
+	--sectionborder: var(--bluetext);
+	--sectionbutton:   var(--fadedbutton);
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: auto;
+	
+	padding-left: 15px; padding-right: 15px;
+	box-sizing: border-box;
+	
+	/*draggable below this point*/
+	position: absolute;
+	
+}
+
+.section.counting-section {
+	--sectionborder: var(--greentext);
+	--sectionbutton:   var(--greenbutton);
+	
+	border-color: var(--sectionborder);
+	color: var(--sectionborder);
+	
+	width: 25vw;
+	bottom: 15px;
+	right: 15px;
+}
+
+.section .header {
+	background-color:        var(--sectionbutton);
+	border-bottom: 2px solid var(--sectionborder);
+	
+	cursor: move;
+	width: 100%;
+	margin-bottom: 15px;
+	padding: 15px;
+}
+
+.section .footer {
+	background-color:     var(--sectionbutton);
+	border-top: 2px solid var(--sectionborder);
+	
+	/*cursor: move;*/
+	width: 100%;
+	margin-top: -2px; /*ensures that the top collapses all the way*/
+	padding: 15px;
+}
+
+.container.counting-container {
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+	width: 100%;
+	padding-left: 15px; padding-right: 15px;
+	
+	box-sizing: border-box;
+	resize: horizontal;
+}
+
 option {
 	display:none;
 }
@@ -202,12 +330,20 @@ option {
 .message-container {
 	position: -webkit-sticky; /*safari*/
 	position: fixed;
-	top: 0;
-	left: 0;
 	margin: 0px;
 	
 	width:100%;
 	align-items:stretch;
+}
+
+.message-container.top {
+	top: 0;
+	left: 0;
+}
+
+.message-container.bottom {
+	bottom: 0;
+	left: 0;
 }
 
 .message-border {
@@ -257,7 +393,7 @@ option {
 }
 
 @media only screen and (max-width: 800px) {
-	button, .stickytop {
+	.container, .stickytop {
 		min-width: 100%;
 	}
 	

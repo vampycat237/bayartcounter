@@ -9,7 +9,7 @@
 	<h1>shell counting helper</h1>
 	
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
-	<div class="column message-container">
+	<div class="column message-container top">
 	<div id="message-border" class="message-border" style="display:none">
 		<div id="message" class="column message">
 			<span id="message-content" class="message-content">test message</span>
@@ -261,7 +261,9 @@
 	</div>
 	</section>
 	<!--stickybutton-->
+	<div class="container">
 	<button id="countingsticky" class="counting" onclick="doCounting()" style="display:none">calculate totals</button>
+	</div>
 	
 	<!--get our shell counting script loaded up-->
 	<script src="artmanager.js"></script>
