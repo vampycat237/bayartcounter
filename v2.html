@@ -9,82 +9,64 @@
 	<!--<p>shell calculator for bayfox art submissions</p>-->
 	
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
-	<div class="column message-container bottom">
-	<div id="message-border" class="message-border" style="display:none">
-		<div id="message" class="column message">
-			<span id="message-content" class="message-content">test message</span>
-			<button id="message-button" class="smallish clear message-content hoverable" onclick="hideMessage()">ok</button>
+	<div id="message-container" class="dropdown-holder" style="display:none;">
+		<div id="message-border" class="section nopadding centered dropdown-contents">
+		<div id="message" class="centered">
+			<span id="message-content" class="p">test message</span>
+			<div id="message-button" class="small section btn-floating" onclick="hideMessage()">X</div>
+		</div>
 		</div>
 	</div>
-	</div>
+	
+	<!--help buttons-->
+	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleDebug()">?</div>
 	
 	<!--debug menu (set to `style="display: none"` later, so it can still be enabled if needed)-->
-	<div class="column stickytop multibay sticky" style="display:none">
-		<p class="note">debug menu</p>
+	<div id="debug" class="section dropdown-holder" style="display:none">
+		<div class="header" id="debugheader" >debug menu</div>
 		
-		<button class="small" onclick="showMessage('test message')">show test message</button>
+		<div class="container btn-container dropdown-contents">
+			<div style="padding-top:0.5vw"></div>
+			<button class="small" onclick="showMessage('test message')">show test message</button>
+			<button class="small" onclick="showMessage('this is a test message<br>hope that line break works')">show longer test message</button>
+		</div>
 	</div>
 	
 	<!--2.0 does not use the multibaymanager bar-->
 	
-	<!--2.0 will not use the stickies as a row - they may be used as individual buttons though-->
-	<!--<div class="row stickytop">
-		<button id="categorysticky" class="sticky" onclick="revert('category')" style="display:none">category</button>
-		
-		<button id="mediasticky" class="sticky" onclick="revert('media')" style="display:none">media</button>
-		
-		<button id="coveragesticky" class="sticky" onclick="revert('coverage')" style="display:none">coverage</button>
-		
-		<button id="linessticky" class="sticky" onclick="revert('lines')" style="display:none">lines</button>
-		
-		<button id="shadingsticky" class="sticky" onclick="revert('shading')" style="display:none">shading</button>
-		
-		<button id="craftSizesticky" class="sticky" onclick="revert('craftSize')" style="display:none">craft size</button>
-		
-		<button id="animationsticky" class="sticky" onclick="revert('animation')" style="display:none">sticky</button>
-		
-		<button id="animComplexitysticky" class="sticky" onclick="revert('animComplexity')" style="display:none">sticky</button>
-		
-		<button id="backgroundsticky" class="sticky" onclick="revert('background')" style="display:none">sticky</button>
-		
-	</div>-->
+	<!--2.0 will not use the sticky row-->
 	
 	<!--start!!-->
 	<!--2.0 embeds "category" into "media", not having them seperate.-->
-	<!--<section id="category">
-	<p>starting off, what is the general category of this artwork?</p>
-	<div class="container">
-		<button id="2d" onclick="setCategory('2d')">2d artwork</button>
-		<button id="3d" onclick="setCategory('3d')">digital 3d model</button>
-		<button id="craft" onclick="setCategory('craft')">physical craft</button>
-	</div>
-	</section>-->
 	
 	<!--medium stuff, each button here will only be shown if the mediumGroup matches it-->
-	<div class="section" id="media">
+	<div class="section dropdown-holder" id="media">
 	<div class="header" id="mediaheader">medium</div>
-	<div class="container btn-container dropdown-holder" id="2dmedia">
-		<button id="2d" class="title-button" onclick="toggleSelected('2dmedia')">2d artwork</button>
-		<div class="dropdown-contents">
-			<button id="grayscale" onclick="setMedium('grayscale')" class="smalltext">grayscale</button>
-			<button id="flatcolor" onclick="setMedium('flatcolor')" class="smalltext">flatcolored</button>
+	<div class="section-body dropdown-contents dropdown-holder">
+		<div class="spacer"></div>
+		<div class="container btn-container dropdown-holder" id="2dmedia">
+			<button id="2d" class="title-button" onclick="toggleSelected('2dmedia')">2d artwork</button>
+			<div class="dropdown-contents">
+				<button id="grayscale" onclick="setMedium('grayscale')" class="smalltext">grayscale</button>
+				<button id="flatcolor" onclick="setMedium('flatcolor')" class="smalltext">flatcolored</button>
+			</div>
 		</div>
-	</div>
-	<div class="container btn-container dropdown-holder" id="3dmedia">
-		<button id="3d" class="title-button" onclick="toggleSelected('3dmedia')">digital 3d model</button>
-		<div class="dropdown-contents">
-			<button id="3dflat" onclick="setMedium('3dflat')" class="smalltext">flat</button>
-			<button id="3d"     onclick="setMedium('3d')" class="smalltext">full 3d</button>
-			<a class="button smalltext" href="https://bayfoxcove.xyz/index.php/info/shellguide#MODELS" target="_blank" rel="noopener noreferrer" title="this should help! (opens in new tab)">i'm not sure</a>
+		<div class="container btn-container dropdown-holder" id="3dmedia">
+			<button id="3d" class="title-button" onclick="toggleSelected('3dmedia')">digital 3d model</button>
+			<div class="dropdown-contents">
+				<button id="3dflat" onclick="setMedium('3dflat')" class="smalltext">flat</button>
+				<button id="3d"     onclick="setMedium('3d')" class="smalltext">full 3d</button>
+				<a class="button smalltext" href="https://bayfoxcove.xyz/index.php/info/shellguide#MODELS" target="_blank" rel="noopener noreferrer" title="this should help! (opens in new tab)">i'm not sure</a>
+			</div>
 		</div>
-	</div>
-	<div class="container btn-container dropdown-holder" id="craftmedia">
-		<button id="craft" class="title-button" onclick="toggleSelected('craftmedia')">physical crafts</button>
-		<div class="dropdown-contents">
-			<button id="paper"  onclick="setMedium('paper')" class="smalltext">papercrafts</button>
-			<button id="food"   onclick="setMedium('food')" class="smalltext">confections</button>
-			<button id="clay"   onclick="setMedium('clay')" class="smalltext">clay</button>
-			<button id="fabric" onclick="setMedium('fabric')" class="smalltext">fabric crafts</button>
+		<div class="container btn-container dropdown-holder" id="craftmedia">
+			<button id="craft" class="title-button" onclick="toggleSelected('craftmedia')">physical crafts</button>
+			<div class="dropdown-contents">
+				<button id="paper"  onclick="setMedium('paper')" class="smalltext">papercrafts</button>
+				<button id="food"   onclick="setMedium('food')" class="smalltext">confections</button>
+				<button id="clay"   onclick="setMedium('clay')" class="smalltext">clay</button>
+				<button id="fabric" onclick="setMedium('fabric')" class="smalltext">fabric crafts</button>
+			</div>
 		</div>
 	</div>
 	</div>
@@ -179,8 +161,8 @@
 	</div>
 	
 	<!--get our shell counting script loaded up-->
-	<!--<script src="artmanager.js"></script>-->
-	<script src="arthelper.js"></script>
+	<!--<script src="artmanager.js"></script>
+	<script src="arthelper.js"></script>-->
 	<script src="v2helperscript.js"></script>
 	<script src="shellcounter.js"></script>
 	<script src="baymanager.js"></script>
