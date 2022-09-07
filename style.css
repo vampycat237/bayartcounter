@@ -60,9 +60,9 @@ button, a.button {
 	min-width: 100%;
 }
 
-button:hover, a.button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: var(--bluehover); }
+button:hover, a.button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover  { background-color: var(--bluehover); }
 
-button:active, a.button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover .title-button, .dropdown-holder:focus .title-button { background-color: var(--blueactive); }
+button:active, a.button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover > .title-button, .dropdown-holder:focus > .title-button, .btn-floating:active { background-color: var(--blueactive); }
 
 .small {
 	font-size: 16px !important;
@@ -70,6 +70,7 @@ button:active, a.button:active, button.dropdown-content:active, .dropdown-holder
 	width: 100%;
 	height: auto;
 	margin: 0vw;
+	margin-bottom: 0.5vw;
 }
 
 .smallish {
@@ -243,7 +244,7 @@ div.dropdown-content {
 }*/
 
 /*v2's dropdowns/expand on click-s*/
-.dropdown-holder .dropdown-contents {
+.dropdown-holder > .dropdown-contents {
 	/*styling for the dropdown content holder*/
 	display: flex;
 	flex-direction: column;
@@ -253,13 +254,108 @@ div.dropdown-content {
 	
 	transition: 2s;
 }
-.dropdown-holder.selected .dropdown-contents, .dropdown-holder:hover .dropdown-contents, .dropdown-holder:focus .dropdown-contents {
+.dropdown-holder.selected > .dropdown-contents, .dropdown-holder:hover > .dropdown-contents, .dropdown-holder:focus > .dropdown-contents {
 	/*so we can set things to "selected" to keep them expanded*/
 	max-height: 30vw;
 }
 
+/*v2's help button things*/
+.btn-floating {
+	position: absolute;
+	right: 0;
+	top: 0;
+	
+	width: auto;
+	
+	background-color: var(--bluebutton);
+	
+	z-index: 2;
+}
+.section .btn-floating {
+	color: var(--sectionborder);
+	border-color: var(--sectionborder);
+	background-color: var(--sectionbutton);
+}
+
+.section .btn-floating:hover, .section .btn-floating:focus {
+	background-color: var(--sectionhover);
+}
+
+.section .btn-floating:active {
+	background-color: var(--sectionactive);
+}
+
 /*v2's div.section*/
 .section {
+	background-color: var(--bluebg);
+	border: 2px solid var(--bluetext);
+	
+	--sectionborder: var(--bluetext);
+	--sectionbutton: var(--fadedbutton);
+	--sectionhover:  var(--bluehover);
+	--sectionactive: var(--blueactive);
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: auto;
+	
+	padding-left: 15px; padding-right: 15px;
+	box-sizing: border-box;
+	
+	/*draggable below this point*/
+	position: absolute;
+	
+	z-index: 1;
+	
+}
+
+.section.centered, .clear-section.centered {
+	align-self: center;
+	left: 20%;
+	right: 20%;
+}
+
+.section.counting-section {
+	--sectionborder: var(--greentext);
+	--sectionbutton:   var(--greenbutton);
+	
+	border-color: var(--sectionborder);
+	color: var(--sectionborder);
+	
+	width: 25vw;
+	bottom: 15px;
+	right: 15px;
+	
+	z-index: 3;
+}
+
+.section .header {
+	background-color:        var(--sectionbutton);
+	border-bottom: 2px solid var(--sectionborder);
+	
+	cursor: move;
+	width: 100%;
+	margin-bottom: -2px; /*ensures that the bottom collapses all the way*/
+	padding: 15px;
+}
+
+.section .footer {
+	background-color:     var(--sectionbutton);
+	border-top: 2px solid var(--sectionborder);
+	
+	cursor: move;
+	width: 100%;
+	margin-top: -2px; /*ensures that the top collapses all the way*/
+	padding: 15px;
+}
+
+.section .spacer {
+	padding-top: 17px;
+}
+
+.faux-section {
 	background-color: var(--bluebg);
 	border: 2px solid var(--bluetext);
 	
@@ -274,42 +370,15 @@ div.dropdown-content {
 	
 	padding-left: 15px; padding-right: 15px;
 	box-sizing: border-box;
-	
-	/*draggable below this point*/
-	position: absolute;
-	
 }
 
-.section.counting-section {
-	--sectionborder: var(--greentext);
-	--sectionbutton:   var(--greenbutton);
-	
-	border-color: var(--sectionborder);
-	color: var(--sectionborder);
-	
-	width: 25vw;
-	bottom: 15px;
-	right: 15px;
+.faux-section.centered {
+	align-self: center;
+	margin: auto;
 }
 
-.section .header {
-	background-color:        var(--sectionbutton);
-	border-bottom: 2px solid var(--sectionborder);
-	
-	cursor: move;
-	width: 100%;
-	margin-bottom: 15px;
-	padding: 15px;
-}
-
-.section .footer {
-	background-color:     var(--sectionbutton);
-	border-top: 2px solid var(--sectionborder);
-	
-	/*cursor: move;*/
-	width: 100%;
-	margin-top: -2px; /*ensures that the top collapses all the way*/
-	padding: 15px;
+.faux-section.borderless, .section.borderless {
+	border: 0px;
 }
 
 .container.counting-container {
@@ -334,6 +403,8 @@ option {
 	
 	width:100%;
 	align-items:stretch;
+	
+	z-index: 5;
 }
 
 .message-container.top {
@@ -346,16 +417,36 @@ option {
 	left: 0;
 }
 
+.message-container .btn-floating {
+	z-index: 6;
+	right: 2.5vw;
+	top: -1.5vw;
+}
+
 .message-border {
 	max-width: 100%;
 	
 	border: 2px solid #424b8900;
 	transition: border-color 1s;
 	
+	box-sizing: border-box;
+	
+	margin-left: -2vw; margin-top: -2vw;
+	
+	z-index: 5;
+	
 }
 
-.message-border.show {
+.message-border.show, #message-container.selected #message-border, #message-container:hover #message-border, #message-container:focus #message-border {
 	border-color: #c1e1ffff;
+	border-width: 2px;
+}
+
+#message-border {
+	transition: max-height 2s, border-width 1s cubic-bezier(.6,-0.28,.74,.05);
+	transition-delay: 0s, 0.9s;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
 }
 
 .message {
@@ -367,30 +458,46 @@ option {
 	align-items: center;
 }
 
+#message {
+	z-index: 5;
+	/*border-width: 0px;
+	transition: border-width 0.1s, max-height 2s;*/
+	box-sizing: border-box;
+}
+
+.dropdown-holder.selected #message {
+	/*border-width: 2px;*/
+}
+
 .message.show {
 	background-color: #39386bff;
 }
 
 .message-content {
 	color: #c1e1ff00;
+	border-color: #c1e1ff00;
 	background-color: #39386b00;
-	transition: color 1s;
+	transition: color 1s, border-color 1s;
 }
 
 .message-content.show {
 	color: #c1e1ffff;
+	border-color: #c1e1ffff;
 }
 
 .message-content.show.hoverable:hover {
 	color: #fffcd6ff;
+	border-color: #fffcd6ff;
 	background-color: #424b89;
 }
 
-#message-button {
+/*#message-button {
 	border: 0px solid;
 	align-self: center;
 	margin-left: auto; margin-right: auto;
-}
+	
+	z-index: 6;
+}*/
 
 @media only screen and (max-width: 800px) {
 	.container, .stickytop {
