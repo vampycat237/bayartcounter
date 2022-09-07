@@ -10,6 +10,7 @@ function toggleSelected(divId) {
 //code to make draggable windows - taken from w3schools.com! too many things for my brain.
 //Make the DIV element draggagle:
 dragElement(document.getElementById("media"));
+dragElement(document.getElementById("debug"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -50,4 +51,64 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
+}
+
+//message management
+const messageContainer = document.getElementById('message-container');
+//const messageBorder = document.getElementById('message-border');
+//const messageDiv    = document.getElementById('message');
+const messageText   = document.getElementById('message-content');
+//const messageButton = document.getElementById('message-button');
+
+function showMessage(message, timeToShow = 5000) {
+	messageContainer.style.display = "flex";
+	
+	messageText.innerHTML   = message;
+	//toggleMessageVisibility();
+	messageContainer.classList.add("selected");
+	
+	//setTimeout(hideMessage, timeToShow);
+}
+
+function hideMessage() {
+	//do the same thing as toggleSelected, but make sure it's making it *not* selected
+	messageContainer.classList.remove("selected");
+	
+	//we don't need to set the display to none anymore, hopefully at least
+	setTimeout(hideMessage2, 3000);
+}
+
+//helper method to reduce redundancy
+/*function toggleMessageVisibility() {
+	//old way - fades in and out with transparency
+	/*messageBorder.classList.toggle("show");
+	messageDiv.classList.toggle("show");
+	messageText.classList.toggle("show");
+	messageButton.classList.toggle("show");*/
+	
+	/*//new way - expands down like the dropdowns, using the same code
+	toggleSelected('message-container');
+}*/
+
+function hideMessage2() {
+	messageContainer.style.display = "none";
+}
+
+//shows the debug menu
+const debugMenu = document.getElementById('debug');
+
+function toggleDebug() {
+	if (debugMenu.style.display == "none") {
+		showDebug();
+	} else {
+		hideDebug();
+	}
+}
+
+function showDebug() {
+	debugMenu.style.display = "flex";
+}
+
+function hideDebug() {
+	debugMenu.style.display = "none";
 }
