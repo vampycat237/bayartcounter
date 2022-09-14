@@ -43,12 +43,12 @@ h1 {
 .note {
 	font-size: 16px;
 }
-button, a.button {
+button, .button {
 	/*font stuff again bc buttons aren't that smart*/
-	color: var(--bluetext);
-	font-size: 30px;
+	color: inherit;
+	font-size: inherit;
 	text-align: center;
-	font-family: sans-serif;
+	font-family: inherit;
 	box-sizing: border-box;
 	
 	margin-left: auto; margin-right: auto;
@@ -60,9 +60,9 @@ button, a.button {
 	min-width: 100%;
 }
 
-button:hover, a.button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover  { background-color: var(--bluehover); }
+button:hover, .button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover  { background-color: var(--bluehover); }
 
-button:active, a.button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover > .title-button, .dropdown-holder:focus > .title-button, .btn-floating:active { background-color: var(--blueactive); }
+button:active, .button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover > .title-button, .dropdown-holder:focus > .title-button, .btn-floating:active { background-color: var(--blueactive); }
 
 .small {
 	font-size: 16px !important;
@@ -197,7 +197,7 @@ div.stickytop.multibaymanager {
 	width: 100%;
 }*/
 
-#activeBayCount {
+#activeBayCount, .value-count {
 	background-color: var(--fadedbutton);
 	border: 2px solid var(--fadedtext);
 	color:            var(--fadedtext);
@@ -244,6 +244,10 @@ div.dropdown-content {
 }*/
 
 /*v2's dropdowns/expand on click-s*/
+.dropdown-holder {
+	width: 100%;
+}
+
 .dropdown-holder > .dropdown-contents {
 	/*styling for the dropdown content holder*/
 	display: flex;
@@ -331,27 +335,29 @@ div.dropdown-content {
 	z-index: 3;
 }
 
-.section .header {
+.section .header, .section .footer {
+	cursor: move;
+}
+
+.header {
 	background-color:        var(--sectionbutton);
 	border-bottom: 2px solid var(--sectionborder);
 	
-	cursor: move;
 	width: 100%;
 	margin-bottom: -2px; /*ensures that the bottom collapses all the way*/
 	padding: 15px;
 }
 
-.section .footer {
+.footer {
 	background-color:     var(--sectionbutton);
 	border-top: 2px solid var(--sectionborder);
 	
-	cursor: move;
 	width: 100%;
 	margin-top: -2px; /*ensures that the top collapses all the way*/
 	padding: 15px;
 }
 
-.section .spacer {
+.spacer {
 	padding-top: 17px;
 }
 
@@ -393,7 +399,7 @@ div.dropdown-content {
 }
 
 option {
-	display:none;
+	/*display:none; this is handled by the code*/
 }
 
 .message-container {
@@ -498,6 +504,53 @@ option {
 	
 	z-index: 6;
 }*/
+
+/*BASE VAL EDITOR STYLES*/
+.base-values-editor {
+	max-width: 100%;
+	gap: 5px;
+	justify-content: space-between;
+}
+
+.base-values-editor > * {
+	width: auto;
+	flex: 1 1 20%;
+	min-width: auto;
+}
+
+/*BASE VALUE STYLES*/
+.base-value-item {
+	gap: 2px;
+	justify-content: space-between;
+}
+
+.base-value-item > input, .base-value-item > button {
+	width: 20%;
+	max-width: 20%; min-width: 20%;
+	margin: 0;
+}
+
+.base-value-item > label {
+	min-width: 40%;
+	width: auto;
+	text-align: center;
+	
+}
+
+/*SIDEBAR STYLES*/
+.sidebar {
+	position: absolute;
+	overflow-y: scroll;
+	overflow-x: clip;
+	top: 0; left: 0;
+	height: 100%;
+	width: 20%;
+	font-size: 16px;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+}
 
 @media only screen and (max-width: 800px) {
 	.container, .stickytop {
