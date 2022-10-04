@@ -13,7 +13,7 @@
 		<div id="message-border" class="section nopadding centered dropdown-contents">
 		<div id="message" class="centered">
 			<span id="message-content" class="p">test message</span>
-			<div id="message-button" class="small section btn-floating" onclick="hideMessage()">X</div>
+			<div id="message-button" class="small section btn-floating" onclick="forceClose(message.container)">X</div>
 		</div>
 		</div>
 	</div>
@@ -21,7 +21,7 @@
 	<!--help buttons-->
 	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleVisibility(debugMenu)">?</div>
 	
-	<!--debug menu (set to `style="display: none"` later, so it can still be enabled if needed)-->
+	<!--debug menu-->
 	<div id="debug" class="section dropdown-holder draggable" style="display:none">
 		<div class="header" id="debug-header" >debug menu</div>
 		

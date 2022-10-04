@@ -263,6 +263,11 @@ div.dropdown-content {
 	max-height: 30vw;
 }
 
+.dropdown-holder.deselected > .dropdown-contents {
+	/*force-closes the dropdown*/
+	max-height: 0vw !important;
+}
+
 /*v2's help button things*/
 .btn-floating {
 	position: absolute;
@@ -276,6 +281,9 @@ div.dropdown-content {
 	z-index: 2;
 }
 .section .btn-floating {
+	position: relative;
+	top: -2px; right: -2px;
+	float: right;
 	color: var(--sectionborder);
 	border-color: var(--sectionborder);
 	background-color: var(--sectionbutton);
@@ -403,7 +411,7 @@ option {
 }
 
 .message-container {
-	position: -webkit-sticky; /*safari*/
+	position: -webkit-fixed; /*safari*/
 	position: fixed;
 	margin: 0px;
 	
@@ -469,6 +477,8 @@ option {
 	/*border-width: 0px;
 	transition: border-width 0.1s, max-height 2s;*/
 	box-sizing: border-box;
+	width: 100%;
+	align-items: stretch;
 }
 
 .dropdown-holder.selected #message {
@@ -483,6 +493,7 @@ option {
 	color: #c1e1ff00;
 	border-color: #c1e1ff00;
 	background-color: #39386b00;
+	
 	transition: color 1s, border-color 1s;
 }
 
@@ -497,13 +508,18 @@ option {
 	background-color: #424b89;
 }
 
-/*#message-button {
-	border: 0px solid;
+#message-content {
+	flex: 1 1 100%;
+}
+
+#message-button {
+	flex-grow: 0;
 	align-self: center;
-	margin-left: auto; margin-right: auto;
-	
-	z-index: 6;
-}*/
+}
+
+.nopadding {
+	padding: 0;
+}
 
 /*BASE VAL EDITOR STYLES*/
 .base-values-editor {

@@ -50,14 +50,25 @@ function showMessage(msg, timeToShow = 10000) {
 	setTimeout(hideMessage, timeToShow);
 }
 
-function hideMessage() {
+function hideMessage(attempts = 1) {
 	//deselect message so it will collapse
 	message.container.classList.remove("selected");
 	
 	//TODO: check for collapse instead of basing this on time
 	//checkUntil(checkMsgUnhovered, hide(message.container));
 	//console.log(message.border.matches(':hover'));
-	setTimeout(hide(message.container), 3000);
+	setTimeout(hideMessage2, 3000);
+}
+
+function hideMessage2() {
+	if (message.container.matches(":focus") || message.container.matches(":hover")) {
+		console.log("abandoning hope of closing message automatically");
+		return;
+	}
+	else { 
+		console.log("message closed automatically");
+		hide(message.container);
+	}
 }
 
 //elmntId version of toggleVisibility
@@ -88,5 +99,13 @@ function hide(elmnt) {
 }
 
 function show(elmnt, d = "flex") {
+	elmnt.classList.remove("deselected");
 	elmnt.style.display = d;
+}
+
+//for dropdowns
+function forceClose(elmnt) {
+	elmnt.classList.add("deselected");
+	//saves the timeout
+	setTimeout(function() { hide(elmnt) }, 2000);
 }
