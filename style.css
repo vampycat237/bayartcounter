@@ -166,6 +166,10 @@ div.container.btn-container {
 	font-size: 22px;
 }
 
+.invisible {
+	visibility: hidden;
+}
+
 /*page holds the whole ass page. everything
 div.row.page {
 	margin-left: auto; margin-right: auto;
@@ -280,6 +284,7 @@ div.dropdown-content {
 	
 	z-index: 2;
 }
+.btn-floating.left { right: auto; left: 0; }
 .section .btn-floating {
 	position: relative;
 	top: -2px; right: -2px;
@@ -288,6 +293,7 @@ div.dropdown-content {
 	border-color: var(--sectionborder);
 	background-color: var(--sectionbutton);
 }
+.section .btn-floating.left { right: auto; left: -2px; float: left; }
 
 .section .btn-floating:hover, .section .btn-floating:focus {
 	background-color: var(--sectionhover);
@@ -406,10 +412,6 @@ div.dropdown-content {
 	resize: horizontal;
 }
 
-option {
-	/*display:none; this is handled by the code*/
-}
-
 .message-container {
 	position: -webkit-fixed; /*safari*/
 	position: fixed;
@@ -512,7 +514,7 @@ option {
 	flex: 1 1 100%;
 }
 
-#message-button {
+#message-button, #message-spacer {
 	flex-grow: 0;
 	align-self: center;
 }
