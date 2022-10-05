@@ -1,31 +1,3 @@
-:root {
-	/*palette defaults*/
-	--bluebg:     #2a2849; /*page background color*/
-	
-	--bluetext:   #c1e1ff; /*text & border color*/
-	--bluebutton: #39386b; /*button default bg color*/
-	--bluehover:  #424b89; /*button default hover color*/
-	--blueactive: #4e60a3; /*button default active color*/
-	
-	/*faded: used for stickybuttons*/
-	--fadedtext:   #9bb6db; /*text & border color*/
-	--fadedbutton: #322e56; /*button bg color*/
-	--fadedhover:  #39386b; /*button hover color, matches bluebutton*/
-	--fadedactive: #424b89; /*button active color, matches bluehover*/
-	
-	/*green: used for counting*/
-	--greentext:   #c5d8b2; /*text & border color*/
-	--greenbutton: #356137; /*button bg color*/
-	--greenhover:  #4f8046; /*button hover color*/
-	--greenactive: #85a15e; /*button active color*/
-	
-	/*red: used for delete buttons and such*/
-	--redtext:   #FF97B6; /*text & border color*/
-	--redbutton: #851C1C; /*button bg color*/
-	--redhover:  #AD2742; /*button hover color*/
-	--redactive: #B82D5D; /*button active color*/
-}
-
 body {
 	background-color: var(--bluebg);
 	margin: 2vw 5vw 2vw 5vw;
