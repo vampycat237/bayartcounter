@@ -251,7 +251,7 @@ class BaseVal {
 	countSelf() {
 		//aquire appropriate rates list
 		var rates;
-		const isModel = craftSize == "model";
+		const isModel = this.craftSize != "large";
 		switch (this.media) {
 			case "flatcolor": rates = shellRates.ratesFlatcolor; break;
 			case "grayscale": rates = shellRates.ratesGrayscale; break;

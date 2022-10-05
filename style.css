@@ -348,7 +348,8 @@ div.dropdown-content {
 	border-color: var(--sectionborder);
 	color: var(--sectionborder);
 	
-	width: 25vw;
+	width: auto;
+	max-width: 77.7vw;
 	bottom: 15px;
 	right: 15px;
 	
