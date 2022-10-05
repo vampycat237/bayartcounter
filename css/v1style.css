@@ -1,0 +1,272 @@
+body {
+	background-color: #2a2849;
+	margin: 2vw 5vw 2vw 5vw;
+	
+	/*font defaults*/
+	color: #c1e1ff;
+	font-size: 30px;
+	text-align: center;
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 46px;
+	margin-bottom: 1vw;
+}
+.note {
+	font-size: 16px;
+}
+button {
+	/*font stuff again bc buttons aren't that smart*/
+	color: #c1e1ff;
+	font-size: 30px;
+	text-align: center;
+	font-family: sans-serif;
+	
+	margin-left: auto; margin-right: auto;
+	padding: 15px;
+	border: 2px solid #c1e1ff;
+	margin-bottom: 1vw;
+	background-color: #39386b;
+	min-width: 75%;
+}
+
+button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: #424b89; }
+
+button:active, button.dropdown-content:active { background-color: #4e60a3; }
+
+.small {
+	font-size: 16px !important;
+	padding: 5px;
+	width: 100%;
+	height: auto;
+	margin: 0vw;
+}
+
+.smallish {
+	font-size: 20px;
+	padding: 5px;
+	min-width: 10%;
+	max-width: 20%;
+}
+
+.tiny {
+	padding: 0px 6px 0px 6px;
+	min-width: 16px;
+	max-width: 50px;
+	align-self: center;
+}
+
+.sticky {
+	min-width: 25%;
+	flex: 1 1 0%;
+	background-color: #322e56;
+	border: 2px solid #9bb6db;
+	color:            #9bb6db;
+	font-size: 26px;
+	margin-bottom: 0px;
+}
+
+.sticky:hover  { background-color: #39386b; }
+
+.sticky:active { background-color: #424b89; }
+
+button.counting {
+	background-color: #356137;
+	border-color:     #c5d8b2;
+	color:            #c5d8b2;
+}
+
+button.counting:hover { background-color: #4f8046; }
+
+button.counting:active { background-color: #85a15e; }
+
+button.red {
+	background-color: #851C1C;
+	border-color:     #FF97B6;
+	color:            #FF97B6;
+}
+
+button.red:hover { background-color: #AD2742; }
+
+button.red:active { background-color: #B82D5D; }
+
+button.clear {
+	background-color: #00000000;
+	border: 0px solid #00000000;
+}
+
+div.column {
+	display: flex;
+	flex-direction: column;
+}
+
+div.row {
+	display: flex;
+	flex-direction: row;
+}
+
+div.container {
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+}
+
+div.stickytop {
+	margin-left: auto; margin-right: auto;
+	margin-bottom: 1vw;
+	width: 75%;
+	align-items: stretch;
+	flex-wrap: wrap;
+}
+
+/*page holds the whole ass page. everything
+div.row.page {
+	margin-left: auto; margin-right: auto;
+	width: 100%;
+	align-items: stretch;
+}*/
+
+div.stickytop.multibaymanager {
+	margin-bottom: 1vw;
+}
+
+.multibay {
+	min-width: 20%;
+	max-width: 25%;
+	font-size: 16px;
+	justify-content: center;
+	flex: 1 1 0%;
+}
+
+/*top holds the stickies at the top*/
+/*div.row.top {
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+}*/
+
+/*div.body {
+	margin-left: auto; margin-right: auto;
+	width: 100%;
+}*/
+
+#activeBayCount {
+	background-color: #322e56;
+	border: 2px solid #9bb6db;
+	color:            #9bb6db;
+	font-size: 16px;
+	height: auto;
+	margin: 0px;
+	margin-left: 2px;
+	min-width: 20%;
+	max-width: 40%;
+	flex: 1 1 0%;
+	text-align: center;
+}
+
+/*.column.plusminus {
+	align-items: stretch;
+	flex: 1 1 25%;
+}*/
+
+/*DROPDOWN STUFF*/
+div.dropdown-content {
+	display: none;
+	position: absolute;
+	width: 20%;
+	overflow: auto;
+	margin: auto;
+	align-self: center;
+	justify-content: space-between;
+	z-index: 1;
+}
+
+.dropdown-content {
+	color: #c1e1ff;
+	border: 2px solid #c1e1ff;
+	padding: 5px;
+	font-size: 16px;
+	background-color: #39386b;
+	width: 100%;
+	margin: 0;
+}
+
+/*.dropdown:hover .dropdown-content {
+	display: block;
+}*/
+
+option {
+	display:none;
+}
+
+.message-container {
+	position: -webkit-sticky; /*safari*/
+	position: fixed;
+	top: 0;
+	left: 0;
+	margin: 0px;
+	
+	width:100%;
+	align-items:stretch;
+}
+
+.message-border {
+	max-width: 100%;
+	
+	border: 2px solid #424b8900;
+	transition: border-color 1s;
+	
+}
+
+.message-border.show {
+	border-color: #c1e1ffff;
+}
+
+.message {
+	padding: 5px;
+	
+	background-color: #39386b00;
+	transition: background-color 2s;
+	
+	align-items: center;
+}
+
+.message.show {
+	background-color: #39386bff;
+}
+
+.message-content {
+	color: #c1e1ff00;
+	background-color: #39386b00;
+	transition: color 1s;
+}
+
+.message-content.show {
+	color: #c1e1ffff;
+}
+
+.message-content.show.hoverable:hover {
+	color: #fffcd6ff;
+	background-color: #424b89;
+}
+
+#message-button {
+	border: 0px solid;
+	align-self: center;
+	margin-left: auto; margin-right: auto;
+}
+
+@media only screen and (max-width: 800px) {
+	button, .stickytop {
+		min-width: 100%;
+	}
+	
+	.sticky, .multibay {
+		min-width: 40%;
+		max-width: 100%;
+	}
+	
+	#activeBayCount {
+		min-width: 40%;
+	}
+}
