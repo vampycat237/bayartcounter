@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel = "stylesheet" type = "text/css" href = "style.css" />
 </head>
-<body onload="resetCounts()">
+<body>
 	<!--<p>shell calculator for bayfox art submissions</p>-->
 	
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
@@ -24,12 +24,15 @@
 	
 	<!--debug menu-->
 	<div id="debug" class="section dropdown-holder draggable" style="display:none">
-		<div class="header" id="debug-header" >debug menu</div>
+		<div id="debug-header" class="header" >debug menu</div>
 		
 		<div class="container btn-container dropdown-contents">
 			<div style="padding-top:0.5vw"></div>
 			<button class="small" onclick="showMessage('test message')">show test message</button>
 			<button class="small" onclick="showMessage('this is a test message<br>hope that line break works')">show longer test message</button>
+			<button class="small" onclick="console.log(new BaseVal('flatcolor', 'mini', 1))">log '1x flatcolor mini' BaseVal</button>
+			<button class="small" onclick="console.log(new BaseVal('food', 'headshot', 2, 'large'))">log '2x large food headshot' BaseVal</button>
+			<button class="small" onclick="updateHolders()">update sidebar holders</button>
 		</div>
 	</div>
 	
@@ -41,22 +44,17 @@
 	<!--2.0 embeds "category" into "media", not having them seperate.-->
 	
 	<!--sidebar as show/hider-->
-	<div class="faux-section sidebar" id="sidebar">
+	<div id="sidebar" class="faux-section sidebar">
 	  <div class="header">show/hide dropdowns</div>
 	  <div class="spacer"></div>
-	  <div class="dropdown-holder" id="sidebar-base-values">
+	  <div id="sidebar-base-values" class="dropdown-holder">
 		<button class="title-button" onclick="toggleSelected('sidebar-base-values')">base values</button>
-		<div class="section-body dropdown-contents">
+		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
 			<div id="base-values-holder">
-				<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
-					<input id="base-value-item-0" class="value-count" type="number" value="1" min="1"></input>
-					<label for="base-value-item-0">edit blank</label>
-					<button class="small red">x</button>
-				</div>
-				<div class="row button base-value-item" onclick="openBaseValEditor('edit', 1)">
-					<span id="base-value-item-1">edit blank</span>
-					<button class="small red">x</button>
-				</div>
+				<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
+					<span id="base-value-item-0">edit blank</span>
+					<button class="small red" onclick="removeBaseVal(0)">x</button>
+				</div>-->
 			</div>
 			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 		</div>
@@ -65,8 +63,11 @@
 	
 	
 	<!--base-values as a draggable section for editing base values. starting pos: "top: 5px; left: 261px;"-->
-	<div class="section draggable" id="base-values" style="display:none; top: 5px; left: 261px;">
-	<div class="header" id="base-values-header">[edit/add] base values</div>
+	<div id="base-values" class="section draggable" style="display:none; top: 5px; left: 261px;">
+	<div id="base-values-header" class="header">
+		<span class="p">[edit/add] base values</span>
+		<div class="small red button btn-floating"></div>
+	</div>
 	<div class="section-body">
 		<div class="spacer"></div>
 		<span>enter the count, medium, and coverage types below</span>
@@ -79,68 +80,45 @@
 			</div>
 			<select id="base-values-media">
 				<option selected="true" value="null">--select the medium--</option>
-				<option value="flatcolor">flatcolor</option>
-				<option value="grayscale">grayscale</option>
+				  <optgroup label="2d art">
+					<option value="flatcolor">flatcolor</option>
+					<option value="grayscale">grayscale</option>
+				  </optgroup>
+				  <optgroup label="3d models">
+					<option value="3d">full 3d</option>
+					<option value="3dflat">flat 3d</option>
+				  </optgroup>
+				  <optgroup label="crafts">
+					<option value="paper">papercrafts</option>
+					<option value="food">confections</option>
+					<option value="clay">clay</option>
+					<option value="fabric">fabric crafts</option>
+				  </optgroup>
 			</select>
 			<select id="base-values-coverage">
 				<option selected="true" value="null">--select the coverage--</option>
 				<option value="headshot">headshot</option>
 				<option value="halfbody">halfbody</option>
 				<option value="fullbody">fullbody</option>
-				<option value="mini">mini</option>
+				<option value="mini" id="coverage-mini">mini (flatcolor only)</option>
+			</select>
+			<select id="base-values-size">
+				<option selected="true" value="null">--for crafts: select the size--</option>
+				<option value="model" id="size-model">model</option>
+				<option value="large" id="size-large">large</option>
 			</select>
 		</div>
 		<div class="spacer"></div>
 		<div class="row base-values-editor">
-			<button class="small" onclick="hide(baseValEditor.editor)">cancel</button>
-			<button class="small counting" onclick="confirm()">confirm</button>
+			<button class="small" onclick="cancelBaseValEditor()">cancel</button>
+			<button class="small counting" onclick="storeBaseVal()">save & close editor</button>
 		</div>
 	</div>
 	</div>
 	
+	<!--MEDIA, COVERAGE, AND CRAFTSIZE ARE COVERED BY BASEVAL-->
 	<!--medium stuff, each button here will only be shown if the mediumGroup matches it starting pos: "top: 5px; left: 261px;"-->
-	<div class="section dropdown-holder draggable" id="media" style="display:none; top: 5px; left: 261px;">
-	<div class="header" id="media-header">medium</div>
-	<div class="section-body dropdown-contents dropdown-holder">
-		<div class="spacer"></div>
-		<div class="container btn-container dropdown-holder" id="2dmedia">
-			<button id="2d" class="title-button" onclick="toggleSelected('2dmedia')">2d artwork</button>
-			<div class="dropdown-contents">
-				<button id="grayscale" onclick="setMedium('grayscale')" class="smalltext">grayscale</button>
-				<button id="flatcolor" onclick="setMedium('flatcolor')" class="smalltext">flatcolored</button>
-			</div>
-		</div>
-		<div class="container btn-container dropdown-holder" id="3dmedia">
-			<button id="3d" class="title-button" onclick="toggleSelected('3dmedia')">digital 3d model</button>
-			<div class="dropdown-contents">
-				<button id="3dflat" onclick="setMedium('3dflat')" class="smalltext">flat</button>
-				<button id="3d"     onclick="setMedium('3d')" class="smalltext">full 3d</button>
-				<a class="button smalltext" href="https://bayfoxcove.xyz/index.php/info/shellguide#MODELS" target="_blank" rel="noopener noreferrer" title="this should help! (opens in new tab)">i'm not sure</a>
-			</div>
-		</div>
-		<div class="container btn-container dropdown-holder" id="craftmedia">
-			<button id="craft" class="title-button" onclick="toggleSelected('craftmedia')">physical crafts</button>
-			<div class="dropdown-contents">
-				<button id="paper"  onclick="setMedium('paper')" class="smalltext">papercrafts</button>
-				<button id="food"   onclick="setMedium('food')" class="smalltext">confections</button>
-				<button id="clay"   onclick="setMedium('clay')" class="smalltext">clay</button>
-				<button id="fabric" onclick="setMedium('fabric')" class="smalltext">fabric crafts</button>
-			</div>
-		</div>
-	</div>
-	</div>
-	
-	
 	<!--coverage-->
-	<section id="coverage" style="display:none">
-	<p>okay, which of these describes the character coverage</p>
-	<div class="container">
-		<button id="mini" onclick="setCoverage('mini')" style="display:none">mini (simplified)</button>
-		<button id="headshot" onclick="setCoverage('headshot')">headshot</button>
-		<button id="halfbody" onclick="setCoverage('halfbody')">halfbody (chest or more)</button>
-		<button id="fullbody" onclick="setCoverage('fullbody')">fullbody (at least 90% of body)</button>
-	</div>
-	</section>
 	
 	<!--lines (if applicable)-->
 	<section id="lines" style="display:none">
@@ -221,8 +199,9 @@
 	
 	<!--get all our scripts loaded up-->
 	<script src="js/v2/v2helperscript.js"></script>
-	<script src="js/v2/base-value-manager.js"></script>
 	<script src="js/v2/drag-elements.js"></script>
+	<script src="js/v2/base-value-manager.js"></script>
+	<script src="js/v2/sidebar-manager.js"></script>
 	<!--v1 shared scripts-->
 	<script src="js/shellcounter.js"></script>
 	<script src="js/baymanager.js"></script>

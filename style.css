@@ -58,6 +58,12 @@ button, .button {
 	background-color: var(--bluebutton);
 	/*min-width: 75%;*/
 	min-width: 100%;
+	
+	cursor: pointer;
+}
+
+button *, .button * {
+	cursor: pointer;
 }
 
 button:hover, .button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover  { background-color: var(--bluehover); }
@@ -540,19 +546,17 @@ div.dropdown-content {
 .base-value-item {
 	gap: 2px;
 	justify-content: space-between;
+	padding: 10px;
 }
 
-.base-value-item > input, .base-value-item > button {
+.base-value-item > button {
 	width: 20%;
 	max-width: 20%; min-width: 20%;
 	margin: 0;
 }
 
-.base-value-item > label {
-	min-width: 40%;
-	width: auto;
-	text-align: center;
-	
+.base-value-item > span {
+	flex-grow: 1;
 }
 
 /*SIDEBAR STYLES*/

@@ -60,6 +60,7 @@ function hideMessage(attempts = 1) {
 	setTimeout(hideMessage2, 3000);
 }
 
+//idea: make this use an event listener to the height?
 function hideMessage2() {
 	if (message.container.matches(":focus") || message.container.matches(":hover")) {
 		console.log("abandoning hope of closing message automatically");
@@ -108,4 +109,15 @@ function forceClose(elmnt) {
 	elmnt.classList.add("deselected");
 	//saves the timeout
 	setTimeout(function() { hide(elmnt) }, 2000);
+}
+
+function forceOpen(elmnt) {
+	//console.log("forced open an element");
+	elmnt.classList.remove("deselected");
+	elmnt.classList.add("selected");
+}
+
+function releaseForce(elmnt) {
+	elmnt.classList.remove("selected");
+	elmnt.classList.remove("deselected");
 }
