@@ -44,7 +44,6 @@ h1 {
 	font-size: 16px;
 }
 button, .button {
-	/*font stuff again bc buttons aren't that smart*/
 	color: inherit;
 	font-size: inherit;
 	text-align: center;
@@ -514,7 +513,7 @@ div.dropdown-content {
 .message-content.show.hoverable:hover {
 	color: #fffcd6ff;
 	border-color: #fffcd6ff;
-	background-color: #424b89;
+	background-color: var(--bluehover);
 }
 
 #message-content {

@@ -1,9 +1,37 @@
+:root {
+	/*palette defaults*/
+	--bluebg:     #2a2849; /*page background color*/
+	
+	--bluetext:   #c1e1ff; /*text & border color*/
+	--bluebutton: #39386b; /*button default bg color*/
+	--bluehover:  #424b89; /*button default hover color*/
+	--blueactive: #4e60a3; /*button default active color*/
+	
+	/*faded: used for stickybuttons*/
+	--fadedtext:   #9bb6db; /*text & border color*/
+	--fadedbutton: #322e56; /*button bg color*/
+	--fadedhover:  #39386b; /*button hover color, matches bluebutton*/
+	--fadedactive: #424b89; /*button active color, matches bluehover*/
+	
+	/*green: used for counting*/
+	--greentext:   #c5d8b2; /*text & border color*/
+	--greenbutton: #356137; /*button bg color*/
+	--greenhover:  #4f8046; /*button hover color*/
+	--greenactive: #85a15e; /*button active color*/
+	
+	/*red: used for delete buttons and such*/
+	--redtext:   #FF97B6; /*text & border color*/
+	--redbutton: #851C1C; /*button bg color*/
+	--redhover:  #AD2742; /*button hover color*/
+	--redactive: #B82D5D; /*button active color*/
+}
+
 body {
-	background-color: #2a2849;
+	background-color: var(--bluebg);
 	margin: 2vw 5vw 2vw 5vw;
 	
 	/*font defaults*/
-	color: #c1e1ff;
+	color: var(--bluetext);
 	font-size: 30px;
 	text-align: center;
 	font-family: sans-serif;
@@ -16,23 +44,24 @@ h1 {
 	font-size: 16px;
 }
 button {
-	/*font stuff again bc buttons aren't that smart*/
-	color: #c1e1ff;
-	font-size: 30px;
+	color: inherit;
+	font-size: inherit;
 	text-align: center;
-	font-family: sans-serif;
+	font-family: inherit;
 	
 	margin-left: auto; margin-right: auto;
 	padding: 15px;
-	border: 2px solid #c1e1ff;
+	border: 2px solid var(--bluetext);
 	margin-bottom: 1vw;
-	background-color: #39386b;
+	background-color: var(--bluebutton);
 	min-width: 75%;
+	
+	cursor: pointer;
 }
 
-button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: #424b89; }
+button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: var(--bluehover); }
 
-button:active, button.dropdown-content:active { background-color: #4e60a3; }
+button:active, button.dropdown-content:active { background-color: var(--blueactive); }
 
 .small {
 	font-size: 16px !important;
@@ -59,36 +88,36 @@ button:active, button.dropdown-content:active { background-color: #4e60a3; }
 .sticky {
 	min-width: 25%;
 	flex: 1 1 0%;
-	background-color: #322e56;
-	border: 2px solid #9bb6db;
-	color:            #9bb6db;
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
 	font-size: 26px;
 	margin-bottom: 0px;
 }
 
-.sticky:hover  { background-color: #39386b; }
+.sticky:hover  { background-color: var(--fadedhover); }
 
-.sticky:active { background-color: #424b89; }
+.sticky:active { background-color: var(--fadedactive); }
 
 button.counting {
-	background-color: #356137;
-	border-color:     #c5d8b2;
-	color:            #c5d8b2;
+	background-color: var(--greenbutton);
+	border-color:     var(--greentext);
+	color:            var(--greentext);
 }
 
-button.counting:hover { background-color: #4f8046; }
+button.counting:hover { background-color: var(--greenhover); }
 
-button.counting:active { background-color: #85a15e; }
+button.counting:active { background-color: var(--greenactive); }
 
 button.red {
-	background-color: #851C1C;
-	border-color:     #FF97B6;
-	color:            #FF97B6;
+	background-color: var(--redbutton);
+	border-color:     var(--redtext);
+	color:            var(--redtext);
 }
 
-button.red:hover { background-color: #AD2742; }
+button.red:hover { background-color: var(--redhover); }
 
-button.red:active { background-color: #B82D5D; }
+button.red:active { background-color: var(--redactive); }
 
 button.clear {
 	background-color: #00000000;
@@ -151,9 +180,9 @@ div.stickytop.multibaymanager {
 }*/
 
 #activeBayCount {
-	background-color: #322e56;
-	border: 2px solid #9bb6db;
-	color:            #9bb6db;
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
 	font-size: 16px;
 	height: auto;
 	margin: 0px;
@@ -182,11 +211,11 @@ div.dropdown-content {
 }
 
 .dropdown-content {
-	color: #c1e1ff;
-	border: 2px solid #c1e1ff;
+	background-color: var(--bluebutton);
+	border: 2px solid var(--bluetext);
+	color:            var(--bluetext);
 	padding: 5px;
 	font-size: 16px;
-	background-color: #39386b;
 	width: 100%;
 	margin: 0;
 }
@@ -200,7 +229,7 @@ option {
 }
 
 .message-container {
-	position: -webkit-sticky; /*safari*/
+	position: -webkit-fixed; /*safari*/
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -247,7 +276,7 @@ option {
 
 .message-content.show.hoverable:hover {
 	color: #fffcd6ff;
-	background-color: #424b89;
+	background-color: var(--bluehover);
 }
 
 #message-button {
