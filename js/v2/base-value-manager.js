@@ -232,8 +232,8 @@ class BaseVal {
 		this.craftSize  = craftSize;
 		this.isCraft    = isCraft(media);
 		
-		//set shellValue
-		this.shellValue = 0;
+		//set value
+		this.value = 0;
 		this.countSelf();
 	}
 	
@@ -247,9 +247,9 @@ class BaseVal {
 		return str;
 	}
 	
-	//Sets its own shellValue based on the medium, coverage, size, and count. Requires a shellRates object
+	//Sets its own value based on the medium, coverage, size, and count. Requires a shellRates object
 	countSelf() {
-		//aquire appropriate shellRates list
+		//aquire appropriate rates list
 		var rates;
 		const isModel = craftSize == "model";
 		switch (this.media) {
@@ -292,7 +292,7 @@ class BaseVal {
 		}
 		
 		//calculate value
-		this.shellValue = rates[i] * this.count;
-		console.log("counted "+this.toString()+" for a total of "+this.shellValue+" shells");
+		this.value = rates[i] * this.count;
+		console.log("counted "+this.toString()+" for a total of "+this.value+" shells");
 	}
 }

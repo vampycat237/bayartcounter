@@ -191,10 +191,10 @@
 	<!--counting zone-->
 	<div id="counting" class="section counting-section dropdown-holder">
 		<div class="container counting-container dropdown-contents">
-			<p id="countingproof">counting goes here</p>
-			<p id="shelltotal" title="test">total: #</p>
+			<p id="counting-proof">counting goes here</p>
+			<p id="counting-total" title="test">total: #</p>
 		</div>
-		<div id="countingsticky" class="counting footer" onclick="countShells()">calculate totals</div>
+		<div id="countingsticky" class="counting footer" onclick="counting.totals()">calculate totals</div>
 	</div>
 	
 	<!--get all our scripts loaded up-->
@@ -202,22 +202,9 @@
 	<script src="js/v2/drag-elements.js"></script>
 	<script src="js/v2/base-value-manager.js"></script>
 	<script src="js/v2/sidebar-manager.js"></script>
+	<script src="js/v2/counting.js"></script>
 	<!--v1 shared scripts-->
 	<script src="js/shellcounter.js"></script>
-	<script src="js/baymanager.js"></script>
-	
-	<!--all event listeners go below! their functionality might be in other scripts, but the event listeners go here bc it's easier on my noggin-->
-	<!--<script>
-		//activeBayCount
-		const bayCountInput = document.querySelector('input');
-
-		bayCountInput.addEventListener('input', updateActiveBayCount);
-
-		function updateActiveBayCount(count) {
-			//console.log(count.target.value);
-			activeBay.count = count.target.value;
-		}
-		
-	</script>-->
+	<!--<script src="js/baymanager.js"></script>-->
 </body>
 </html>
