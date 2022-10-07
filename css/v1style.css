@@ -1,34 +1,8 @@
 body {
-	background-color: var(--bluebg);
 	margin: 2vw 5vw 2vw 5vw;
-	
-	/*font defaults*/
-	color: var(--bluetext);
-	font-size: 30px;
-	text-align: center;
-	font-family: sans-serif;
-}
-h1 {
-	font-size: 46px;
-	margin-bottom: 1vw;
-}
-.note {
-	font-size: 16px;
 }
 button {
-	color: inherit;
-	font-size: inherit;
-	text-align: center;
-	font-family: inherit;
-	
-	margin-left: auto; margin-right: auto;
-	padding: 15px;
-	border: 2px solid var(--bluetext);
-	margin-bottom: 1vw;
-	background-color: var(--bluebutton);
 	min-width: 75%;
-	
-	cursor: pointer;
 }
 
 button:hover, p.dropdown-content:hover, button.dropdown-content:hover  { background-color: var(--bluehover); }
@@ -196,8 +170,26 @@ div.dropdown-content {
 	display: block;
 }*/
 
-option {
-	display:none;
+/*v2's help button things*/
+.btn-floating {
+	position: absolute;
+	right: 0;
+	top: 0;
+	
+	width: auto;
+	
+	background-color: var(--bluebg);
+	border: 2px solid var(--bluetext);
+	
+	z-index: 2;
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	
+	padding-left: 15px; padding-right: 15px;
+	box-sizing: border-box;
 }
 
 .message-container {
@@ -236,7 +228,7 @@ option {
 	background-color: #39386bff;
 }
 
-.message-content {
+.message-content, .message-content * {
 	color: #c1e1ff00;
 	background-color: #39386b00;
 	transition: color 1s;

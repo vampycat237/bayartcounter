@@ -1,45 +1,21 @@
 body {
-	background-color: var(--bluebg);
-	margin: 2vw 2vw 2vw 2vw;
-	
-	/*font defaults*/
-	color: var(--bluetext);
-	font-size: 30px;
-	text-align: center;
-	font-family: sans-serif;
-}
-h1 {
-	font-size: 46px;
-	margin-bottom: 1vw;
+	margin: 0;
 }
 .note {
 	font-size: 16px;
 }
 button, .button {
-	color: inherit;
-	font-size: inherit;
-	text-align: center;
-	font-family: inherit;
 	box-sizing: border-box;
-	
-	margin-left: auto; margin-right: auto;
-	padding: 15px;
-	border: 2px solid var(--bluetext);
-	margin-bottom: 1vw;
-	background-color: var(--bluebutton);
-	/*min-width: 75%;*/
 	min-width: 100%;
-	
-	cursor: pointer;
 }
 
 button *, .button * {
 	cursor: pointer;
 }
 
-button:hover, .button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover  { background-color: var(--bluehover); }
+button:hover, .button:hover, p.dropdown-content:hover, button.dropdown-content:hover, .btn-floating:hover, .dropdown-holder:hover > .title-button, .dropdown-holder:focus > .title-button  { background-color: var(--bluehover); }
 
-button:active, .button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .dropdown-holder:hover > .title-button, .dropdown-holder:focus > .title-button, .btn-floating:active { background-color: var(--blueactive); }
+button:active, .button:active, button.dropdown-content:active, .dropdown-holder.selected .title-button, .btn-floating:active { background-color: var(--blueactive); }
 
 .small {
 	font-size: 16px !important;
@@ -263,7 +239,7 @@ div.dropdown-content {
 }
 .btn-floating.left { right: auto; left: 0; }
 .section .btn-floating {
-	position: relative;
+	/*position: relative;*/
 	top: -2px; right: -2px;
 	float: right;
 	color: var(--sectionborder);
@@ -321,13 +297,13 @@ div.dropdown-content {
 	
 	width: auto;
 	max-width: 77.7vw;
-	bottom: 15px;
-	right: 15px;
+	bottom: 0;
+	right: 0;
 	
 	z-index: 3;
 }
 
-.section .header, .section .footer {
+.section .header {
 	cursor: move;
 }
 
@@ -351,6 +327,10 @@ div.dropdown-content {
 
 .spacer {
 	padding-top: 17px;
+}
+
+.h-divider {
+	border-bottom: 2px solid var(--sectionborder);
 }
 
 .faux-section {

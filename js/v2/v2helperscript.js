@@ -42,7 +42,7 @@ function toggleSelected(divId) {
 function showMessage(msg, timeToShow = 10000) {
 	message.content.innerHTML = msg;
 	
-	show(message.container);
+	show(message.container, 'block');
 	
 	message.container.classList.add("selected");
 	
@@ -50,7 +50,7 @@ function showMessage(msg, timeToShow = 10000) {
 	setTimeout(hideMessage, timeToShow);
 }
 
-function hideMessage(attempts = 1) {
+function hideMessage() {
 	//deselect message so it will collapse
 	message.container.classList.remove("selected");
 	

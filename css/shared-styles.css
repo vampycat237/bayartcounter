@@ -1,0 +1,36 @@
+body {
+	background-color: var(--bluebg);
+	
+	/*font defaults*/
+	color: var(--bluetext);
+	font-size: 30px;
+	text-align: center;
+	font-family: sans-serif;
+}
+/*FONT STYLES*/
+h1 {
+	font-size: 46px;
+	margin-bottom: 1vw;
+}
+.note {
+	font-size: 16px;
+}
+a, .show a {
+	color: var(--greentext);
+}
+
+/*BUTTONS*/
+button, .button {
+	color: inherit;
+	font-size: inherit;
+	text-align: center;
+	font-family: inherit;
+	
+	margin-left: auto; margin-right: auto;
+	padding: 15px;
+	border: 2px solid var(--bluetext);
+	margin-bottom: 1vw;
+	background-color: var(--bluebutton);
+	
+	cursor: pointer;
+}

@@ -4,6 +4,7 @@
 	<title>vampy's bay art counter 2.0</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel = "stylesheet" type = "text/css" href = "css/theme-dark.css" />
+	<link rel = "stylesheet" type = "text/css" href = "css/shared-styles.css" />
 	<link rel = "stylesheet" type = "text/css" href = "css/v2style.css" />
 </head>
 <body>
@@ -24,7 +25,7 @@
 	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleVisibility(debugMenu)">?</div>
 	
 	<!--debug menu-->
-	<div id="debug" class="section dropdown-holder draggable" style="display:none">
+	<div id="debug" class="section dropdown-holder draggable" style="top: 0px; left: 1005px; display:none">
 		<div id="debug-header" class="header" >debug menu</div>
 		
 		<div class="container btn-container dropdown-contents">
@@ -48,8 +49,9 @@
 	  <div class="header">show/hide dropdowns</div>
 	  <div class="spacer"></div>
 	  <div id="sidebar-base-values" class="dropdown-holder">
-		<button class="title-button" onclick="toggleSelected('sidebar-base-values')">base values</button>
+		<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>
 		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
+			<div class="spacer"></div>
 			<div id="base-values-holder">
 				<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
 					<span id="base-value-item-0">edit blank</span>
@@ -58,6 +60,7 @@
 			</div>
 			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 		</div>
+		<div class="h-divider"></div>
 	  </div>
 	</div>
 	
