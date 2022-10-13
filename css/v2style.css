@@ -123,83 +123,6 @@ div.container.btn-container {
 	visibility: hidden;
 }
 
-/*page holds the whole ass page. everything
-div.row.page {
-	margin-left: auto; margin-right: auto;
-	width: 100%;
-	align-items: stretch;
-}*/
-
-div.stickytop.multibaymanager {
-	margin-bottom: 1vw;
-}
-
-.multibay {
-	min-width: 20%;
-	max-width: 25%;
-	font-size: 16px;
-	justify-content: center;
-	flex: 1 1 0%;
-}
-
-/*top holds the stickies at the top*/
-/*div.row.top {
-	justify-content: space-between;
-	align-items: center;
-	margin: auto;
-}*/
-
-/*div.body {
-	margin-left: auto; margin-right: auto;
-	width: 100%;
-}*/
-
-#activeBayCount, .value-count {
-	background-color: var(--fadedbutton);
-	border: 2px solid var(--fadedtext);
-	color:            var(--fadedtext);
-	font-size: 16px;
-	height: auto;
-	margin: 0px;
-	margin-left: 2px;
-	min-width: 20%;
-	max-width: 40%;
-	flex: 1 1 0%;
-	text-align: center;
-}
-
-/*.column.plusminus {
-	align-items: stretch;
-	flex: 1 1 25%;
-}*/
-
-/*DROPDOWN STUFF*/
-/*v1's dropdowns*/
-div.dropdown-content {
-	display: none;
-	position: absolute;
-	width: 20%;
-	overflow: auto;
-	margin: auto;
-	align-self: center;
-	justify-content: space-between;
-	z-index: 1;
-}
-
-.dropdown-content {
-	background-color: var(--bluebutton);
-	border: 2px solid var(--bluetext);
-	color:            var(--bluetext);
-	font-size: 16px;
-	padding: 5px;
-	width: 100%;
-	margin: 0;
-}
-
-/*.dropdown:hover .dropdown-content {
-	display: block;
-}*/
-
 /*v2's dropdowns/expand on click-s*/
 .dropdown-holder {
 	width: 100%;
@@ -495,19 +418,19 @@ div.dropdown-content {
 }
 
 /*BASE VALUE STYLES*/
-.base-value-item {
+.section-item {
 	gap: 2px;
 	justify-content: space-between;
 	padding: 10px;
 }
 
-.base-value-item > button {
+.section-item > button {
 	width: 20%;
 	max-width: 20%; min-width: 20%;
 	margin: 0;
 }
 
-.base-value-item > span {
+.section-item > span {
 	flex-grow: 1;
 }
 
@@ -521,10 +444,32 @@ div.dropdown-content {
 	width: 20%;
 	font-size: 16px;
 	
+	gap: 15px;
+	
 	display: flex;
 	flex-direction: column;
 	justify-content: start;
 }
+
+.sidebar .header {
+	margin-bottom: 1px;
+}
+
+/*LINES*/
+#lines .button > input {
+	float: left;
+}
+
+/*#lines .btn-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+#lines .button {
+	min-width: 50%;
+	max-width: 100%;
+}*/
 
 @media only screen and (max-width: 800px) {
 	.container, .stickytop {

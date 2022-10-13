@@ -34,3 +34,18 @@ button, .button {
 	
 	cursor: pointer;
 }
+
+/*INPUTS*/
+input, #activeBayCount, .value-count {
+	background-color: var(--fadedbutton);
+	border: 2px solid var(--fadedtext);
+	color:            var(--fadedtext);
+	font-size: 16px;
+	height: auto;
+	margin: 0px;
+	margin-left: 2px;
+	min-width: 20%;
+	max-width: 40%;
+	flex: 1 1 0%;
+	text-align: center;
+}

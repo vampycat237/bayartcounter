@@ -24,6 +24,13 @@
 	<!--help buttons-->
 	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleVisibility(debugMenu)">?</div>
 	
+	<!--info popup-->
+	<div id="info" class="small section centered" style="z-index: 6;">
+		<div id="info-header" class="header">info</div>
+		<span id="message-content" class="p">information about the thing you clicked goes here</span>
+		<div id="message-button" class="small section btn-floating" onclick="forceClose(info)">X</div>
+	</div>
+	
 	<!--debug menu-->
 	<div id="debug" class="section dropdown-holder draggable" style="top: 0px; left: 1005px; display:none">
 		<div id="debug-header" class="header" >debug menu</div>
@@ -47,7 +54,7 @@
 	<!--sidebar as show/hider-->
 	<div id="sidebar" class="faux-section sidebar">
 	  <div class="header">show/hide dropdowns</div>
-	  <div class="spacer"></div>
+	  <!--<div class="spacer"></div>-->
 	  <div id="sidebar-base-values" class="dropdown-holder">
 		<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>
 		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
@@ -61,6 +68,22 @@
 			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 		</div>
 		<div class="h-divider"></div>
+	  </div>
+	  <div id="sidebar-lineart" class="dropdown-holder">
+		<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('lines')">lineart bonuses</button>
+		<!--<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-lineart')">lineart bonuses</button>
+		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
+			<div class="spacer"></div>
+			<div id="lineart-holder">
+				<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
+					<input class=>
+					<span id="base-value-item-0">edit blank</span>
+					<button class="small red" onclick="removeBaseVal(0)">x</button>
+				</div>
+			</div>
+			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
+		</div>
+		<div class="h-divider"></div>-->
 	  </div>
 	</div>
 	
@@ -124,14 +147,21 @@
 	<!--coverage-->
 	
 	<!--lines (if applicable)-->
-	<section id="lines" style="display:none">
-	<p>what is the lineart like?</p>
-	<div class="container">
-		<button id="lined" onclick="setLines(null)">regular lineart</button>
-		<button id="colorlines" onclick="setLines('colorlines')">fully colored lineart</button>
-		<button id="lineless" onclick="setLines('lineless')">lineless</button>
+	<div id="lines" class="section draggable" style="display:none">
+		<div id="lines-header" class="header">lineart bonuses</div>
+		<p class="note">how many bays are drawn with the following lineart styles?<br>
+		(anything else will not get a shell bonus)</p>
+		<div class="container btn-container">
+			<div class="small button">
+				<input id="colorlines" type="number" value="0" min="0">
+				<label for="colorlines">fully colored lineart</label>
+			</div>
+			<div class="small button">
+				<input id="lineless" type="number" value="0" min="0">
+				<label for="lineless">lineless</label>
+			</div>
+		</div>
 	</div>
-	</section>
 	
 	<!--shading-->
 	<section id="shading" style="display:none">
