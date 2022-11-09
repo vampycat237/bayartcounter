@@ -6,8 +6,9 @@ const counting = {
 	stringArray : [],
 	
 	totals() {
-		//reset total
+		//reset total & user's stringArray
 		userTotal = 0;
+		this.stringArray = [];
 		
 		//count base values
 		for (i = 0; i < baseValues.length; i++) {
