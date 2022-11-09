@@ -1,15 +1,16 @@
 //SIDEBAR MANAGER
 const sidebar = {
-	dropdowns : {
-		BV : document.getElementById('sidebar-base-values')
+	sections : {
+		BV : document.getElementById('sidebar-base-values'),
+		lines : document.getElementById('sidebar-lines')
 	},
 	holders : {
 		BV : document.getElementById('base-values-holder')
 	}
 }
 
-//TODO: update all sidebar holder elements
-function updateHolders() {
+//TODO: update all sidebar section, holder, titlebutton, etc. elements that have update functions
+function updateSidebar() {
 	updateBVHolder();
 }
 
@@ -56,4 +57,12 @@ function updateSectionHolder(section, list, func) {
 	} else {
 		section.innerHTML = "";
 	}
+}
+
+//TODO
+//Updates button title for a section depending on if its draggable window it spawns is shown or not.
+//section = the sidebar subsection in question
+//window  = the pop-out window this section spawns
+function updateButtonTitle(section, window) {
+	return;
 }

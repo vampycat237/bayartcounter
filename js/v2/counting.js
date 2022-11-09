@@ -17,8 +17,7 @@ const counting = {
 			//TODO: combine duplicate values before counting
 			this.stringArray.push(tmp +" ("+ baseValues[i].toString() +")");
 		}
-		//TODO: count stackables
-		//TODO: count static
+		//TODO: count stackable & static bonuses
 		
 		this.update();
 	},

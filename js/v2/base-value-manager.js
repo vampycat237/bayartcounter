@@ -73,7 +73,7 @@ function openBaseValEditor(action, i = -1) {
 	baseValEditor.index.value  = i;
 	
 	//housekeeping
-	forceOpen(sidebar.dropdowns.BV);
+	forceOpen(sidebar.sections.BV);
 	onMediumChange();
 	
 	//show the editor
@@ -82,14 +82,13 @@ function openBaseValEditor(action, i = -1) {
 }
 
 function cancelBaseValEditor() {
-	releaseForce(sidebar.dropdowns.BV);
+	releaseForce(sidebar.sections.BV);
 	hide(baseValEditor.editor);
 }
 
 //When confirming action using the baseValEditor, this is called.
 //Checks the validity of the action, preps the information for storage, and calls the appropriate helper with the info it needs.
 function storeBaseVal() {
-	//TODO: add craftSize
 	//Creates a new BaseVal object using the information in the editor.
 	//BaseVal needs media, coverage, count, and craftSize if applicable
 	
@@ -100,7 +99,9 @@ function storeBaseVal() {
 		if (isCraft(baseValEditor.media.value)) { showMessage("No size was specified for a craft. It was added anyway with size 'model'."); }
 	}
 	
+	//Create new BaseVal & save the medium information
 	const bv = new BaseVal(baseValEditor.media.value, baseValEditor.coverage.value, baseValEditor.count.value, craftSize);
+	lastMedia = baseValEditor.media.value;
 	
 	//Hand the object to the appropriate helper function to execute the appropriate action
 	if (baseValEditor.action.value == "edit") {
@@ -112,7 +113,7 @@ function storeBaseVal() {
 	
 	//update the sidebar BV holder & release it
 	updateBVHolder();
-	releaseForce(sidebar.dropdowns.BV);
+	releaseForce(sidebar.sections.BV);
 	
 	//close the BV editor
 	hide(baseValEditor.editor);
@@ -218,6 +219,7 @@ function getMediaCategory(medium) {
 function isCraft(medium) {
 	return getMediaCategory(medium) == "craft";
 }
+
 
 //base value class
 class BaseVal {
