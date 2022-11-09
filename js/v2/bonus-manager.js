@@ -12,7 +12,8 @@ class BonusVal {
 	}
 	
 	toString() {
-		return this.type;
+		//string format: "value (bonus type)"
+		return this.value +" ("+this.type+")";
 	}
 	
 	countSelf() {
@@ -41,6 +42,12 @@ class StackableVal extends BonusVal {
 		super(value, type);
 	}
 	
+	//overrides toString to account for count
+	toString() {
+		//string format: "value (#x bonus type)"
+		return countSelf()+" ("this.count+"x "+this.type+")";
+	}
+	
 	//overrides countSelf to account for count
 	countSelf() {
 		return this.value * this.count;
@@ -51,6 +58,7 @@ class StackableVal extends BonusVal {
 //TODO: Make it accept a Pet object, if pets are stored as objects
 //Pet bonus class
 class PetBonus extends StackableVal {
+	//value = Shell or percentage (decimal) value of this pet.
 	//type = type of pet
 	//func = how this value should be added to the total. can equal "+", "*", or "RNG", for flat, percentage, and RNG bonuses respectively. (RNG bonuses are not added to the total, but will call for RNG bonuses to be accounted for at the end.
 	constructor(value, type, count = 1, func = "+") {
@@ -61,12 +69,19 @@ class PetBonus extends StackableVal {
 	//overrides toString to account for RNG pets
 	toString() {
 		if (this.func == "RNG") {
+			//TODO
 			//do RNG pet stuff
-		} else {
-			//do normal pet stuff
+			return "RNG for "+this.type;
 		}
-		//TEMP
-		return this.type;
+		else if (this.func == "*") {
+			//TODO
+			//show how the multiplication goes
+			return countSelf()+" ("+this.count+"x "+this.value*100+"% bonus of"+userTotal+" from"+this.type+")"
+		}
+		else {
+			//do normal pet stuff
+			return countSelf()+" ("this.count+"x "+this.type+")";
+		}
 	}
 	
 	//TODO
@@ -74,9 +89,11 @@ class PetBonus extends StackableVal {
 	countSelf() {
 		if (this.func == "*") {
 			//do the multiplication
+			return userTotal * this.value;
 		}
 		else if (this.func == "RNG") {
-			//handle RNG
+			//TODO: handle RNG
+			return 0; //Returns 0 so that no shell value is added to the total
 		}
 		else {
 			//assume addition

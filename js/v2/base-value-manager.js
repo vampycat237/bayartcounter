@@ -239,13 +239,17 @@ class BaseVal {
 		this.countSelf();
 	}
 	
-	//Returns a string representation of this object
+	//Returns a string representation of this object. Includes the value
 	toString() {
 		let str = "";
+		str += this.value + " (";
+		
 		str += this.count + "x ";
 		if (this.isCraft) { str += this.craftSize + " " }
 		str += this.media + " ";
 		str += this.coverage;
+		
+		str += ")"
 		return str;
 	}
 	
