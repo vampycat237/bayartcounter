@@ -222,7 +222,8 @@ function isCraft(medium) {
 
 
 //base value class
-class BaseVal {
+//REQUIRES VAL from bonus-manager.js
+class BaseVal extends Val {
 	//make our new BaseVal object
 	constructor(media, coverage, count = 1, craftSize = 'model') {
 		this.media      = media;
@@ -237,21 +238,23 @@ class BaseVal {
 		//set value
 		this.value = 0;
 		this.countSelf();
+		
+		//we don't need to call super bc we already set value with countSelf()
 	}
 	
-	//Returns a string representation of this object. Includes the value
+	//Returns a string representation of this object. Does not include value.
 	toString() {
 		let str = "";
-		str += this.value + " (";
 		
 		str += this.count + "x ";
 		if (this.isCraft) { str += this.craftSize + " " }
 		str += this.media + " ";
 		str += this.coverage;
 		
-		str += ")"
 		return str;
 	}
+	
+	//countingString(): Returns a string representing this object and its value, for counting. Defined in parent class.
 	
 	//Sets its own value based on the medium, coverage, size, and count. Requires a shellRates object
 	countSelf() {

@@ -15,7 +15,7 @@ const counting = {
 			var tmp = baseValues[i].value
 			userTotal += tmp;
 			//TODO: combine duplicate values before counting
-			this.stringArray.push(baseValues[i].toString());
+			this.stringArray.push(baseValues[i].countingString());
 		}
 		//TODO: count stackable & static bonuses
 		

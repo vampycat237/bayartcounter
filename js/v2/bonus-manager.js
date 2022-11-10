@@ -2,55 +2,157 @@
 //ALL stackables expect their value & a type to be given.
 
 //TODO
-//SUPERCLASS: BonusVal
-class BonusVal {
-	//value = int. shell value of this bonus
-	//type  = string. what is granting this bonus
-	constructor(value, type = "generic bonus") {
-		this.type  = type;
+//SUPERCLASS: Val
+class Val {
+	//value = int. shell value of this item
+	//type  = string. what type of value is this (base, static, stackable, pet)
+	constructor(value) {
 		this.value = value;
+		countSelf()
+		//this.type  = type;
 	}
 	
+	//Returns a string representation of this object. Does not include value.
 	toString() {
-		//string format: "value (bonus type)"
-		return this.value +" ("+this.type+")";
+		return "generic value";
 	}
 	
+	//Returns a string representing this object and its value, for counting.
+	countingString() {
+		return this.value + " (" + this.toString() + ")";
+	}
+	
+	//ABSTRACT FUNCTION: countSelf()
+	//Should always count its own value and save that as value.
 	countSelf() {
-		return this.value;
+		return;
 	}
 }
 
 //TODO
-class Background extends BonusVal {
+//SUPERCLASS: StaticVal
+class StaticVal extends Val {
+	//value  = int. shell value of this bonus
+	//source = string. what specifically is granting this bonus? (treasure trove, lineless, etc)
+	//type   = string. category of bonus (bonus, background, lines, etc)
+	constructor(value, source = "generic", type = "bonus") {
+		this.subtype = source;
+		this.type = type;
+		super(value);
+		//this.type  = "bonus";
+		//this.value = value;
+	}
+	
+	toString() {
+		//string format: "bonusType type"
+		//examples: "treasure trove bonus", "depth background"
+		return subtype + " " + type;
+	}
+	
+	//Can use countingString() from parent class
+	
+	//This countSelf() is so abstract we don't need it
+	/*countSelf() {
+		return this.value;
+	}*/
+}
+
+//TODO
+class Background extends StaticVal {
 	//value = shell value
-	//type  = type of background.
-	constructor(value, type) {
-		super(value, type+" background");
+	//backgroundType = type of background. Used to calculate value
+	constructor(backgroundType) {
+		//TODO: calculate value based on backgroundType
+		this.value = 0;
+		countSelf()
+		
+		super(this.value, backgroundType, "background");
+	}
+	
+	//Can use countingString() from parent class
+	
+	//TODO
+	countSelf() {
+		var v = 0;
+		
+		switch (this.subtype) {
+			case "simple" : v = shellRates.ratesBackgrounds[1]; break;
+			case "depth"  : v = shellRates.ratesBackgrounds[2]; break;
+			case "complex": v = shellRates.ratesBackgrounds[3]; break;
+			default       : v = shellRates.ratesBackgrounds[0]; break;
+		}
+		
+		this.value = v;
 	}
 }
 
 //TODO
 //TODO: consider calculating values for these instead of requiring they be provided
 //Stackable class
-class StackableVal extends BonusVal {
-	//value = the value of ONE of these
-	//type  = lines, shading, animation types
+class StackableVal extends StaticVal {
+	//type = lines, shading, animation etc
+	//subtype  = lines, shading, animation TYPES. simple, complex, etc.
 	//count = number of times to apply this bonus. will be counted with countSelf()
-	constructor(value, type, count = 1) {
+	constructor(type, subtype, count = 1) {
 		this.count = count;
-		super(value, type);
+		//TODO: calculate value based on type and stackableType
+		this.value = 0;
+		countSelf();
+		
+		super(this.value, subtype, type);
 	}
 	
 	//overrides toString to account for count
 	toString() {
-		//string format: "value (#x bonus type)"
-		return countSelf()+" ("this.count+"x "+this.type+")";
+		//string format: "#x bonus type"
+		return this.count + "x " + this.type;
 	}
 	
-	//overrides countSelf to account for count
+	//countingString() is inhereited from parent
+	
+	//Calculates value from shellRates
 	countSelf() {
-		return this.value * this.count;
+		var rates = [];
+		var i = 0;
+		
+		switch (this.type) {
+			case "lines" : rates = shellRates.ratesLines; break;
+			case "shading" : rates = shellRates.ratesShading; break;
+			case "animtween" : rates = shellRates.ratesTweens; break;
+			case "animhanddrawn" : rates = shellRates.ratesAnimated; break;
+			default:
+				rates = [0,0,0,0];
+				console.log("invalid type on a stackable value with subtype '"+this.subtype+"'");
+				break;
+		}
+		
+		switch (this.subtype) {
+			case "colorlines": //lines
+			case "minimal": //shading
+			case "easy": //animation
+				i = 1;
+				break;
+				
+			case "lineless": //lines
+			case "basic": //shading
+			case "simple": //animation
+				i = 2;
+				break;
+				
+			case "complex": //shading & animation
+				i = 3;
+				break;
+			
+			case "painting": //shading
+				i = 4;
+				break;
+			
+			default:
+				i = 0;
+				break;
+		}
+		
+		this.value = rates[i] * this.count;
 	}
 }
 
@@ -61,8 +163,8 @@ class PetBonus extends StackableVal {
 	//value = Shell or percentage (decimal) value of this pet.
 	//type = type of pet
 	//func = how this value should be added to the total. can equal "+", "*", or "RNG", for flat, percentage, and RNG bonuses respectively. (RNG bonuses are not added to the total, but will call for RNG bonuses to be accounted for at the end.
-	constructor(value, type, count = 1, func = "+") {
-		super(value, type, count)
+	constructor(value, petType, count = 1, func = "+") {
+		super(value, petType, count);
 	}
 	
 	//TODO
