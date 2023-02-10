@@ -1,5 +1,40 @@
 //info management script
+
+/* FOR USERS:
+ * A majority of descriptions are taken or adapted from the bayfox website, bayfoxcove.xyz.
+ * Any changes from listed descriptions there are purely for clarity, and should enhance but not change the meaning of the category.
+ * If you feel any descriptions provided by this tool are inaccurate to the categories defined on bayfoxcove.xyz,
+ * please contact vampycat237. Contact information can be found at vampycat237.github.io.
+ * 
+ * Vampycat237 is not responsible for the contents of any projects other than those of their own creation,
+ * so if you are having issues with a project that is managed by someone else, please contact the project owner.
+ */
+
+/* FOR DEVELOPERS:
+ * The infoStrings object holds the descriptions for every option that exists for your users to choose from when
+ * counting using your tool.
+ * 
+ * Knowing what exactly the various options mean - and being able to pull that information up without leaving the
+ * page - is very helpful, especially with complicated art redeeming systems.
+ * It's reccomended to pull your infoStrings directly from official sources and to use the same wording as the
+ * site, unless the language of the site is unclear, in which you should attempt to clarify further.
+ * 
+ * Make sure you do not describe your options in a way that does not align with how the art is actually redeemed,
+ * though, as your tool will then become an inconvenience instead of a convenience, which is literally the opposite
+ * of what this is for.
+ */
+
 const info = {
+	container: document.getElementById('info'),
+	content: document.getElementById('info-content')
+};
+
+function showInfo(str) {
+	info.content.innerHTML = str;
+	info.container.style.display = "flex";
+}
+
+const infoStrings = {
 	elmnt : document.getElementById("info"),
 	
 	media : {
@@ -34,8 +69,8 @@ const info = {
 	stackable : "'Stackable values' are bonuses you get for putting in more effort or polish in your work. This is how you get extra shells for shading, animating, lineless art, or fully colored lineart.",
 	
 	lines : {
-		colorlines : "",
-		lineless : ""
+		colorlines : "colorlines TODO",
+		lineless : "lineless TODO"
 	},
 	
 	shading : {
@@ -45,7 +80,7 @@ const info = {
 		painting : "Multiple layers of mixed highlights and shadows creating a fluid texture."
 	},
 	
-	animation {
+	animation : {
 		overview : "There are two categories for animation in Baycove: tween/puppet animation, and hand-drawn animation. The line may be a little blurry at times, but if you use your best judgement you should be fine. Feel free to ask for clarification on what kind of animation yours would count as in the help center!",
 		tweens : "Tween or puppet animations would include animations that primarily consist of moving and/or rotating static pieces of art. For instance, a head bob where the head moves straight up and down, or a puppet animation where three seperate arm sprites make up one arm that is moved with simulated 'bones.'",
 		handdrawn : "Hand-drawn animations would include animations that primarily consist of uniquely drawn images and frames."

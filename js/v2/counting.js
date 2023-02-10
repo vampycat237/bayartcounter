@@ -1,4 +1,17 @@
 //fun fact i almost named this object moneymachine
+
+/* FOR DEVELOPERS:
+ * This is the brain behind your whole tool, and probably the most important script here.
+ * Make sure that if your categories and such are different, you loop through them appropriately, or they will
+ * be skipped when counting.
+ * 
+ * Your #1 priority is to have ACCURATE TOTALS.
+ * Your #2 priority is to have ACCURATE PROOF of your counting.
+ * Your #3 priority is to be able to actually count everything available for scoring in your art redeeming system.
+ * 
+ * Try to avoid comprimising #1 and #2 in releases.
+ */
+
 const counting = {
 	proof : document.getElementById('counting-proof'),
 	total : document.getElementById('counting-total'),

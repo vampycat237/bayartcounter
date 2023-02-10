@@ -1,6 +1,13 @@
 //STACKABLE (and static) CLASS
 //ALL stackables expect their value & a type to be given.
 
+//Store bonuses in here.
+/*
+const bonuses = {
+	
+}
+*/
+
 //TODO
 //SUPERCLASS: Val
 class Val {
@@ -8,7 +15,7 @@ class Val {
 	//type  = string. what type of value is this (base, static, stackable, pet)
 	constructor(value) {
 		this.value = value;
-		countSelf()
+		//countSelf()
 		//this.type  = type;
 	}
 	
@@ -24,9 +31,9 @@ class Val {
 	
 	//ABSTRACT FUNCTION: countSelf()
 	//Should always count its own value and save that as value.
-	countSelf() {
+	/*countSelf() {
 		return;
-	}
+	}*/
 }
 
 //TODO
@@ -36,9 +43,9 @@ class StaticVal extends Val {
 	//source = string. what specifically is granting this bonus? (treasure trove, lineless, etc)
 	//type   = string. category of bonus (bonus, background, lines, etc)
 	constructor(value, source = "generic", type = "bonus") {
+		super(value);
 		this.subtype = source;
 		this.type = type;
-		super(value);
 		//this.type  = "bonus";
 		//this.value = value;
 	}
@@ -63,10 +70,9 @@ class Background extends StaticVal {
 	//backgroundType = type of background. Used to calculate value
 	constructor(backgroundType) {
 		//TODO: calculate value based on backgroundType
-		this.value = 0;
+		super(0, backgroundType, "background");
 		countSelf()
 		
-		super(this.value, backgroundType, "background");
 	}
 	
 	//Can use countingString() from parent class
@@ -94,12 +100,11 @@ class StackableVal extends StaticVal {
 	//subtype  = lines, shading, animation TYPES. simple, complex, etc.
 	//count = number of times to apply this bonus. will be counted with countSelf()
 	constructor(type, subtype, count = 1) {
+		super(0, subtype, type);
 		this.count = count;
 		//TODO: calculate value based on type and stackableType
-		this.value = 0;
 		countSelf();
 		
-		super(this.value, subtype, type);
 	}
 	
 	//overrides toString to account for count
@@ -182,7 +187,7 @@ class PetBonus extends StackableVal {
 		}
 		else {
 			//do normal pet stuff
-			return countSelf()+" ("this.count+"x "+this.type+")";
+			return countSelf()+" ("+this.count+"x "+this.type+")";
 		}
 	}
 	

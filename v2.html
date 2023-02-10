@@ -9,219 +9,212 @@
 </head>
 <body>
 	<!--<p>shell calculator for bayfox art submissions</p>-->
-	
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
 	<div id="message-container" class="dropdown-holder" style="display:none;">
 		<div id="message-border" class="section nopadding centered dropdown-contents">
-		<div id="message" class="centered">
-			<div id="message-spacer" class="invisible small section btn-floating left">X</div>
-			<span id="message-content" class="p">test message</span>
-			<div id="message-button" class="small section btn-floating" onclick="forceClose(message.container)">X</div>
-		</div>
+			<div id="message" class="centered">
+				<div id="message-spacer" class="invisible small section btn-floating left">X</div>
+				<span id="message-content" class="p">test message</span>
+				<div id="message-button" class="small section btn-floating" onclick="forceClose(message.container)">X</div>
+			</div>
 		</div>
 	</div>
-	
+
 	<!--help buttons-->
 	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleVisibility(debugMenu)">?</div>
-	
+
 	<!--info popup-->
-	<div id="info" class="small section centered" style="z-index: 6;">
+	<div id="info" class="small section centered" style="z-index: 6; display: none;">
 		<div id="info-header" class="header">info</div>
-		<span id="message-content" class="p">information about the thing you clicked goes here</span>
-		<div id="message-button" class="small section btn-floating" onclick="forceClose(info)">X</div>
+		<span id="info-content" class="p">information about the thing you clicked goes here</span>
+		<div id="info-button" class="small section btn-floating" onclick="forceClose(info.container)">X</div>
 	</div>
-	
+
 	<!--debug menu-->
 	<div id="debug" class="section dropdown-holder draggable" style="top: 0px; left: 1005px; display:none">
-		<div id="debug-header" class="header" >debug menu</div>
-		
+		<div id="debug-header" class="header">debug menu</div>
+
 		<div class="container btn-container dropdown-contents">
 			<div style="padding-top:0.5vw"></div>
 			<button class="small" onclick="showMessage('test message')">show test message</button>
 			<button class="small" onclick="showMessage('this is a test message<br>hope that line break works')">show longer test message</button>
 			<button class="small" onclick="console.log(baseValues)">log baseValues</button>
 			<button class="small" onclick="updateSidebar()">update sidebar elements</button>
+			<button class="small" onclick="showInfo(infoStrings.base)">show test info</button>
 		</div>
 	</div>
-	
+
 	<!--2.0 does not use the multibaymanager bar-->
-	
 	<!--2.0 will not use the sticky row-->
-	
 	<!--start!!-->
 	<!--2.0 embeds "category" into "media", not having them seperate.-->
-	
 	<!--sidebar as show/hider-->
 	<div id="sidebar" class="faux-section sidebar">
-	  <div class="header">show/hide dropdowns</div>
-	  <!--<div class="spacer"></div>-->
-	  <div id="sidebar-base-values" class="dropdown-holder">
-		<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>
-		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
-			<div class="spacer"></div>
-			<div id="base-values-holder">
-				<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
-					<span id="base-value-item-0">edit blank</span>
-					<button class="small red" onclick="removeBaseVal(0)">x</button>
-				</div>-->
-			</div>
-			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
-		</div>
-		<div class="h-divider"></div>
-	  </div>
-	  <div id="sidebar-lines" class="dropdown-holder">
-		<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('lines')">lineart bonuses</button>
-		<!--<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-lineart')">lineart bonuses</button>
-		<div id="sidebar-base-values-body"class="section-body dropdown-contents">
-			<div class="spacer"></div>
-			<div id="lineart-holder">
-				<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
-					<input class=>
-					<span id="base-value-item-0">edit blank</span>
-					<button class="small red" onclick="removeBaseVal(0)">x</button>
+		<div class="header">show/hide dropdowns</div>
+		<!--<div class="spacer"></div>-->
+		<div id="sidebar-base-values" class="dropdown-holder">
+			<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>
+			<div id="sidebar-base-values-body" class="section-body dropdown-contents">
+				<div class="spacer"></div>
+				<div id="base-values-holder">
+					<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
+			<span id="base-value-item-0">edit blank</span>
+			<button class="small red" onclick="removeBaseVal(0)">x</button>
+		</div>-->
 				</div>
+				<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 			</div>
-			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
+			<div class="h-divider"></div>
 		</div>
-		<div class="h-divider"></div>-->
-	  </div>
+		<div id="sidebar-lines" class="dropdown-holder">
+			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('lines')">lineart bonuses</button>
+		</div>
+		<div id="sidebar-shading" class="dropdown-holder">
+			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('shading')">shading</button>
+		</div>
 	</div>
-	
-	
+
+
 	<!--base-values as a draggable section for editing base values. starting pos: "top: 5px; left: 261px;"-->
 	<div id="base-values" class="section draggable" style="display:none; top: 5px; left: 261px;">
-	<div id="base-values-header" class="header">
-		<span class="p">[edit/add] base values</span>
-		<div class="small red button btn-floating"></div>
-	</div>
-	<div class="section-body">
-		<div class="spacer"></div>
-		<span>enter the count, medium, and coverage types below</span>
-		<div id="base-values-editor" class="row base-values-editor">
-			<input id="base-values-action" type="hidden" value="add" style="display:none;"></input>
-			<input id="base-values-index" type="hidden" value="-1" style="display:none;"></input>
-			<div style="display:inline-block; padding:0;">
-				<label for="base-values-count" class="smalltext">count: </label>
-				<input id="base-values-count" class="value-count" type="number" value="1" min="1"></input>
+		<div id="base-values-header" class="header">
+			<span class="p">[edit/add] base values</span>
+			<div class="small red button btn-floating"></div>
+		</div>
+		<div class="section-body">
+			<div class="spacer"></div>
+			<span>enter the count, medium, and coverage types below</span>
+			<div id="base-values-editor" class="row base-values-editor">
+				<input id="base-values-action" type="hidden" value="add" style="display:none;">
+				<input id="base-values-index" type="hidden" value="-1" style="display:none;">
+				<div style="display:inline-block; padding:0;">
+					<label for="base-values-count" class="smalltext">count: </label>
+					<input id="base-values-count" class="value-count" type="number" value="1" min="1">
+				</div>
+				<select id="base-values-media">
+					<option value="null">--select the medium--</option>
+					<optgroup label="2d art">
+						<option value="flatcolor">flatcolor</option>
+						<option value="grayscale">grayscale</option>
+					</optgroup>
+					<optgroup label="3d models">
+						<option value="3d">full 3d</option>
+						<option value="3dflat">flat 3d</option>
+					</optgroup>
+					<optgroup label="crafts">
+						<option value="paper">papercrafts</option>
+						<option value="food">confections</option>
+						<option value="clay">clay</option>
+						<option value="fabric">fabric crafts</option>
+					</optgroup>
+				</select>
+				<select id="base-values-coverage">
+					<option value="null">--select the coverage--</option>
+					<option value="headshot">headshot</option>
+					<option value="halfbody">halfbody</option>
+					<option value="fullbody">fullbody</option>
+					<option value="mini" id="coverage-mini">mini (flatcolor only)</option>
+				</select>
+				<select id="base-values-size">
+					<option value="null">--for crafts: select the size--</option>
+					<option value="model" id="size-model">model</option>
+					<option value="large" id="size-large">large</option>
+				</select>
 			</div>
-			<select id="base-values-media">
-				<option selected="true" value="null">--select the medium--</option>
-				  <optgroup label="2d art">
-					<option value="flatcolor">flatcolor</option>
-					<option value="grayscale">grayscale</option>
-				  </optgroup>
-				  <optgroup label="3d models">
-					<option value="3d">full 3d</option>
-					<option value="3dflat">flat 3d</option>
-				  </optgroup>
-				  <optgroup label="crafts">
-					<option value="paper">papercrafts</option>
-					<option value="food">confections</option>
-					<option value="clay">clay</option>
-					<option value="fabric">fabric crafts</option>
-				  </optgroup>
-			</select>
-			<select id="base-values-coverage">
-				<option selected="true" value="null">--select the coverage--</option>
-				<option value="headshot">headshot</option>
-				<option value="halfbody">halfbody</option>
-				<option value="fullbody">fullbody</option>
-				<option value="mini" id="coverage-mini">mini (flatcolor only)</option>
-			</select>
-			<select id="base-values-size">
-				<option selected="true" value="null">--for crafts: select the size--</option>
-				<option value="model" id="size-model">model</option>
-				<option value="large" id="size-large">large</option>
-			</select>
-		</div>
-		<div class="spacer"></div>
-		<div class="row base-values-editor">
-			<button class="small" onclick="cancelBaseValEditor()">cancel</button>
-			<button class="small counting" onclick="storeBaseVal()">save & close editor</button>
+			<div class="spacer"></div>
+			<div class="row base-values-editor">
+				<button class="small" onclick="cancelBaseValEditor()">cancel</button>
+				<button class="small counting" onclick="storeBaseVal()">save & close editor</button>
+			</div>
 		</div>
 	</div>
-	</div>
-	
+
 	<!--MEDIA, COVERAGE, AND CRAFTSIZE ARE COVERED BY BASEVAL-->
 	<!--medium stuff, each button here will only be shown if the mediumGroup matches it starting pos: "top: 5px; left: 261px;"-->
 	<!--coverage-->
-	
 	<!--lines (if applicable)-->
 	<div id="lines" class="section draggable" style="display:none">
 		<div id="lines-header" class="header">lineart bonuses</div>
-		<p class="note">how many bays are drawn with the following lineart styles?<br>
-		(anything else will not get a shell bonus)<br>
-		(minis do not qualify for the lineless bonus)</p>
+		<p class="note">
+			how many bays are drawn with the following lineart styles?<br>
+			(anything else will not get a shell bonus)<br>
+			(minis do not qualify for the lineless bonus)
+		</p>
 		<div class="container btn-container">
 			<div class="small button">
 				<input id="colorlines" type="number" value="0" min="0">
 				<label for="colorlines">fully colored lineart</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.lines.colorlines)">i</button>
 			</div>
 			<div class="small button">
 				<input id="lineless" type="number" value="0" min="0">
 				<label for="lineless">lineless</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.lines.lineless)">i</button>
 			</div>
 		</div>
 	</div>
-	
+
 	<!--shading-->
-	<section id="shading" style="display:none">
-	<p>is the piece shaded? if so, what is the shading complexity?</p>
-	<div class="container">
-		<button id="noshading" onclick="setShading(null)">no shading</button>
-		<button id="minimal" onclick="setShading('minimal')">minimal shading</button>
-		<button id="basic" onclick="setShading('basic')">basic shading (about one layer of shading or highlights)</button>
-		<button id="complex" onclick="setShading('complex')">complex shading (multiple layers of shading & highlights)</button>
-		<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
+	<div id="shading" class="section draggable" style="display:none">
+		<p class="note">
+			are any bays in the piece shaded?<br>
+			if so, what is the shading complexity, and how many are shaded?
+		</p>
+		<div class="container btn-container">
+			<button id="noshading" onclick="setShading(null)">no shading</button>
+			<button id="minimal" onclick="setShading('minimal')">minimal shading</button>
+			<button id="basic" onclick="setShading('basic')">basic shading (about one layer of shading or highlights)</button>
+			<button id="complex" onclick="setShading('complex')">complex shading (multiple layers of shading & highlights)</button>
+			<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
+		</div>
 	</div>
-	</section>
-	
-	
+
+
 	<!--craft size-->
 	<section id="craftSize" style="display:none">
-	<p>what size best describes the craft?</p>
-	<div class="container">
-		<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
-		<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
-	</div>
+		<p>what size best describes the craft?</p>
+		<div class="container">
+			<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
+			<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
+		</div>
 	</section>
-	
-	
+
+
 	<!--animation-->
 	<section id="animation" style="display:none">
-	<p>is this artwork animated? if so, what type of animation is used?</p>
-	<p class="note">note: each scene in an animation video, such as an AMV, meme, etc; is graded as its own individual, separate animation.</p>
-	<div class="container">
-		<button id="noanimation" onclick="setAnimation(null)">no animation</button>
-		<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
-		<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
-	</div>
+		<p>is this artwork animated? if so, what type of animation is used?</p>
+		<p class="note">note: each scene in an animation video, such as an AMV, meme, etc; is graded as its own individual, separate animation.</p>
+		<div class="container">
+			<button id="noanimation" onclick="setAnimation(null)">no animation</button>
+			<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
+			<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
+		</div>
 	</section>
-	
-	
+
+
 	<!--animation complexity-->
 	<section id="animComplexity" style="display:none">
-	<p>what is the complexity of this animation?</p>
-	<div class="container">
-		<button id="easy" onclick="setAnimComplexity('easy')">easy default text</button>
-		<button id="simple" onclick="setAnimComplexity('simple')">simple default text animation)</button>
-		<button id="complexa" onclick="setAnimComplexity('complexa')">complex default text</button>
-	</div>
+		<p>what is the complexity of this animation?</p>
+		<div class="container">
+			<button id="easy" onclick="setAnimComplexity('easy')">easy default text</button>
+			<button id="simple" onclick="setAnimComplexity('simple')">simple default text animation)</button>
+			<button id="complexa" onclick="setAnimComplexity('complexa')">complex default text</button>
+		</div>
 	</section>
-	
-	
+
+
 	<!--background-->
 	<section id="background" style="display:none">
-	<p>finally, does this piece have a background? if so, how complex is it?</p>
-	<div class="container">
-		<button id="nobackground" onclick="setBackground(null)">no background, photo, pattern, or solid color</button>
-		<button id="simpleb" onclick="setBackground('simpleb')">simple background</button>
-		<button id="depth" onclick="setBackground('depth')">depth background</button>
-		<button id="complexb" onclick="setBackground('complexb')">complex background</button>
-	</div>
+		<p>finally, does this piece have a background? if so, how complex is it?</p>
+		<div class="container">
+			<button id="nobackground" onclick="setBackground(null)">no background, photo, pattern, or solid color</button>
+			<button id="simpleb" onclick="setBackground('simpleb')">simple background</button>
+			<button id="depth" onclick="setBackground('depth')">depth background</button>
+			<button id="complexb" onclick="setBackground('complexb')">complex background</button>
+		</div>
 	</section>
-	
-	
+
+
 	<!--counting zone-->
 	<div id="counting" class="section counting-section dropdown-holder">
 		<div class="container counting-container dropdown-contents">
@@ -230,13 +223,14 @@
 		</div>
 		<div id="countingsticky" class="counting footer" onclick="counting.totals()">calculate totals</div>
 	</div>
-	
+
 	<!--get all our scripts loaded up-->
 	<script src="js/v2/v2helperscript.js"></script>
 	<script src="js/v2/drag-elements.js"></script>
 	<script src="js/v2/sidebar-manager.js"></script>
-	<script src="js/v2/base-value-manager.js"></script>
 	<script src="js/v2/bonus-manager.js"></script>
+	<script src="js/v2/base-value-manager.js"></script>
+	<script src="js/v2/info-manager.js"></script>
 	<script src="js/v2/counting.js"></script>
 	<!--v1 shared scripts-->
 	<script src="js/shellcounter.js"></script>

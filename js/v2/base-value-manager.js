@@ -3,6 +3,8 @@
 var lastMedia  = "flatcolor";
 //Tracks if there has been a recent deletion
 var recentDeletion = false;
+//TODO: store base values in here
+var baseValues = [];
 
 //base values editor
 const baseValEditor = {
@@ -199,9 +201,6 @@ function updateSize() {
 
 //BASE VALUE CLASS AND MANAGEMENT
 
-//TODO: store base values in here
-var baseValues = [];
-
 //Helper method. Determines what type a medium is
 function getMediaCategory(medium) {
 	if (medium == "flatcolor" || medium == "grayscale") {
@@ -226,7 +225,10 @@ function isCraft(medium) {
 class BaseVal extends Val {
 	//make our new BaseVal object
 	constructor(media, coverage, count = 1, craftSize = 'model') {
-		this.media      = media;
+		//We have to call super() first or it dies
+		super(0);
+
+		this.media = media;
 		this.coverage   = coverage;
 		this.count      = count;
 		
@@ -236,7 +238,6 @@ class BaseVal extends Val {
 		this.isCraft    = isCraft(media);
 		
 		//set value
-		this.value = 0;
 		this.countSelf();
 		
 		//we don't need to call super bc we already set value with countSelf()
