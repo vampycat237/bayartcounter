@@ -5,25 +5,8 @@ var lastMedia  = "flatcolor";
 var recentDeletion = false;
 //TODO: store base values in here
 var baseValues = [];
-
-//base values editor
-const baseValEditor = {
-	editor   : document.getElementById('base-values'),
-	header   : document.getElementById('base-values-header'),
-	count    : document.getElementById('base-values-count'),
-	media    : document.getElementById('base-values-media'),
-	coverage : document.getElementById('base-values-coverage'),
-	size     : document.getElementById('base-values-size'),
-	
-	action   : document.getElementById('base-values-action'),
-	index    : document.getElementById('base-values-index'),
-	
-	coverageMini : document.getElementById('coverage-mini'),
-	sizes : {
-		model : document.getElementById('size-model'),
-		large : document.getElementById('size-large')
-	}
-};
+//Background is stored here to avoid errors
+const background = new Background(null);
 
 //Shows BaseVal editor while making its title change to fit the action being performed
 //parameter action: a string. either "edit" or "new"/"create"/"add"

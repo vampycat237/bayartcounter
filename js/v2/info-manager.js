@@ -24,14 +24,13 @@
  * of what this is for.
  */
 
-const info = {
-	container: document.getElementById('info'),
-	content: document.getElementById('info-content')
-};
-
 function showInfo(str) {
 	info.content.innerHTML = str;
 	info.container.style.display = "flex";
+}
+
+function hideInfo() {
+	info.container.style.display = "none";
 }
 
 const infoStrings = {

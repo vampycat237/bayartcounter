@@ -31,7 +31,12 @@ const counting = {
 			this.stringArray.push(baseValues[i].countingString());
 		}
 		//TODO: count stackable & static bonuses
-		
+		//count background
+		if (background.value > 0) {
+			userTotal += background.value;
+			this.stringArray.push(background.countingString());
+		}
+
 		this.update();
 	},
 	

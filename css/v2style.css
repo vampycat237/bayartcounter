@@ -455,9 +455,21 @@ div.container.btn-container {
 	margin-bottom: 1px;
 }
 
-/*LINES*/
-#lines .button > input {
+/*BONUS WINDOWS*/
+.bonus .button > input {
 	float: left;
+}
+
+.bonus .infobutton {
+	float: right;
+}
+
+.bonus .button.small {
+	height: 39px;
+}
+
+.bonus label {
+	vertical-align: middle;
 }
 
 /*#lines .btn-container {

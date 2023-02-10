@@ -1,4 +1,5 @@
 //helper methods for v2 stuff!
+//LOADED FIRST after shellcounter
 
 //DECLARING VARIABLES FOR COMMONLY CALLED ELEMENTS:
 //debug menu
@@ -8,6 +9,29 @@ const message = {
 	container : document.getElementById('message-container'),
 	border    : document.getElementById('message-border'),
 	content   : document.getElementById('message-content')
+};
+//info
+const info = {
+	container: document.getElementById('info'),
+	content: document.getElementById('info-content')
+};
+//base values editor
+const baseValEditor = {
+	editor: document.getElementById('base-values'),
+	header: document.getElementById('base-values-header'),
+	count: document.getElementById('base-values-count'),
+	media: document.getElementById('base-values-media'),
+	coverage: document.getElementById('base-values-coverage'),
+	size: document.getElementById('base-values-size'),
+
+	action: document.getElementById('base-values-action'),
+	index: document.getElementById('base-values-index'),
+
+	coverageMini: document.getElementById('coverage-mini'),
+	sizes: {
+		model: document.getElementById('size-model'),
+		large: document.getElementById('size-large')
+	}
 };
 
 

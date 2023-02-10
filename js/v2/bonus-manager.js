@@ -2,11 +2,8 @@
 //ALL stackables expect their value & a type to be given.
 
 //Store bonuses in here.
-/*
-const bonuses = {
-	
-}
-*/
+const stackableBonuses = [];
+const staticBonuses = [];
 
 //TODO
 //SUPERCLASS: Val
@@ -53,7 +50,7 @@ class StaticVal extends Val {
 	toString() {
 		//string format: "bonusType type"
 		//examples: "treasure trove bonus", "depth background"
-		return subtype + " " + type;
+		return this.subtype + " " + this.type;
 	}
 	
 	//Can use countingString() from parent class
@@ -71,12 +68,18 @@ class Background extends StaticVal {
 	constructor(backgroundType) {
 		//TODO: calculate value based on backgroundType
 		super(0, backgroundType, "background");
-		countSelf()
+		this.countSelf();
 		
 	}
 	
 	//Can use countingString() from parent class
-	
+
+	//Change the background type
+	setBackground(backgroundType) {
+		this.subtype = backgroundType;
+		this.countSelf();
+	}
+
 	//TODO
 	countSelf() {
 		var v = 0;
@@ -103,7 +106,7 @@ class StackableVal extends StaticVal {
 		super(0, subtype, type);
 		this.count = count;
 		//TODO: calculate value based on type and stackableType
-		countSelf();
+		this.countSelf();
 		
 	}
 	
@@ -117,6 +120,9 @@ class StackableVal extends StaticVal {
 	
 	//Calculates value from shellRates
 	countSelf() {
+		//start by if we have count less than 1 (0 or somehow negative), we just return 0. no complications required
+		if (this.count <= 1) { return 0; }
+
 		var rates = [];
 		var i = 0;
 		
@@ -158,6 +164,19 @@ class StackableVal extends StaticVal {
 		}
 		
 		this.value = rates[i] * this.count;
+	}
+}
+
+class Lineart extends StackableVal {
+	//To keep consistent with parent class we refer to the type of lineart as "subtype".
+	constructor(subtype, count) {
+		super("lines", subtype, count);
+	}
+}
+
+class Shading extends StackableVal {
+	constructor(subtype, count) {
+		super("shading", subtype, count);
 	}
 }
 

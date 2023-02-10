@@ -27,7 +27,7 @@
 	<div id="info" class="small section centered" style="z-index: 6; display: none;">
 		<div id="info-header" class="header">info</div>
 		<span id="info-content" class="p">information about the thing you clicked goes here</span>
-		<div id="info-button" class="small section btn-floating" onclick="forceClose(info.container)">X</div>
+		<div id="info-button" class="small section btn-floating" onclick="hideInfo()">X</div>
 	</div>
 
 	<!--debug menu-->
@@ -36,10 +36,9 @@
 
 		<div class="container btn-container dropdown-contents">
 			<div style="padding-top:0.5vw"></div>
-			<button class="small" onclick="showMessage('test message')">show test message</button>
-			<button class="small" onclick="showMessage('this is a test message<br>hope that line break works')">show longer test message</button>
 			<button class="small" onclick="console.log(baseValues)">log baseValues</button>
-			<button class="small" onclick="updateSidebar()">update sidebar elements</button>
+			<button class="small" onclick="console.log(stackableBonuses)">log stackableBonuses</button>
+			<button class="small" onclick="console.log(staticBonuses)">log staticBonuses</button>
 			<button class="small" onclick="showInfo(infoStrings.base)">show test info</button>
 		</div>
 	</div>
@@ -58,19 +57,22 @@
 				<div class="spacer"></div>
 				<div id="base-values-holder">
 					<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
-			<span id="base-value-item-0">edit blank</span>
-			<button class="small red" onclick="removeBaseVal(0)">x</button>
-		</div>-->
+						<span id="base-value-item-0">edit blank</span>
+						<button class="small red" onclick="removeBaseVal(0)">x</button>
+					</div>-->
 				</div>
 				<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 			</div>
 			<div class="h-divider"></div>
 		</div>
 		<div id="sidebar-lines" class="dropdown-holder">
-			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('lines')">lineart bonuses</button>
+			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('lines')">lineart</button>
 		</div>
 		<div id="sidebar-shading" class="dropdown-holder">
 			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('shading')">shading</button>
+		</div>
+		<div id="sidebar-background" class="dropdown-holder">
+			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('background')">background</button>
 		</div>
 	</div>
 
@@ -133,8 +135,8 @@
 	<!--medium stuff, each button here will only be shown if the mediumGroup matches it starting pos: "top: 5px; left: 261px;"-->
 	<!--coverage-->
 	<!--lines (if applicable)-->
-	<div id="lines" class="section draggable" style="display:none">
-		<div id="lines-header" class="header">lineart bonuses</div>
+	<div id="lines" class="bonus section draggable" style="display:none">
+		<div id="lines-header" class="header">lineart</div>
 		<p class="note">
 			how many bays are drawn with the following lineart styles?<br>
 			(anything else will not get a shell bonus)<br>
@@ -155,30 +157,34 @@
 	</div>
 
 	<!--shading-->
-	<div id="shading" class="section draggable" style="display:none">
+	<div id="shading" class="bonus section draggable" style="display:none">
+		<div id="shading-header" class="header">shading</div>
 		<p class="note">
-			are any bays in the piece shaded?<br>
-			if so, what is the shading complexity, and how many are shaded?
+			how many bays are drawn with the following shading styles?
 		</p>
 		<div class="container btn-container">
-			<button id="noshading" onclick="setShading(null)">no shading</button>
-			<button id="minimal" onclick="setShading('minimal')">minimal shading</button>
-			<button id="basic" onclick="setShading('basic')">basic shading (about one layer of shading or highlights)</button>
-			<button id="complex" onclick="setShading('complex')">complex shading (multiple layers of shading & highlights)</button>
-			<button id="painting" onclick="setShading('painting')">painted shading (most complex level of shading)</button>
+			<div class="small button">
+				<input id="minimal" type="number" value="0" min="0">
+				<label for="minimal">minimal shading</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.minimal)">i</button>
+			</div>
+			<div class="small button">
+				<input id="basic" type="number" value="0" min="0">
+				<label for="basic">basic shading</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.basic)">i</button>
+			</div>
+			<div class="small button">
+				<input id="complex" type="number" value="0" min="0">
+				<label for="complex">complex shading</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.complex)">i</button>
+			</div>
+			<div class="small button">
+				<input id="painting" type="number" value="0" min="0">
+				<label for="painting">painted shading</label>
+				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.painting)">i</button>
+			</div>
 		</div>
 	</div>
-
-
-	<!--craft size-->
-	<section id="craftSize" style="display:none">
-		<p>what size best describes the craft?</p>
-		<div class="container">
-			<button id="model" onclick="setCraftSize('model')">model (the size of an average banana or smaller)</button>
-			<button id="large" onclick="setCraftSize('large')">large (significantly larger than the average banana)</button>
-		</div>
-	</section>
-
 
 	<!--animation-->
 	<section id="animation" style="display:none">
@@ -204,15 +210,18 @@
 
 
 	<!--background-->
-	<section id="background" style="display:none">
-		<p>finally, does this piece have a background? if so, how complex is it?</p>
-		<div class="container">
-			<button id="nobackground" onclick="setBackground(null)">no background, photo, pattern, or solid color</button>
-			<button id="simpleb" onclick="setBackground('simpleb')">simple background</button>
-			<button id="depth" onclick="setBackground('depth')">depth background</button>
-			<button id="complexb" onclick="setBackground('complexb')">complex background</button>
+	<div id="background" class="bonus section draggable" style="display:none">
+		<div id="background-header" class="header">background</div>
+		<p class="note">
+			does this piece have a background? if so, how complex is it?
+		</p>
+		<div class="container btn-container">
+			<button class="small" id="background-null" onclick="background.setBackground(null)">no background, photo, pattern, or solid color</button>
+			<button class="small" id="background-simple" onclick="background.setBackground('simple')">simple background</button>
+			<button class="small" id="background-depth" onclick="background.setBackground('depth')">depth background</button>
+			<button class="small" id="background-complex" onclick="background.setBackground('complex')">complex background</button>
 		</div>
-	</section>
+	</div>
 
 
 	<!--counting zone-->
@@ -225,15 +234,23 @@
 	</div>
 
 	<!--get all our scripts loaded up-->
-	<script src="js/v2/v2helperscript.js"></script>
-	<script src="js/v2/drag-elements.js"></script>
-	<script src="js/v2/sidebar-manager.js"></script>
-	<script src="js/v2/bonus-manager.js"></script>
-	<script src="js/v2/base-value-manager.js"></script>
-	<script src="js/v2/info-manager.js"></script>
-	<script src="js/v2/counting.js"></script>
 	<!--v1 shared scripts-->
+	<!--holds shell values, must be loaded first-->
 	<script src="js/shellcounter.js"></script>
-	<!--<script src="js/baymanager.js"></script>-->
+	<!--v2 unique scripts-->
+	<!--holds all element objects-->
+	<script src="js/v2/v2helperscript.js"></script>
+	<!--allows us to drag elements-->
+	<script src="js/v2/drag-elements.js"></script>
+	<!--manages sidebar functions-->
+	<script src="js/v2/sidebar-manager.js"></script>
+	<!--manages stackable and static bonus functions. includes Val class-->
+	<script src="js/v2/bonus-manager.js"></script>
+	<!--manages base value functions. Inherits from Val class so has to load after-->
+	<script src="js/v2/base-value-manager.js"></script>
+	<!--manages infoStrings and info related functions-->
+	<script src="js/v2/info-manager.js"></script>
+	<!--manages counting-->
+	<script src="js/v2/counting.js"></script>
 </body>
 </html>
