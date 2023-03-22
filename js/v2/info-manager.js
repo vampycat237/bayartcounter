@@ -24,18 +24,20 @@
  * of what this is for.
  */
 
-function showInfo(str) {
+/*function showInfo(str) {
 	info.content.innerHTML = str;
 	info.container.style.display = "flex";
 }
 
 function hideInfo() {
 	info.container.style.display = "none";
-}
+}*/
 
 const infoStrings = {
 	elmnt : document.getElementById("info"),
-	
+
+	image : "The image window displays the artwork you are counting if you provide it a link to the image! This is an optional step, but might be helpful when counting shells so you can have everything on the same screen.",
+
 	media : {
 		flatcolor : "2d artwork that has been colored.",
 		grayscale : "2d artwork that has been 'colored' in only grayscale values.",
@@ -83,6 +85,11 @@ const infoStrings = {
 		overview : "There are two categories for animation in Baycove: tween/puppet animation, and hand-drawn animation. The line may be a little blurry at times, but if you use your best judgement you should be fine. Feel free to ask for clarification on what kind of animation yours would count as in the help center!",
 		tweens : "Tween or puppet animations would include animations that primarily consist of moving and/or rotating static pieces of art. For instance, a head bob where the head moves straight up and down, or a puppet animation where three seperate arm sprites make up one arm that is moved with simulated 'bones.'",
 		handdrawn : "Hand-drawn animations would include animations that primarily consist of uniquely drawn images and frames."
+	},
+
+	characterBonus: {
+		botm: "Each user that is not the owner of the Bayfox can draw gift art of the Bay of the Month to earn an additional 100 shells to their work. Commissions and art trades of the Bay of the Month cannot be redeemed for Bay of the Month bonus shells.",
+		kit: "Artwork of official Baykits is counted at 50% of normal shell rates. Unofficial Baykit concepts of approved adult Bays are not redeemable."
 	},
 	
 	pets : { //TO BE IMPLEMENTED

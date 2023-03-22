@@ -69,7 +69,6 @@ class Background extends StaticVal {
 		//TODO: calculate value based on backgroundType
 		super(0, backgroundType, "background");
 		this.countSelf();
-		
 	}
 	
 	//Can use countingString() from parent class
@@ -85,10 +84,18 @@ class Background extends StaticVal {
 		var v = 0;
 		
 		switch (this.subtype) {
-			case "simple" : v = shellRates.ratesBackgrounds[1]; break;
-			case "depth"  : v = shellRates.ratesBackgrounds[2]; break;
-			case "complex": v = shellRates.ratesBackgrounds[3]; break;
-			default       : v = shellRates.ratesBackgrounds[0]; break;
+			case "simple":
+				v = shellRates.ratesBackgrounds[1];
+				break;
+			case "depth":
+				v = shellRates.ratesBackgrounds[2];
+				break;
+			case "complex":
+				v = shellRates.ratesBackgrounds[3];
+				break;
+			default:
+				v = shellRates.ratesBackgrounds[0];
+				break;
 		}
 		
 		this.value = v;

@@ -11,15 +11,16 @@ const message = {
 	content   : document.getElementById('message-content')
 };
 //info
-const info = {
+/*const info = {
 	container: document.getElementById('info'),
 	content: document.getElementById('info-content')
-};
+};*/
 //base values editor
 const baseValEditor = {
 	editor: document.getElementById('base-values'),
 	header: document.getElementById('base-values-header'),
 	count: document.getElementById('base-values-count'),
+	isBaykit: document.getElementById('base-values-baykit'),
 	media: document.getElementById('base-values-media'),
 	coverage: document.getElementById('base-values-coverage'),
 	size: document.getElementById('base-values-size'),

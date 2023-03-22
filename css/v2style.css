@@ -20,8 +20,8 @@ button:active, .button:active, button.dropdown-content:active, .dropdown-holder.
 .small {
 	font-size: 16px !important;
 	padding: 5px;
-	width: 100%;
-	height: auto;
+	/*width: 100%;
+	height: auto*/
 	margin: 0vw;
 	margin-bottom: 0.5vw;
 }
@@ -482,6 +482,15 @@ div.container.btn-container {
 	min-width: 50%;
 	max-width: 100%;
 }*/
+
+/*image holder & display styles*/
+#image-holder {
+	flex-direction: column;
+}
+#image-display {
+	max-height: 400px;
+	max-width: 600px;
+}
 
 @media only screen and (max-width: 800px) {
 	.container, .stickytop {

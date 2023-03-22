@@ -6,6 +6,9 @@ const sidebar = {
 	},
 	holders : {
 		BV : document.getElementById('base-values-holder')
+	},
+	ex: {
+		focus : document.getElementById('sidebarex-focus')
 	}
 }
 

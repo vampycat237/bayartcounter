@@ -45,7 +45,10 @@ const counting = {
 	},
 	
 	update() {
-		this.total.innerHTML = "total: "+userTotal;
-		this.proof.innerHTML = "counting: "+this.assembleProof();
+		//this.total.innerHTML = "total: "+userTotal;
+		//this.proof.innerHTML = "counting: "+this.assembleProof();
+
+		//TEMPORARY until counting display is reformatted
+		openPopUp("counting: " + this.assembleProof()+"<br>total: " + userTotal, "counting");
 	}
 }

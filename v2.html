@@ -3,12 +3,38 @@
 <head>
 	<title>vampy's bay art counter 2.0</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel = "stylesheet" type = "text/css" href = "css/theme-dark.css" />
-	<link rel = "stylesheet" type = "text/css" href = "css/shared-styles.css" />
-	<link rel = "stylesheet" type = "text/css" href = "css/v2style.css" />
+	<link rel="stylesheet" type="text/css" href="css/theme-dark.css" />
+	<link rel="stylesheet" type="text/css" href="css/shared-styles.css" />
+	<link rel="stylesheet" type="text/css" href="css/v2style.css" />
+	<link rel="stylesheet" type="text/css" href="css/popup.css" />
 </head>
 <body>
 	<!--<p>shell calculator for bayfox art submissions</p>-->
+	<!--popup code from my experiments! this is intended to replace info & message.-->
+	<div id="popup" class="small" style="display:none; z-index: 6;">
+		<div class="topbar">
+			<div class="title">
+				<span id="popup-title">this is a popup</span>
+			</div>
+			<div class="nav">
+				<button id="close-popup" onclick="closePopUp();">x</button>
+			</div>
+		</div>
+		<div class="padded">
+			<span id="popup-text">message goes here</span>
+			<!--for requesting input-->
+			<div id="popup-input-container" style="display:none;">
+				<input id="popup-input"/>
+				<button id="popup-send" onclick="closePopUp(); setImage(popup.input.value);">apply</button>
+			</div>
+			<!--for requesting an option from a set list of options!-->
+			<div id="popup-select-container" style="display:none;">
+				<select id="popup-select">
+				</select>
+				<button id="popup-select-send" onclick="closePopUp();">apply</button>
+			</div>
+		</div>
+	</div>
 	<!--displays messages to the user. should have "absolute" positioning on the top or bottom of the page, maybe sticky as well, point is it needs to be visible when a message is displayed! (this will be handled thru a script)-->
 	<div id="message-container" class="dropdown-holder" style="display:none;">
 		<div id="message-border" class="section nopadding centered dropdown-contents">
@@ -24,12 +50,11 @@
 	<div id="help" class="small section btn-floating" style="z-index:4;" onclick="toggleVisibility(debugMenu)">?</div>
 
 	<!--info popup-->
-	<div id="info" class="small section centered" style="z-index: 6; display: none;">
+	<!--<div id="info" class="small section centered" style="z-index: 6; display: none;">
 		<div id="info-header" class="header">info</div>
 		<span id="info-content" class="p">information about the thing you clicked goes here</span>
 		<div id="info-button" class="small section btn-floating" onclick="hideInfo()">X</div>
-	</div>
-
+	</div>-->
 	<!--debug menu-->
 	<div id="debug" class="section dropdown-holder draggable" style="top: 0px; left: 1005px; display:none">
 		<div id="debug-header" class="header">debug menu</div>
@@ -39,7 +64,8 @@
 			<button class="small" onclick="console.log(baseValues)">log baseValues</button>
 			<button class="small" onclick="console.log(stackableBonuses)">log stackableBonuses</button>
 			<button class="small" onclick="console.log(staticBonuses)">log staticBonuses</button>
-			<button class="small" onclick="showInfo(infoStrings.base)">show test info</button>
+			<button class="small" onclick="infoPopUp(infoStrings.base)">show test info</button>
+			<button class="small" onclick="selectPopUp('test', ['1','2','3'], 'console.log')">show test select popup</button>
 		</div>
 	</div>
 
@@ -51,18 +77,21 @@
 	<div id="sidebar" class="faux-section sidebar">
 		<div class="header">show/hide dropdowns</div>
 		<!--<div class="spacer"></div>-->
+		<div id="sidebar-image" class="dropdown-holder">
+			<button class="title-button counting" style="margin-bottom: -2px;" onclick="showHide('image-holder')">image viewer</button>
+		</div>
 		<div id="sidebar-base-values" class="dropdown-holder">
-			<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>
-			<div id="sidebar-base-values-body" class="section-body dropdown-contents">
-				<div class="spacer"></div>
+			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
+			<!--<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>-->
+			<!--<div id="sidebar-base-values-body" class="section-body dropdown-contents">
+				<div class="spacer"></div>-->
 				<div id="base-values-holder">
 					<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
 						<span id="base-value-item-0">edit blank</span>
 						<button class="small red" onclick="removeBaseVal(0)">x</button>
 					</div>-->
 				</div>
-				<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
-			</div>
+			<!--</div>-->
 			<div class="h-divider"></div>
 		</div>
 		<div id="sidebar-lines" class="dropdown-holder">
@@ -74,8 +103,37 @@
 		<div id="sidebar-background" class="dropdown-holder">
 			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('background')">background</button>
 		</div>
+		<div id="sidebar-counting" class="dropdown-holder">
+			<button class="title-button counting" style="margin-bottom: -2px;" onclick="counting.totals()">calculate totals</button>
+		</div>
 	</div>
 
+	<!--sidebar popout thingie-->
+	<div id="sidebarex" class="section small" style="left:20%;">
+		<!--base value things-->
+		<div>
+			<!--this input stores the base value we're messing with!-->
+			<input id="sidebarex-focus" type="hidden" value="0" style="display:none;">
+			<button onclick="openBaseValEditor('edit', sidebar.ex.focus.value)">edit</button>
+			<button class="red" onclick="">delete</button>
+			<button onclick="showHide('lines')">lineart</button>
+		</div>
+	</div>
+
+	<!--image holder! Displays an image from a URL input using the popup.-->
+	<div id="image-holder" class="small window draggable" style="display:none;">
+		<div class="topbar">
+			<div class="title">
+				<span>image</span>
+			</div>
+			<div class="nav">
+				<button onclick="inputPopUp('input the url to your image to display here!');">+</button>
+				<button onclick="infoPopUp(infoStrings.image)">?</button>
+				<button onclick="showHide('image-holder')">x</button>
+			</div>
+		</div>
+		<img id="image-display" src="" />
+	</div>
 
 	<!--base-values as a draggable section for editing base values. starting pos: "top: 5px; left: 261px;"-->
 	<div id="base-values" class="section draggable" style="display:none; top: 5px; left: 261px;">
@@ -86,13 +144,19 @@
 		<div class="section-body">
 			<div class="spacer"></div>
 			<span>enter the count, medium, and coverage types below</span>
-			<div id="base-values-editor" class="row base-values-editor">
-				<input id="base-values-action" type="hidden" value="add" style="display:none;">
-				<input id="base-values-index" type="hidden" value="-1" style="display:none;">
+			<div class="row base-values-editor">
 				<div style="display:inline-block; padding:0;">
 					<label for="base-values-count" class="smalltext">count: </label>
 					<input id="base-values-count" class="value-count" type="number" value="1" min="1">
 				</div>
+				<div style="display:inline-block; padding:0">
+					<input style="min-width:unset;" id="base-values-baykit" type="checkbox" value="true" />
+					<label for="base-values-baykit" class="smalltext">this is a baykit</label>
+				</div>
+			</div>
+			<div id="base-values-editor" class="row base-values-editor">
+				<input id="base-values-action" type="hidden" value="add" style="display:none;">
+				<input id="base-values-index" type="hidden" value="-1" style="display:none;">
 				<select id="base-values-media">
 					<option value="null">--select the medium--</option>
 					<optgroup label="2d art">
@@ -146,12 +210,12 @@
 			<div class="small button">
 				<input id="colorlines" type="number" value="0" min="0">
 				<label for="colorlines">fully colored lineart</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.lines.colorlines)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.lines.colorlines)">i</button>
 			</div>
 			<div class="small button">
 				<input id="lineless" type="number" value="0" min="0">
 				<label for="lineless">lineless</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.lines.lineless)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.lines.lineless)">i</button>
 			</div>
 		</div>
 	</div>
@@ -166,22 +230,22 @@
 			<div class="small button">
 				<input id="minimal" type="number" value="0" min="0">
 				<label for="minimal">minimal shading</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.minimal)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.shading.minimal)">i</button>
 			</div>
 			<div class="small button">
 				<input id="basic" type="number" value="0" min="0">
 				<label for="basic">basic shading</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.basic)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.shading.basic)">i</button>
 			</div>
 			<div class="small button">
 				<input id="complex" type="number" value="0" min="0">
 				<label for="complex">complex shading</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.complex)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.shading.complex)">i</button>
 			</div>
 			<div class="small button">
 				<input id="painting" type="number" value="0" min="0">
 				<label for="painting">painted shading</label>
-				<button class="tiny infobutton" onclick="showInfo(infoStrings.shading.painting)">i</button>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.shading.painting)">i</button>
 			</div>
 		</div>
 	</div>
@@ -223,9 +287,29 @@
 		</div>
 	</div>
 
+	<!--character-based bonuses/deductions-->
+	<div id="character-bonus" class="bonus section draggable" style="display:none">
+		<div id="character-bonus-header" class="header">character bonuses and deductions</div>
+		<p class="note">
+			how many bays in this artwork fall into the following categories?<br>
+		</p>
+		<div class="container btn-container">
+			<div class="small button">
+				<input id="colorlines" type="number" value="0" min="0">
+				<label for="colorlines">baykits (50% shell reduction)</label>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.characterBonus.kit)">i</button>
+			</div>
+			<div class="small button">
+				<input id="lineless" type="number" value="0" min="0">
+				<label for="lineless">bay of the month (100 shell bonus)</label>
+				<button class="tiny infobutton" onclick="infoPopUp(infoStrings.characterBonus.botm)">i</button>
+			</div>
+		</div>
+	</div>
+
 
 	<!--counting zone-->
-	<div id="counting" class="section counting-section dropdown-holder">
+	<div id="counting" class="section counting-section dropdown-holder" style="display:none;">
 		<div class="container counting-container dropdown-contents">
 			<p id="counting-proof">counting goes here</p>
 			<p id="counting-total" title="test">total: #</p>
@@ -250,6 +334,10 @@
 	<script src="js/v2/base-value-manager.js"></script>
 	<!--manages infoStrings and info related functions-->
 	<script src="js/v2/info-manager.js"></script>
+	<!--manages the popup-->
+	<script src="js/popup.js"></script>
+	<!--manages the images-->
+	<script src="js/v2/image-handler.js"></script>
 	<!--manages counting-->
 	<script src="js/v2/counting.js"></script>
 </body>

@@ -1,0 +1,75 @@
+/*yoinked from my experiments*/
+/*WINDOW STYLES*/
+.topbar {
+    display: flex;
+    border-bottom: solid 2px;
+    justify-content: space-between;
+}
+
+.title, .nav {
+    display: flex;
+    
+}
+
+.title {
+    align-items: center;
+}
+
+.title span {
+    padding-left: 15px;
+    text-align: left;
+}
+
+.nav > * {
+    width: 48px;
+    margin: -2px;
+    box-sizing: border-box;
+}
+
+.nav > button {
+    min-width: revert;
+}
+
+/*POPUP STYLES*/
+#popup, .window {
+    position: absolute;
+    background-color: var(--bluebg);
+    border: 2px solid var(--bluetext);
+    --sectionborder: var(--bluetext);
+    --sectionbutton: var(--fadedbutton);
+    --sectionhover: var(--bluehover);
+    --sectionactive: var(--blueactive);
+    padding: 0;
+}
+
+#popup {
+    left: 35%;
+    right: 35%;
+    top: 15%;
+}
+
+input {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.padded {
+    padding: 15px;
+}
+
+/*media query breakpoints based on https://docs.microsoft.com/en-us/windows/apps/design/layout/screen-sizes-and-breakpoints-for-responsive-design*/
+/*tablet/laptop (medium screens, 1007px - 641px)*/
+@media screen and (max-width: 1007px) {
+    #popup {
+        left: 30%;
+        right: 30%;
+    }
+}
+
+/*mobile phone (small screens, 640px or less)*/
+@media screen and (max-width: 640px) {
+    #popup {
+        left: 10%;
+        right: 10%;
+    }
+}

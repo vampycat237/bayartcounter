@@ -17,6 +17,7 @@ function openBaseValEditor(action, i = -1) {
 	
 	var title = "base value editor";
 	var count = 1;
+	var isBaykit = false;
 	var media = lastMedia; //assumes this medium is likely to match the last saved one!
 	var coverage = "fullbody";
 	
@@ -30,6 +31,7 @@ function openBaseValEditor(action, i = -1) {
 		//TODO: retrieve the needed information from the BaseVal at the specified index
 		const bv = baseValues[i];
 		count = bv.count;
+		isBaykit = bv.isBaykit;
 		media = bv.media;
 		coverage = bv.coverage;
 		size  = bv.craftSize;
@@ -49,7 +51,8 @@ function openBaseValEditor(action, i = -1) {
 	//now we are clear to update the editor's into then show the editor
 	//edit the innerHTML
 	baseValEditor.header.innerHTML = title;
-	baseValEditor.count.value  = count;
+	baseValEditor.count.value = count;
+	baseValEditor.isBaykit.checked = isBaykit;
 	baseValEditor.media.value  = media;
 	baseValEditor.coverage.value = coverage;
 	
@@ -85,7 +88,7 @@ function storeBaseVal() {
 	}
 	
 	//Create new BaseVal & save the medium information
-	const bv = new BaseVal(baseValEditor.media.value, baseValEditor.coverage.value, baseValEditor.count.value, craftSize);
+	const bv = new BaseVal(baseValEditor.media.value, baseValEditor.coverage.value, baseValEditor.count.value, baseValEditor.isBaykit.checked, craftSize);
 	lastMedia = baseValEditor.media.value;
 	
 	//Hand the object to the appropriate helper function to execute the appropriate action
@@ -207,13 +210,14 @@ function isCraft(medium) {
 //REQUIRES VAL from bonus-manager.js
 class BaseVal extends Val {
 	//make our new BaseVal object
-	constructor(media, coverage, count = 1, craftSize = 'model') {
+	constructor(media, coverage, count = 1, isBaykit = false, craftSize = 'model') {
 		//We have to call super() first or it dies
 		super(0);
 
-		this.media = media;
-		this.coverage   = coverage;
-		this.count      = count;
+		this.media    = media;
+		this.coverage = coverage;
+		this.count    = count;
+		this.isBaykit = isBaykit;
 		
 		//craft related things
 		//only used by crafts, defaults to model to avoid errors
@@ -231,6 +235,7 @@ class BaseVal extends Val {
 		let str = "";
 		
 		str += this.count + "x ";
+		if (this.isBaykit) { str += "baykit " } //accounts for baykit here
 		if (this.isCraft) { str += this.craftSize + " " }
 		str += this.media + " ";
 		str += this.coverage;
@@ -286,6 +291,12 @@ class BaseVal extends Val {
 		
 		//calculate value
 		this.value = rates[i] * this.count;
+
+		//account for baykit reduction in value (50% reduction)
+		if (this.isBaykit) {
+			this.value = this.value * 0.5;
+		}
+
 		console.log("counted "+this.toString()+" for a total of "+this.value+" shells");
 	}
 }
