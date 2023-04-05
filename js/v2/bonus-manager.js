@@ -128,7 +128,7 @@ class StackableVal extends StaticVal {
 	//Calculates value from shellRates
 	countSelf() {
 		//start by if we have count less than 1 (0 or somehow negative), we just return 0. no complications required
-		if (this.count <= 1) { return 0; }
+		if (this.count < 1) { return 0; }
 
 		var rates = [];
 		var i = 0;
@@ -176,13 +176,13 @@ class StackableVal extends StaticVal {
 
 class Lineart extends StackableVal {
 	//To keep consistent with parent class we refer to the type of lineart as "subtype".
-	constructor(subtype, count) {
+	constructor(subtype, count = 1) {
 		super("lines", subtype, count);
 	}
 }
 
 class Shading extends StackableVal {
-	constructor(subtype, count) {
+	constructor(subtype, count = 1) {
 		super("shading", subtype, count);
 	}
 }
@@ -196,6 +196,7 @@ class PetBonus extends StackableVal {
 	//func = how this value should be added to the total. can equal "+", "*", or "RNG", for flat, percentage, and RNG bonuses respectively. (RNG bonuses are not added to the total, but will call for RNG bonuses to be accounted for at the end.
 	constructor(value, petType, count = 1, func = "+") {
 		super(value, petType, count);
+		this.func = func;
 	}
 	
 	//TODO

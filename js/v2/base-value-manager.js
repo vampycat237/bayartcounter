@@ -84,7 +84,7 @@ function storeBaseVal() {
 	var craftSize = baseValEditor.size.value;
 	if ( craftSize == "null") { 
 		craftSize = "model";
-		if (isCraft(baseValEditor.media.value)) { showMessage("No size was specified for a craft. It was added anyway with size 'model'."); }
+		if (isCraft(baseValEditor.media.value)) { errorPopUp("no size was specified for a craft.<br>defaulting to size 'model'."); }
 	}
 	
 	//Create new BaseVal & save the medium information
@@ -149,8 +149,8 @@ function actionIsEdit(action, i = -1) {
 	if (action == "new" || action == "create" || action == "add") { return false; }
 	
 	//case: invalid action
-	console.log("invalid action passed to base value editor. defaulting to adding new value");
-	showMessage("invalid action passed to base value editor.<br>defaulting to adding new value");
+	console.log("invalid action or index passed to base value editor. defaulting to adding new value");
+	errorPopUp("invalid action or index passed to base value editor.<br>defaulting to adding new value");
 	return false;
 }
 
@@ -222,7 +222,11 @@ class BaseVal extends Val {
 		//craft related things
 		//only used by crafts, defaults to model to avoid errors
 		this.craftSize  = craftSize;
-		this.isCraft    = isCraft(media);
+		this.isCraft = isCraft(media);
+
+		//UNUSED
+		//set up the "bonuses" thing
+		//this.stackables = [];
 		
 		//set value
 		this.countSelf();
@@ -242,7 +246,14 @@ class BaseVal extends Val {
 		
 		return str;
 	}
-	
+
+	//UNUSED
+	//attaches a stackable item to this base value
+	//item = a StackableVal
+	/*attachStackable(item) {
+		this.stackables.push(item);
+	}*/
+
 	//countingString(): Returns a string representing this object and its value, for counting. Defined in parent class.
 	
 	//Sets its own value based on the medium, coverage, size, and count. Requires a shellRates object
@@ -291,6 +302,13 @@ class BaseVal extends Val {
 		
 		//calculate value
 		this.value = rates[i] * this.count;
+
+		//UNUSED
+		//account for attached stackables BEFORE baykit calculation.
+		/*for (bonus of this.stackables) {
+			bonus.countSelf();
+			this.value += bonus.value;
+		}*/
 
 		//account for baykit reduction in value (50% reduction)
 		if (this.isBaykit) {

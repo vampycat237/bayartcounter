@@ -16,18 +16,16 @@ const popup = {
 //generic popup functions
 function closePopUp() {
     popup.container.style.display = "none";
-    popup.inputContainer.style.display = "none";
-    popup.selectContainer.style.display = "none";
+    resetPopUp();
 }
 
 function openPopUp(msg, title = "alert") {
     popup.text.innerHTML = msg;
     popup.title.innerHTML = title;
-    popup.container.style.display = "block";
+    popup.container.style.display = "unset";
 
     //hide inputs by default
-    popup.inputContainer.style.display = "none";
-    popup.selectContainer.style.display = "none";
+    resetPopUp();
 }
 
 //specific popup stuff!
@@ -41,12 +39,12 @@ function infoPopUp(msg) {
 
 function inputPopUp(prompt) {
     openPopUp(prompt, "input");
-    popup.inputContainer.style.display = "block";
+    popup.inputContainer.style.display = "unset";
 }
 
 //opens a "select" popup.
 //options: an array used to build the options in the select dropdown
-//sendAction: string representing a function. executed on completion, passing in the select value.
+//sendAction: a function. executed on completion, passing in the select value.
 function selectPopUp(prompt, options, sendAction) {
     openPopUp(prompt, "select an option");
 
@@ -56,8 +54,16 @@ function selectPopUp(prompt, options, sendAction) {
         optionsBlock += `<option value="${o}">${o}</option>`;
     }
     popup.select.innerHTML = optionsBlock;
-    popup.selectSend.onclick = `closePopUp(); ${sendAction}(popup.select.value);`;
-    console.log(sendAction);
+    popup.selectSend.onclick = function () { closePopUp(); sendAction(popup.select.value); };
+    
+    //console.log(sendAction);
 
-    popup.selectContainer.style.display = "block";
+    popup.selectContainer.style.display = "unset";
+}
+
+function resetPopUp() {
+    //only used by inputPopUp
+    popup.inputContainer.style.display = "none";
+    //only used by select
+    popup.selectContainer.style.display = "none";
 }

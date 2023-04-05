@@ -23,12 +23,12 @@
 		<div class="padded">
 			<span id="popup-text">message goes here</span>
 			<!--for requesting input-->
-			<div id="popup-input-container" style="display:none;">
+			<div id="popup-input-container">
 				<input id="popup-input"/>
 				<button id="popup-send" onclick="closePopUp(); setImage(popup.input.value);">apply</button>
 			</div>
 			<!--for requesting an option from a set list of options!-->
-			<div id="popup-select-container" style="display:none;">
+			<div id="popup-select-container">
 				<select id="popup-select">
 				</select>
 				<button id="popup-select-send" onclick="closePopUp();">apply</button>
@@ -65,7 +65,7 @@
 			<button class="small" onclick="console.log(stackableBonuses)">log stackableBonuses</button>
 			<button class="small" onclick="console.log(staticBonuses)">log staticBonuses</button>
 			<button class="small" onclick="infoPopUp(infoStrings.base)">show test info</button>
-			<button class="small" onclick="selectPopUp('test', ['1','2','3'], 'console.log')">show test select popup</button>
+			<button class="small" onclick="selectPopUp('test', ['1','2','3'], console.log)">show test select popup</button>
 		</div>
 	</div>
 
@@ -109,14 +109,14 @@
 	</div>
 
 	<!--sidebar popout thingie-->
-	<div id="sidebarex" class="section small" style="left:20%;">
+	<div id="sidebarex" class="section small" style="left:20%; display:none;">
 		<!--base value things-->
 		<div>
 			<!--this input stores the base value we're messing with!-->
 			<input id="sidebarex-focus" type="hidden" value="0" style="display:none;">
 			<button onclick="openBaseValEditor('edit', sidebar.ex.focus.value)">edit</button>
-			<button class="red" onclick="">delete</button>
-			<button onclick="showHide('lines')">lineart</button>
+			<button class="red" onclick="removeBaseVal(sidebar.ex.focus.value)">delete</button>
+			<button onclick="">lineart</button>
 		</div>
 	</div>
 
