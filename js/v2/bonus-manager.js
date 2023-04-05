@@ -2,7 +2,7 @@
 //ALL stackables expect their value & a type to be given.
 
 //Store bonuses in here.
-const stackableBonuses = [];
+var stackableBonuses = [];
 const staticBonuses = [];
 
 //TODO
@@ -120,7 +120,7 @@ class StackableVal extends StaticVal {
 	//overrides toString to account for count
 	toString() {
 		//string format: "#x bonus type"
-		return this.count + "x " + this.type;
+		return this.count + "x " + this.subtype + " "+ this.type;
 	}
 	
 	//countingString() is inhereited from parent
@@ -147,17 +147,21 @@ class StackableVal extends StaticVal {
 		switch (this.subtype) {
 			case "colorlines": //lines
 			case "minimal": //shading
-			case "easy": //animation
+			case "easy": //animation - handdrawn
+			case "tsimple": //animation - tween
 				i = 1;
 				break;
 				
 			case "lineless": //lines
 			case "basic": //shading
-			case "simple": //animation
+			case "hsimple": //animation - handdrawn
+			case "tcomplex": //animation - tween
 				i = 2;
 				break;
 				
-			case "complex": //shading & animation
+			case "complex": //shading
+			case "hcomplex": //animation - handdrawn
+			case "fluid": //animation - tween
 				i = 3;
 				break;
 			
@@ -184,6 +188,40 @@ class Lineart extends StackableVal {
 class Shading extends StackableVal {
 	constructor(subtype, count = 1) {
 		super("shading", subtype, count);
+	}
+}
+
+//Named AnimationVal to avoid conflicts with existing JS classes
+class AnimationVal extends StackableVal {
+	//expects subtype as the ID, so like tween-simple or handdrawn-easy
+	constructor(subtype, count = 1) {
+		//set type
+		var type = "anim";
+		if (subtype.startsWith('tween-')) {
+			type += 'tween';
+		}
+		else {
+			type += 'handdrawn';
+		}
+		//set subtype properly
+		subtype = subtype.substr(subtype.indexOf('-') + 1);
+
+		//fix subtype for overlap
+		if (subtype == 'simple' || subtype == 'complex') {
+			subtype = type.charAt(4) + subtype;
+		}
+		
+		//console.log(subtype);
+		super(type, subtype, count);
+	}
+
+	toString() {
+		//string format: "#x bonus type"
+		var tempSubtype = this.subtype;
+		if (this.subtype.charAt(0) == 't' || this.subtype.charAt(0) == 'h') {
+			tempSubtype = this.subtype.substr(1);
+		}
+		return this.count + "x " + tempSubtype + " " + this.type.substr(4);
 	}
 }
 
@@ -234,4 +272,24 @@ class PetBonus extends StackableVal {
 			return this.value * this.count;
 		}
 	}
+}
+
+function countStackables() {
+	//lineart
+	stackableBonuses.push(new Lineart('colorlines', document.getElementById('colorlines').value));
+	stackableBonuses.push(new Lineart('lineless', document.getElementById('lineless').value));
+
+	//shading
+	stackableBonuses.push(new Shading('minimal', document.getElementById('minimal').value));
+	stackableBonuses.push(new Shading('basic', document.getElementById('basic').value));
+	stackableBonuses.push(new Shading('complex', document.getElementById('complex').value));
+	stackableBonuses.push(new Shading('painting', document.getElementById('painting').value));
+
+	//animation
+	stackableBonuses.push(new AnimationVal('tween-simple', document.getElementById('tween-simple').value));
+	stackableBonuses.push(new AnimationVal('tween-complex', document.getElementById('tween-complex').value));
+	stackableBonuses.push(new AnimationVal('tween-fluid', document.getElementById('tween-fluid').value));
+	stackableBonuses.push(new AnimationVal('handdrawn-easy', document.getElementById('handdrawn-easy').value));
+	stackableBonuses.push(new AnimationVal('handdrawn-simple', document.getElementById('handdrawn-simple').value));
+	stackableBonuses.push(new AnimationVal('handdrawn-complex', document.getElementById('handdrawn-complex').value));
 }

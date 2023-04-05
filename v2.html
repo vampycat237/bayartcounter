@@ -84,13 +84,13 @@
 			<button id="base-values-add" class="counting" onclick="openBaseValEditor('add')">add new base value...</button>
 			<!--<button class="title-button" style="margin-bottom: -2px;" onclick="toggleSelected('sidebar-base-values')">base values</button>-->
 			<!--<div id="sidebar-base-values-body" class="section-body dropdown-contents">
-				<div class="spacer"></div>-->
-				<div id="base-values-holder">
-					<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
-						<span id="base-value-item-0">edit blank</span>
-						<button class="small red" onclick="removeBaseVal(0)">x</button>
-					</div>-->
-				</div>
+			<div class="spacer"></div>-->
+			<div id="base-values-holder">
+				<!--<div class="row button base-value-item" onclick="openBaseValEditor('edit', 0)">
+				<span id="base-value-item-0">edit blank</span>
+				<button class="small red" onclick="removeBaseVal(0)">x</button>
+			</div>-->
+			</div>
 			<!--</div>-->
 			<div class="h-divider"></div>
 		</div>
@@ -99,6 +99,9 @@
 		</div>
 		<div id="sidebar-shading" class="dropdown-holder">
 			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('shading')">shading</button>
+		</div>
+		<div id="sidebar-animation" class="dropdown-holder">
+			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('animation')">animation</button>
 		</div>
 		<div id="sidebar-background" class="dropdown-holder">
 			<button class="title-button" style="margin-bottom: -2px;" onclick="showHide('background')">background</button>
@@ -203,8 +206,8 @@
 		<div id="lines-header" class="header">lineart</div>
 		<p class="note">
 			how many bays are drawn with the following lineart styles?<br>
-			(anything else will not get a shell bonus)<br>
-			(minis do not qualify for the lineless bonus)
+			(minis do not qualify for the lineless bonus)<br>
+			(please count baykits as half a bayfox!)
 		</p>
 		<div class="container btn-container">
 			<div class="small button">
@@ -224,7 +227,8 @@
 	<div id="shading" class="bonus section draggable" style="display:none">
 		<div id="shading-header" class="header">shading</div>
 		<p class="note">
-			how many bays are drawn with the following shading styles?
+			how many bays are drawn with the following shading styles?<br>
+			(please count baykits as half a bayfox!)
 		</p>
 		<div class="container btn-container">
 			<div class="small button">
@@ -251,15 +255,52 @@
 	</div>
 
 	<!--animation-->
-	<section id="animation" style="display:none">
-		<p>is this artwork animated? if so, what type of animation is used?</p>
-		<p class="note">note: each scene in an animation video, such as an AMV, meme, etc; is graded as its own individual, separate animation.</p>
-		<div class="container">
-			<button id="noanimation" onclick="setAnimation(null)">no animation</button>
-			<button id="tween" onclick="setAnimation('tween')">tween or puppet animation</button>
-			<button id="handdrawn" onclick="setAnimation('handdrawn')">hand-drawn or frame-by-frame animation</button>
+	<div id="animation" class="bonus section draggable" style="display:none">
+		<div id="animation-header" class="header">animation</div>
+		<p class="note">
+			is this artwork animated? if so, what type of animation is used?<br>
+			(each scene in an animation video is graded as its own individual, separate animation)<br>
+			(please count baykits as half a bayfox!)
+		</p>
+		<div class="container row">
+			<div id="tween">
+				tween or puppet animation
+				<div class="small button">
+					<input id="tween-simple" type="number" value="0" min="0">
+					<label for="tween-simple">simple tween</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.tweens.simple)">i</button>
+				</div>
+				<div class="small button">
+					<input id="tween-complex" type="number" value="0" min="0">
+					<label for="tween-complex">complex tween</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.tweens.complex)">i</button>
+				</div>
+				<div class="small button">
+					<input id="tween-fluid" type="number" value="0" min="0">
+					<label for="tween-fluid">fluid tween</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.tweens.fluid)">i</button>
+				</div>
+			</div>
+			<div id="handdrawn">
+				hand-drawn or frame-by-frame animation
+				<div class="small button">
+					<input id="handdrawn-easy" type="number" value="0" min="0">
+					<label for="handdrawn-easy">easy handdrawn</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.handdrawn.easy)">i</button>
+				</div>
+				<div class="small button">
+					<input id="handdrawn-simple" type="number" value="0" min="0">
+					<label for="handdrawn-simple">simple handdrawn</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.handdrawn.simple)">i</button>
+				</div>
+				<div class="small button">
+					<input id="handdrawn-complex" type="number" value="0" min="0">
+					<label for="handdrawn-complex">complex handdrawn</label>
+					<button class="tiny infobutton" onclick="infoPopUp(infoStrings.handdrawn.complex)">i</button>
+				</div>
+			</div>
 		</div>
-	</section>
+	</div>
 
 
 	<!--animation complexity-->

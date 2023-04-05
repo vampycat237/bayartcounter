@@ -22,6 +22,7 @@ const counting = {
 		//reset total & user's stringArray
 		userTotal = 0;
 		this.stringArray = [];
+		stackableBonuses = [];
 		
 		//count base values
 		for (i = 0; i < baseValues.length; i++) {
@@ -30,7 +31,14 @@ const counting = {
 			//TODO: combine duplicate values before counting
 			this.stringArray.push(baseValues[i].countingString());
 		}
-		//TODO: count stackable & static bonuses
+		//count stackable & static bonuses (handled in bonus-manager.js)
+		countStackables();
+		for (item of stackableBonuses) {
+			if (item.count > 0) {
+				userTotal += item.value;
+				this.stringArray.push(item.countingString());
+			}
+		}
 		//count background
 		if (background.value > 0) {
 			userTotal += background.value;

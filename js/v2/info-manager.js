@@ -34,57 +34,68 @@ function hideInfo() {
 }*/
 
 const infoStrings = {
-	elmnt : document.getElementById("info"),
+	elmnt: document.getElementById("info"),
 
-	image : "The image window displays the artwork you are counting if you provide it a link to the image! This is an optional step, but might be helpful when counting shells so you can have everything on the same screen.",
+	image: "The image window displays the artwork you are counting if you provide it a link to the image! This is an optional step, but might be helpful when counting shells so you can have everything on the same screen.",
 
-	media : {
-		flatcolor : "2d artwork that has been colored.",
-		grayscale : "2d artwork that has been 'colored' in only grayscale values.",
-		
-		full3d : "A 3d model that is 'in the round' - if you were to turn it around, it would look like a real-world fox from all angles. This does not require realism.",
-		flat3d : "A 3d model that is not 'in the round' - if you were to turn it around, it would not look like a real-world fox from every angle. A good example would be a 3d model with depth akin to a relief carving.",
-		
-		paper : "A craft made from paper. This could be origami, paper standees, a collage, or anything else you might make using paper!",
-		food : "Confections is a catch-all for any edible creations. This could mean frosting/icing art on cupcakes, cakes, or cookies, or some sort of 3d representation of a fox, or anything else you make using food!",
-		clay : "Artwork made of clay or made in a mold. This would include clay, pottery, resin, rubber band sculpture/models, and more!",
-		fabric : "Fabric crafts would include anything you make using fabric or yarn of a bayfox. Some examples would be a crochet plush or a fursuit."
+	media: {
+		flatcolor: "2d artwork that has been colored.",
+		grayscale: "2d artwork that has been 'colored' in only grayscale values.",
+
+		full3d: "A 3d model that is 'in the round' - if you were to turn it around, it would look like a real-world fox from all angles. This does not require realism.",
+		flat3d: "A 3d model that is not 'in the round' - if you were to turn it around, it would not look like a real-world fox from every angle. A good example would be a 3d model with depth akin to a relief carving.",
+
+		paper: "A craft made from paper. This could be origami, paper standees, a collage, or anything else you might make using paper!",
+		food: "Confections is a catch-all for any edible creations. This could mean frosting/icing art on cupcakes, cakes, or cookies, or some sort of 3d representation of a fox, or anything else you make using food!",
+		clay: "Artwork made of clay or made in a mold. This would include clay, pottery, resin, rubber band sculpture/models, and more!",
+		fabric: "Fabric crafts would include anything you make using fabric or yarn of a bayfox. Some examples would be a crochet plush or a fursuit."
 	},
-	
-	size : {
-		overview : "Crafts are evaluated not only on medium and coverage, but also their size, as it is much more difficult to make a large physical object than a smaller sized physical object in most cases. The sizes Bayfoxes use are 'model' and 'large'.",
-		model : "This craft is about the size of or smaller than an average banana.",
-		large : "This craft is significantly larger than an average banana."
+
+	size: {
+		overview: "Crafts are evaluated not only on medium and coverage, but also their size, as it is much more difficult to make a large physical object than a smaller sized physical object in most cases. The sizes Bayfoxes use are 'model' and 'large'.",
+		model: "This craft is about the size of or smaller than an average banana.",
+		large: "This craft is significantly larger than an average banana."
 	},
-	
-	coverage : {
-		overview : "'Coverage' refers to how much of the character is depicted in your art. Common words for this are terms like 'headshot' and 'fullbody.'",
-		headshot : "Only the head of the Bayfox, and maybe neck, is visible.",
-		halfbody : "Anywhere from the Bayfox’s head and chest to a bit of the hindlegs is visible.",
-		fullbody : "Entire Bayfox’s body is visible. It will still count as a fullbody if say, only the tips of toes are not visible.",
-		mini : "Art that is small or simplified and lacking the details that a normal fullbody or headshot may contain. The lineless value does not apply to minis. When creating 'grind sheets' poses must be somewhat unique!"
+
+	coverage: {
+		overview: "'Coverage' refers to how much of the character is depicted in your art. Common words for this are terms like 'headshot' and 'fullbody.'",
+		headshot: "Only the head of the Bayfox, and maybe neck, is visible.",
+		halfbody: "Anywhere from the Bayfox’s head and chest to a bit of the hindlegs is visible.",
+		fullbody: "Entire Bayfox’s body is visible. It will still count as a fullbody if say, only the tips of toes are not visible.",
+		mini: "Art that is small or simplified and lacking the details that a normal fullbody or headshot may contain. The lineless value does not apply to minis. When creating 'grind sheets' poses must be somewhat unique!"
 	},
-	
-	base : "'Base values' represent the starting values for the art, essentially. Their value is based on the medium you have done the artwork in, how much of the bayfox you have drawn (coverage), and in the case of crafts the size of the artwork.",
-	
-	stackable : "'Stackable values' are bonuses you get for putting in more effort or polish in your work. This is how you get extra shells for shading, animating, lineless art, or fully colored lineart.",
-	
-	lines : {
-		colorlines : "colorlines TODO",
-		lineless : "lineless TODO"
+
+	base: "'Base values' represent the starting values for the art, essentially. Their value is based on the medium you have done the artwork in, how much of the bayfox you have drawn (coverage), and in the case of crafts the size of the artwork.",
+
+	stackable: "'Stackable values' are bonuses you get for putting in more effort or polish in your work. This is how you get extra shells for shading, animating, lineless art, or fully colored lineart.",
+
+	lines: {
+		colorlines: "colorlines TODO",
+		lineless: "lineless TODO"
 	},
-	
-	shading : {
-		minimal : "Baycove defines minimal shading as 'very small shadows, such as used to define a limb in the back.'",
-		basic : "A single layer of shading and/or very minimal highlights.",
-		complex : "Shading with multiple layers of highlights and shadows.",
-		painting : "Multiple layers of mixed highlights and shadows creating a fluid texture."
+
+	shading: {
+		minimal: "Baycove defines minimal shading as 'very small shadows, such as used to define a limb in the back.'",
+		basic: "A single layer of shading and/or very minimal highlights.",
+		complex: "Shading with multiple layers of highlights and shadows.",
+		painting: "Multiple layers of mixed highlights and shadows creating a fluid texture."
 	},
-	
-	animation : {
-		overview : "There are two categories for animation in Baycove: tween/puppet animation, and hand-drawn animation. The line may be a little blurry at times, but if you use your best judgement you should be fine. Feel free to ask for clarification on what kind of animation yours would count as in the help center!",
-		tweens : "Tween or puppet animations would include animations that primarily consist of moving and/or rotating static pieces of art. For instance, a head bob where the head moves straight up and down, or a puppet animation where three seperate arm sprites make up one arm that is moved with simulated 'bones.'",
-		handdrawn : "Hand-drawn animations would include animations that primarily consist of uniquely drawn images and frames."
+
+	animation: {
+		overview: "There are two categories for animation in Baycove: tween/puppet animation, and hand-drawn animation. Additionally, this category is specifically for character animation, not backgrounds.",
+		tweens: "Tween or puppet animations would include animations that primarily consist of moving and/or rotating static pieces of art. For instance, a head bob where the head moves straight up and down, or a puppet animation where three seperate arm sprites make up one arm that is moved with simulated 'bones.'",
+		handdrawn: "Hand-drawn animations would include animations that primarily consist of uniquely drawn images and frames."
+	},
+
+	tweens: {
+		simple: "A simple tween consists of minimal movement, like a small headbob.",
+		complex: "A complex tween has busy movement, consisting of three or more limbs in action.",
+		fluid: "A fluid tween is an extremely complex tween animation that involves most or all limbs on the body."
+	},
+	handdrawn: {
+		easy: "Easy animation is when one drawing is reused with minimal changes per frame, such as an eye blink or ear twitch.",
+		simple: "A simple animation uses the same pose with minimal changes, such as a tail wag or idle animation.",
+		complex: "Drawing each pose and position uniquely, such as in a walk cycle, is considered complex animation."
 	},
 
 	characterBonus: {
